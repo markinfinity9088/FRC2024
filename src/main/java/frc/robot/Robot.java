@@ -4,12 +4,31 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.GyroSubsystem;
+import frc.robot.utils.AprilTagUtils;
+import frc.robot.utils.RuntimeConfig;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
+import com.revrobotics.REVPhysicsSim;
+
+import edu.wpi.first.apriltag.AprilTagDetection;
+import edu.wpi.first.apriltag.AprilTagDetector;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.math.system.plant.DCMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,8 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Configure default commands and condition bindings on robot startup
-    m_robot.configureBindings();
+    
   }
 
   /**
@@ -57,6 +75,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    // Configure default commands and condition bindings on robot startup
+    m_robot.configureBindings();
     GyroSubsystem.getInstance().init();
 
     m_autonomousCommand = m_robot.getAutonomousCommand(new Date());
@@ -76,6 +96,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    // Configure default commands and condition bindings on robot startup
+    m_robot.configureBindings();
     GyroSubsystem.getInstance().init();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -97,4 +119,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
+
+  @Override
+  public void simulationInit(){
+    RuntimeConfig.is_simulator_mode = true;
+    // Configure default commands and condition bindings on robot startup
+    m_robot.configureBindings();
+  }
+  @Override
+  public void simulationPeriodic(){
+    
+  }
+
 }

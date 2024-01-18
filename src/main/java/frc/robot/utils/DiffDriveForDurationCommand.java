@@ -2,14 +2,14 @@ package frc.robot.utils;
 
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 
 /**
  * A command that runs the swerve drive for a specified amount of time
  *
  */
-public class DiffDriveForDurationCommand extends CommandBase {
+public class DiffDriveForDurationCommand extends Command {
   protected Timer m_timer = new Timer();
   private final double m_duration;
   private double speed, rotation;

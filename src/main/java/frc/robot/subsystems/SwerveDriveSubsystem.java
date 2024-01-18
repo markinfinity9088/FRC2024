@@ -13,7 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.SwerveUtils;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
@@ -120,14 +120,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         pose);
   }
 
-  public CommandBase driveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier rot, boolean fieldRelative, boolean rateLimit) {
+  public Command driveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier rot, boolean fieldRelative, boolean rateLimit) {
     return run(() -> {
       this.drive(xSpeed.getAsDouble(), ySpeed.getAsDouble(), rot.getAsDouble(), fieldRelative, rateLimit);
     }
     ).withName("swerveDrive");
   }
   
-  public CommandBase driveCommand(Double xSpeed, Double ySpeed, Double rot, boolean fieldRelative, boolean rateLimit) {
+  public Command driveCommand(Double xSpeed, Double ySpeed, Double rot, boolean fieldRelative, boolean rateLimit) {
   return run(() -> {
       this.drive(xSpeed, ySpeed, rot, fieldRelative, rateLimit);
       periodic();
@@ -270,7 +270,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
-  public CommandBase driveTimeCommand(long timeInSec, double xspeed, double yspeed, double rotation, boolean fieldRelative, boolean rateLimit) {
+  public Command driveTimeCommand(long timeInSec, double xspeed, double yspeed, double rotation, boolean fieldRelative, boolean rateLimit) {
     return driveCommand(xspeed, yspeed, rotation, fieldRelative, rateLimit).withTimeout(timeInSec);
   }
 

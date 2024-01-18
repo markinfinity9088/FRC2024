@@ -14,6 +14,7 @@ import frc.robot.controller.XboxController;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.utils.RuntimeConfig;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.IntakeSubSystem.ItemType;
@@ -94,21 +95,27 @@ public class CommandBot {
        * () -> -teleOpController.getRotation(), true, true));
        */
     }
-    if (Constants.IntakeConstants.kMotorPort >= 0) {
-      m_intake = new IntakeSubSystem();
-      // Deploy the intake with the triangle button for the cone
-      teleOpController.coneIntakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake(ItemType.Cone);}));
-      teleOpController.coneIntakeTrigger().onFalse(m_intake.holdCommand());
-      // Release the intake with the cross button for the cube
-      teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
-      teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
-      // Deploy the intake with the square button for the cube
-      teleOpController.cubeIntakeTrigger().whileTrue(m_intake.intakeCommand(ItemType.Cube));
-      teleOpController.cubeIntakeTrigger().onFalse(m_intake.holdCommand());
-      // Release the intake with the circle button for the cube
-      teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
-      teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
-    }
+    // under simulator mode, there is a crash in IntakeSubSystem at line CANSparkMax(Constants.IntakeConstants.kMotorPort, MotorType.kBrushed);
+    // so can't run intake in the simulation mode. Disabling using RuntimeConfig.is_simulator_mode
+    if(RuntimeConfig.is_simulator_mode == false) { 
+      
+      if (Constants.IntakeConstants.kMotorPort >= 0) {
+        m_intake = new IntakeSubSystem();
+        // Deploy the intake with the triangle button for the cone
+        teleOpController.coneIntakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake(ItemType.Cone);}));
+        teleOpController.coneIntakeTrigger().onFalse(m_intake.holdCommand());
+        // Release the intake with the cross button for the cube
+        teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
+        teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
+        // Deploy the intake with the square button for the cube
+        teleOpController.cubeIntakeTrigger().whileTrue(m_intake.intakeCommand(ItemType.Cube));
+        teleOpController.cubeIntakeTrigger().onFalse(m_intake.holdCommand());
+        // Release the intake with the circle button for the cube
+        teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
+        teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
+      }
+  }
+    
 
     if (Constants.LiftConstants.LIFT_RT >= 0) {
       m_lift = new LiftSubsystem();

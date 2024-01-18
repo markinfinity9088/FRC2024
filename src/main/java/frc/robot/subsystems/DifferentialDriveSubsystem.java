@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.Date;
@@ -57,11 +57,11 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
    * @param fwd the commanded forward movement
    * @param rot the commanded rotation
    */
-  public CommandBase driveCommand(DoubleSupplier speed, DoubleSupplier rotation) {
+  public Command driveCommand(DoubleSupplier speed, DoubleSupplier rotation) {
     return driveCommand(speed.getAsDouble(), rotation.getAsDouble());
   }
 
-  public CommandBase driveCommand(Double speed, Double rotation) {
+  public Command driveCommand(Double speed, Double rotation) {
     return run(() -> { this.drive(speed, rotation); }).withName("diffDrive");
   }
 
@@ -78,7 +78,7 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
    * @param timeInSec The time to drive forward in seconds
    * @param speed The fraction of max speed at which to drive
    */
-  public CommandBase driveTimeCommand(long timeInSec, double speed, double rotation) {
+  public Command driveTimeCommand(long timeInSec, double speed, double rotation) {
     return driveCommand(speed, rotation).withTimeout(timeInSec);
   }
 }

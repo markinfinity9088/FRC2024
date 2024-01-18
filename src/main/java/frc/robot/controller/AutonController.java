@@ -1,7 +1,7 @@
 package frc.robot.controller;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
@@ -11,11 +11,11 @@ import frc.robot.utils.SwerveDriveForDurationCommand;
 import frc.robot.commands.SwerveSampleMoveCommand;
 
 public class AutonController {
-    public static CommandBase getAutonCommand() {
+    public static Command getAutonCommand() {
         return DriveConstants.driveType.equals("DIFFER")? getDiffAutonomousCommand() : getSimpleSwerveCommand();
     }
 
-    private static CommandBase getSimpleSwerveCommand() {
+    private static Command getSimpleSwerveCommand() {
         System.out.println("getSwerveAutonomousCommand called");
         //return null;
         SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
@@ -45,7 +45,7 @@ public class AutonController {
         return commandGroup;
     }
 
-    private static CommandBase getSwerveWithDurationsAutonCommand() {
+    private static Command getSwerveWithDurationsAutonCommand() {
         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
         commandGroup.addCommands(new SwerveDriveForDurationCommand(2,0.05,0,0.0));
         commandGroup.addCommands(new SwerveDriveForDurationCommand(2,-0.05,0,0.0));
@@ -58,7 +58,7 @@ public class AutonController {
         return commandGroup;
     }
 
-    private static CommandBase getDiffAutonomousCommand() {
+    private static Command getDiffAutonomousCommand() {
         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
         commandGroup.addCommands(new DiffDriveForDurationCommand(2,0.2,0.0));
         commandGroup.addCommands(DifferentialDriveSubsystem.getInstance().driveTimeCommand(3, 0.3, 0.4));

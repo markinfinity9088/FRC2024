@@ -1,0 +1,1373 @@
+diff --git a/.vscode/launch.json b/.vscode/launch.json
+index c9c9713..5b804e8 100644
+--- a/.vscode/launch.json
++++ b/.vscode/launch.json
+@@ -1,21 +1,21 @@
+-{
+-  // Use IntelliSense to learn about possible attributes.
+-  // Hover to view descriptions of existing attributes.
+-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+-  "version": "0.2.0",
+-  "configurations": [
+-
+-    {
+-      "type": "wpilib",
+-      "name": "WPILib Desktop Debug",
+-      "request": "launch",
+-      "desktop": true,
+-    },
+-    {
+-      "type": "wpilib",
+-      "name": "WPILib roboRIO Debug",
+-      "request": "launch",
+-      "desktop": false,
+-    }
+-  ]
+-}
++{
++  // Use IntelliSense to learn about possible attributes.
++  // Hover to view descriptions of existing attributes.
++  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
++  "version": "0.2.0",
++  "configurations": [
++
++    {
++      "type": "wpilib",
++      "name": "WPILib Desktop Debug",
++      "request": "launch",
++      "desktop": true,
++    },
++    {
++      "type": "wpilib",
++      "name": "WPILib roboRIO Debug",
++      "request": "launch",
++      "desktop": false,
++    }
++  ]
++}
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+index 4ed293b..8be11f2 100644
+--- a/.vscode/settings.json
++++ b/.vscode/settings.json
+@@ -1,29 +1,29 @@
+-{
+-  "java.configuration.updateBuildConfiguration": "automatic",
+-  "java.server.launchMode": "Standard",
+-  "files.exclude": {
+-    "**/.git": true,
+-    "**/.svn": true,
+-    "**/.hg": true,
+-    "**/CVS": true,
+-    "**/.DS_Store": true,
+-    "bin/": true,
+-    "**/.classpath": true,
+-    "**/.project": true,
+-    "**/.settings": true,
+-    "**/.factorypath": true,
+-    "**/*~": true
+-  },
+-  "java.test.config": [
+-    {
+-      "name": "WPIlibUnitTests",
+-      "workingDirectory": "${workspaceFolder}/build/jni/release",
+-      "vmargs": [ "-Djava.library.path=${workspaceFolder}/build/jni/release" ],
+-      "env": {
+-        "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release" ,
+-        "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
+-      }
+-    },
+-  ],
+-  "java.test.defaultConfig": "WPIlibUnitTests"
+-}
++{
++  "java.configuration.updateBuildConfiguration": "automatic",
++  "java.server.launchMode": "Standard",
++  "files.exclude": {
++    "**/.git": true,
++    "**/.svn": true,
++    "**/.hg": true,
++    "**/CVS": true,
++    "**/.DS_Store": true,
++    "bin/": true,
++    "**/.classpath": true,
++    "**/.project": true,
++    "**/.settings": true,
++    "**/.factorypath": true,
++    "**/*~": true
++  },
++  "java.test.config": [
++    {
++      "name": "WPIlibUnitTests",
++      "workingDirectory": "${workspaceFolder}/build/jni/release",
++      "vmargs": [ "-Djava.library.path=${workspaceFolder}/build/jni/release" ],
++      "env": {
++        "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release" ,
++        "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
++      }
++    },
++  ],
++  "java.test.defaultConfig": "WPIlibUnitTests"
++}
+diff --git a/.wpilib/wpilib_preferences.json b/.wpilib/wpilib_preferences.json
+index b8ec482..6b8554b 100644
+--- a/.wpilib/wpilib_preferences.json
++++ b/.wpilib/wpilib_preferences.json
+@@ -1,6 +1,6 @@
+ {
+     "enableCppIntellisense": false,
+     "currentLanguage": "java",
+-    "projectYear": "2023",
++    "projectYear": "2024",
+     "teamNumber": 9088
+ }
+\ No newline at end of file
+diff --git a/WPILib-License.md b/WPILib-License.md
+index 3d5a824..8434944 100644
+--- a/WPILib-License.md
++++ b/WPILib-License.md
+@@ -1,24 +1,24 @@
+-Copyright (c) 2009-2021 FIRST and other WPILib contributors
+-All rights reserved.
+-
+-Redistribution and use in source and binary forms, with or without
+-modification, are permitted provided that the following conditions are met:
+-   * Redistributions of source code must retain the above copyright
+-     notice, this list of conditions and the following disclaimer.
+-   * Redistributions in binary form must reproduce the above copyright
+-     notice, this list of conditions and the following disclaimer in the
+-     documentation and/or other materials provided with the distribution.
+-   * Neither the name of FIRST, WPILib, nor the names of other WPILib
+-     contributors may be used to endorse or promote products derived from
+-     this software without specific prior written permission.
+-
+-THIS SOFTWARE IS PROVIDED BY FIRST AND OTHER WPILIB CONTRIBUTORS "AS IS" AND
+-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+-WARRANTIES OF MERCHANTABILITY NONINFRINGEMENT AND FITNESS FOR A PARTICULAR
+-PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL FIRST OR CONTRIBUTORS BE LIABLE FOR
+-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++Copyright (c) 2009-2023 FIRST and other WPILib contributors
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++   * Redistributions of source code must retain the above copyright
++     notice, this list of conditions and the following disclaimer.
++   * Redistributions in binary form must reproduce the above copyright
++     notice, this list of conditions and the following disclaimer in the
++     documentation and/or other materials provided with the distribution.
++   * Neither the name of FIRST, WPILib, nor the names of other WPILib
++     contributors may be used to endorse or promote products derived from
++     this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY FIRST AND OTHER WPILIB CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY NONINFRINGEMENT AND FITNESS FOR A PARTICULAR
++PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL FIRST OR CONTRIBUTORS BE LIABLE FOR
++ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+diff --git a/build.gradle b/build.gradle
+index 3281c1d..e97f427 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -1,99 +1,101 @@
+-plugins {
+-    id "java"
+-    id "edu.wpi.first.GradleRIO" version "2023.4.1"
+-}
+-
+-sourceCompatibility = JavaVersion.VERSION_11
+-targetCompatibility = JavaVersion.VERSION_11
+-
+-def ROBOT_MAIN_CLASS = "frc.robot.Main"
+-
+-// Define my targets (RoboRIO) and artifacts (deployable files)
+-// This is added by GradleRIO's backing project DeployUtils.
+-deploy {
+-    targets {
+-        roborio(getTargetTypeClass('RoboRIO')) {
+-            // Team number is loaded either from the .wpilib/wpilib_preferences.json
+-            // or from command line. If not found an exception will be thrown.
+-            // You can use getTeamOrDefault(team) instead of getTeamNumber if you
+-            // want to store a team number in this file.
+-            team = project.frc.getTeamNumber()
+-            debug = project.frc.getDebugOrDefault(false)
+-
+-            artifacts {
+-                // First part is artifact name, 2nd is artifact type
+-                // getTargetTypeClass is a shortcut to get the class type using a string
+-
+-                frcJava(getArtifactTypeClass('FRCJavaArtifact')) {
+-                }
+-
+-                // Static files artifact
+-                frcStaticFileDeploy(getArtifactTypeClass('FileTreeArtifact')) {
+-                    files = project.fileTree('src/main/deploy')
+-                    directory = '/home/lvuser/deploy'
+-                }
+-            }
+-        }
+-    }
+-}
+-
+-def deployArtifact = deploy.targets.roborio.artifacts.frcJava
+-
+-// Set to true to use debug for JNI.
+-wpi.java.debugJni = false
+-
+-// Set this to true to enable desktop support.
+-def includeDesktopSupport = true
+-
+-// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+-// Also defines JUnit 5.
+-dependencies {
+-    implementation wpi.java.deps.wpilib()
+-    implementation wpi.java.vendor.java()
+-
+-    roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
+-    roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
+-
+-    roborioRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.roborio)
+-    roborioRelease wpi.java.vendor.jniRelease(wpi.platforms.roborio)
+-
+-    nativeDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.desktop)
+-    nativeDebug wpi.java.vendor.jniDebug(wpi.platforms.desktop)
+-    simulationDebug wpi.sim.enableDebug()
+-
+-    nativeRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.desktop)
+-    nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
+-    simulationRelease wpi.sim.enableRelease()
+-
+-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+-}
+-
+-test {
+-    useJUnitPlatform()
+-    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+-}
+-
+-// Simulation configuration (e.g. environment variables).
+-wpi.sim.addGui().defaultEnabled = true
+-wpi.sim.addDriverstation()
+-
+-// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
+-// in order to make them all available at runtime. Also adding the manifest so WPILib
+-// knows where to look for our Robot Class.
+-jar {
+-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+-    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+-}
+-
+-// Configure jar and deploy tasks
+-deployArtifact.jarTask = jar
+-wpi.java.configureExecutableTasks(jar)
+-wpi.java.configureTestTasks(test)
+-
+-// Configure string concat to always inline compile
+-tasks.withType(JavaCompile) {
+-    options.compilerArgs.add '-XDstringConcat=inline'
+-}
++plugins {
++    id "java"
++    id "edu.wpi.first.GradleRIO" version "2024.1.1"
++}
++
++java {
++    sourceCompatibility = JavaVersion.VERSION_17
++    targetCompatibility = JavaVersion.VERSION_17
++}
++
++def ROBOT_MAIN_CLASS = "frc.robot.Main"
++
++// Define my targets (RoboRIO) and artifacts (deployable files)
++// This is added by GradleRIO's backing project DeployUtils.
++deploy {
++    targets {
++        roborio(getTargetTypeClass('RoboRIO')) {
++            // Team number is loaded either from the .wpilib/wpilib_preferences.json
++            // or from command line. If not found an exception will be thrown.
++            // You can use getTeamOrDefault(team) instead of getTeamNumber if you
++            // want to store a team number in this file.
++            team = project.frc.getTeamNumber()
++            debug = project.frc.getDebugOrDefault(false)
++
++            artifacts {
++                // First part is artifact name, 2nd is artifact type
++                // getTargetTypeClass is a shortcut to get the class type using a string
++
++                frcJava(getArtifactTypeClass('FRCJavaArtifact')) {
++                }
++
++                // Static files artifact
++                frcStaticFileDeploy(getArtifactTypeClass('FileTreeArtifact')) {
++                    files = project.fileTree('src/main/deploy')
++                    directory = '/home/lvuser/deploy'
++                }
++            }
++        }
++    }
++}
++
++def deployArtifact = deploy.targets.roborio.artifacts.frcJava
++
++// Set to true to use debug for JNI.
++wpi.java.debugJni = false
++
++// Set this to true to enable desktop support.
++def includeDesktopSupport = false
++
++// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
++// Also defines JUnit 5.
++dependencies {
++    implementation wpi.java.deps.wpilib()
++    implementation wpi.java.vendor.java()
++
++    roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
++    roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
++
++    roborioRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.roborio)
++    roborioRelease wpi.java.vendor.jniRelease(wpi.platforms.roborio)
++
++    nativeDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.desktop)
++    nativeDebug wpi.java.vendor.jniDebug(wpi.platforms.desktop)
++    simulationDebug wpi.sim.enableDebug()
++
++    nativeRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.desktop)
++    nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
++    simulationRelease wpi.sim.enableRelease()
++
++    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
++    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
++}
++
++test {
++    useJUnitPlatform()
++    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
++}
++
++// Simulation configuration (e.g. environment variables).
++wpi.sim.addGui().defaultEnabled = true
++wpi.sim.addDriverstation()
++
++// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
++// in order to make them all available at runtime. Also adding the manifest so WPILib
++// knows where to look for our Robot Class.
++jar {
++    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
++    from sourceSets.main.allSource
++    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
++    duplicatesStrategy = DuplicatesStrategy.INCLUDE
++}
++
++// Configure jar and deploy tasks
++deployArtifact.jarTask = jar
++wpi.java.configureExecutableTasks(jar)
++wpi.java.configureTestTasks(test)
++
++// Configure string concat to always inline compile
++tasks.withType(JavaCompile) {
++    options.compilerArgs.add '-XDstringConcat=inline'
++}
+diff --git a/gradle/wrapper/gradle-wrapper.jar b/gradle/wrapper/gradle-wrapper.jar
+index 249e583..d64cd49 100644
+Binary files a/gradle/wrapper/gradle-wrapper.jar and b/gradle/wrapper/gradle-wrapper.jar differ
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+index c23a1b3..7015f6b 100644
+--- a/gradle/wrapper/gradle-wrapper.properties
++++ b/gradle/wrapper/gradle-wrapper.properties
+@@ -1,5 +1,7 @@
+-distributionBase=GRADLE_USER_HOME
+-distributionPath=permwrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-7.5.1-bin.zip
+-zipStoreBase=GRADLE_USER_HOME
+-zipStorePath=permwrapper/dists
++distributionBase=GRADLE_USER_HOME
++distributionPath=permwrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-8.5-bin.zip
++networkTimeout=10000
++validateDistributionUrl=true
++zipStoreBase=GRADLE_USER_HOME
++zipStorePath=permwrapper/dists
+diff --git a/gradlew b/gradlew
+old mode 100644
+new mode 100755
+index a69d9cb..1aa94a4
+--- a/gradlew
++++ b/gradlew
+@@ -55,7 +55,7 @@
+ #       Darwin, MinGW, and NonStop.
+ #
+ #   (3) This script is generated from the Groovy template
+-#       https://github.com/gradle/gradle/blob/master/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
++#       https://github.com/gradle/gradle/blob/HEAD/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
+ #       within the Gradle project.
+ #
+ #       You can find Gradle at https://github.com/gradle/gradle/.
+@@ -80,13 +80,11 @@ do
+     esac
+ done
+ 
+-APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
+-
+-APP_NAME="Gradle"
++# This is normally unused
++# shellcheck disable=SC2034
+ APP_BASE_NAME=${0##*/}
+-
+-# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
++# Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
++APP_HOME=$( cd "${APP_HOME:-./}" > /dev/null && pwd -P ) || exit
+ 
+ # Use the maximum available, or set MAX_FD != -1 to use that value.
+ MAX_FD=maximum
+@@ -133,22 +131,29 @@ location of your Java installation."
+     fi
+ else
+     JAVACMD=java
+-    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++    if ! command -v java >/dev/null 2>&1
++    then
++        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+ 
+ Please set the JAVA_HOME variable in your environment to match the
+ location of your Java installation."
++    fi
+ fi
+ 
+ # Increase the maximum file descriptors if we can.
+ if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
+     case $MAX_FD in #(
+       max*)
++        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
+         MAX_FD=$( ulimit -H -n ) ||
+             warn "Could not query maximum file descriptor limit"
+     esac
+     case $MAX_FD in  #(
+       '' | soft) :;; #(
+       *)
++        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
+         ulimit -n "$MAX_FD" ||
+             warn "Could not set maximum file descriptor limit to $MAX_FD"
+     esac
+@@ -193,11 +198,15 @@ if "$cygwin" || "$msys" ; then
+     done
+ fi
+ 
+-# Collect all arguments for the java command;
+-#   * $DEFAULT_JVM_OPTS, $JAVA_OPTS, and $GRADLE_OPTS can contain fragments of
+-#     shell script including quotes and variable substitutions, so put them in
+-#     double quotes to make sure that they get re-expanded; and
+-#   * put everything else in single quotes, so that it's not re-expanded.
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
++
++# Collect all arguments for the java command:
++#   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
++#     and any embedded shellness will be escaped.
++#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
++#     treated as '${Hostname}' itself on the command line.
+ 
+ set -- \
+         "-Dorg.gradle.appname=$APP_BASE_NAME" \
+diff --git a/gradlew.bat b/gradlew.bat
+index f127cfd..6689b85 100644
+--- a/gradlew.bat
++++ b/gradlew.bat
+@@ -1,91 +1,92 @@
+-@rem
+-@rem Copyright 2015 the original author or authors.
+-@rem
+-@rem Licensed under the Apache License, Version 2.0 (the "License");
+-@rem you may not use this file except in compliance with the License.
+-@rem You may obtain a copy of the License at
+-@rem
+-@rem      https://www.apache.org/licenses/LICENSE-2.0
+-@rem
+-@rem Unless required by applicable law or agreed to in writing, software
+-@rem distributed under the License is distributed on an "AS IS" BASIS,
+-@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-@rem See the License for the specific language governing permissions and
+-@rem limitations under the License.
+-@rem
+-
+-@if "%DEBUG%"=="" @echo off
+-@rem ##########################################################################
+-@rem
+-@rem  Gradle startup script for Windows
+-@rem
+-@rem ##########################################################################
+-
+-@rem Set local scope for the variables with windows NT shell
+-if "%OS%"=="Windows_NT" setlocal
+-
+-set DIRNAME=%~dp0
+-if "%DIRNAME%"=="" set DIRNAME=.
+-set APP_BASE_NAME=%~n0
+-set APP_HOME=%DIRNAME%
+-
+-@rem Resolve any "." and ".." in APP_HOME to make it shorter.
+-for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
+-
+-@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+-set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+-
+-@rem Find java.exe
+-if defined JAVA_HOME goto findJavaFromJavaHome
+-
+-set JAVA_EXE=java.exe
+-%JAVA_EXE% -version >NUL 2>&1
+-if %ERRORLEVEL% equ 0 goto execute
+-
+-echo.
+-echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+-echo.
+-echo Please set the JAVA_HOME variable in your environment to match the
+-echo location of your Java installation.
+-
+-goto fail
+-
+-:findJavaFromJavaHome
+-set JAVA_HOME=%JAVA_HOME:"=%
+-set JAVA_EXE=%JAVA_HOME%/bin/java.exe
+-
+-if exist "%JAVA_EXE%" goto execute
+-
+-echo.
+-echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
+-echo.
+-echo Please set the JAVA_HOME variable in your environment to match the
+-echo location of your Java installation.
+-
+-goto fail
+-
+-:execute
+-@rem Setup the command line
+-
+-set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+-
+-
+-@rem Execute Gradle
+-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
+-
+-:end
+-@rem End local scope for the variables with windows NT shell
+-if %ERRORLEVEL% equ 0 goto mainEnd
+-
+-:fail
+-rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
+-rem the _cmd.exe /c_ return code!
+-set EXIT_CODE=%ERRORLEVEL%
+-if %EXIT_CODE% equ 0 set EXIT_CODE=1
+-if not ""=="%GRADLE_EXIT_CONSOLE%" exit %EXIT_CODE%
+-exit /b %EXIT_CODE%
+-
+-:mainEnd
+-if "%OS%"=="Windows_NT" endlocal
+-
+-:omega
++@rem
++@rem Copyright 2015 the original author or authors.
++@rem
++@rem Licensed under the Apache License, Version 2.0 (the "License");
++@rem you may not use this file except in compliance with the License.
++@rem You may obtain a copy of the License at
++@rem
++@rem      https://www.apache.org/licenses/LICENSE-2.0
++@rem
++@rem Unless required by applicable law or agreed to in writing, software
++@rem distributed under the License is distributed on an "AS IS" BASIS,
++@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++@rem See the License for the specific language governing permissions and
++@rem limitations under the License.
++@rem
++
++@if "%DEBUG%"=="" @echo off
++@rem ##########################################################################
++@rem
++@rem  Gradle startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables with windows NT shell
++if "%OS%"=="Windows_NT" setlocal
++
++set DIRNAME=%~dp0
++if "%DIRNAME%"=="" set DIRNAME=.
++@rem This is normally unused
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Resolve any "." and ".." in APP_HOME to make it shorter.
++for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if %ERRORLEVEL% equ 0 goto execute
++
++echo.
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto execute
++
++echo.
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:execute
++@rem Setup the command line
++
++set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
++
++
++@rem Execute Gradle
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
++
++:end
++@rem End local scope for the variables with windows NT shell
++if %ERRORLEVEL% equ 0 goto mainEnd
++
++:fail
++rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
++rem the _cmd.exe /c_ return code!
++set EXIT_CODE=%ERRORLEVEL%
++if %EXIT_CODE% equ 0 set EXIT_CODE=1
++if not ""=="%GRADLE_EXIT_CONSOLE%" exit %EXIT_CODE%
++exit /b %EXIT_CODE%
++
++:mainEnd
++if "%OS%"=="Windows_NT" endlocal
++
++:omega
+diff --git a/networktables.json b/networktables.json
+deleted file mode 100644
+index fe51488..0000000
+--- a/networktables.json
++++ /dev/null
+@@ -1 +0,0 @@
+-[]
+diff --git a/settings.gradle b/settings.gradle
+index 48c039e..3e30f84 100644
+--- a/settings.gradle
++++ b/settings.gradle
+@@ -1,27 +1,30 @@
+-import org.gradle.internal.os.OperatingSystem
+-
+-pluginManagement {
+-    repositories {
+-        mavenLocal()
+-        gradlePluginPortal()
+-        String frcYear = '2023'
+-        File frcHome
+-        if (OperatingSystem.current().isWindows()) {
+-            String publicFolder = System.getenv('PUBLIC')
+-            if (publicFolder == null) {
+-                publicFolder = "C:\\Users\\Public"
+-            }
+-            def homeRoot = new File(publicFolder, "wpilib")
+-            frcHome = new File(homeRoot, frcYear)
+-        } else {
+-            def userFolder = System.getProperty("user.home")
+-            def homeRoot = new File(userFolder, "wpilib")
+-            frcHome = new File(homeRoot, frcYear)
+-        }
+-        def frcHomeMaven = new File(frcHome, 'maven')
+-        maven {
+-            name 'frcHome'
+-            url frcHomeMaven
+-        }
+-    }
+-}
++import org.gradle.internal.os.OperatingSystem
++
++pluginManagement {
++    repositories {
++        mavenLocal()
++        gradlePluginPortal()
++        String frcYear = '2024'
++        File frcHome
++        if (OperatingSystem.current().isWindows()) {
++            String publicFolder = System.getenv('PUBLIC')
++            if (publicFolder == null) {
++                publicFolder = "C:\\Users\\Public"
++            }
++            def homeRoot = new File(publicFolder, "wpilib")
++            frcHome = new File(homeRoot, frcYear)
++        } else {
++            def userFolder = System.getProperty("user.home")
++            def homeRoot = new File(userFolder, "wpilib")
++            frcHome = new File(homeRoot, frcYear)
++        }
++        def frcHomeMaven = new File(frcHome, 'maven')
++        maven {
++            name 'frcHome'
++            url frcHomeMaven
++        }
++    }
++}
++
++Properties props = System.getProperties();
++props.setProperty("org.gradle.internal.native.headers.unresolved.dependencies.ignore", "true");
+diff --git a/simgui-ds.json b/simgui-ds.json
+deleted file mode 100644
+index 59cd3f3..0000000
+--- a/simgui-ds.json
++++ /dev/null
+@@ -1,97 +0,0 @@
+-{
+-  "keyboardJoysticks": [
+-    {
+-      "axisConfig": [
+-        {
+-          "decKey": 65,
+-          "incKey": 68
+-        },
+-        {
+-          "decKey": 87,
+-          "incKey": 83
+-        },
+-        {
+-          "decKey": 69,
+-          "decayRate": 0.0,
+-          "incKey": 82,
+-          "keyRate": 0.009999999776482582
+-        }
+-      ],
+-      "axisCount": 3,
+-      "buttonCount": 4,
+-      "buttonKeys": [
+-        90,
+-        88,
+-        67,
+-        86
+-      ],
+-      "povConfig": [
+-        {
+-          "key0": 328,
+-          "key135": 323,
+-          "key180": 322,
+-          "key225": 321,
+-          "key270": 324,
+-          "key315": 327,
+-          "key45": 329,
+-          "key90": 326
+-        }
+-      ],
+-      "povCount": 1
+-    },
+-    {
+-      "axisConfig": [
+-        {
+-          "decKey": 74,
+-          "incKey": 76
+-        },
+-        {
+-          "decKey": 73,
+-          "incKey": 75
+-        }
+-      ],
+-      "axisCount": 2,
+-      "buttonCount": 4,
+-      "buttonKeys": [
+-        77,
+-        44,
+-        46,
+-        47
+-      ],
+-      "povCount": 0
+-    },
+-    {
+-      "axisConfig": [
+-        {
+-          "decKey": 263,
+-          "incKey": 262
+-        },
+-        {
+-          "decKey": 265,
+-          "incKey": 264
+-        }
+-      ],
+-      "axisCount": 2,
+-      "buttonCount": 6,
+-      "buttonKeys": [
+-        260,
+-        268,
+-        266,
+-        261,
+-        269,
+-        267
+-      ],
+-      "povCount": 0
+-    },
+-    {
+-      "axisCount": 0,
+-      "buttonCount": 0,
+-      "povCount": 0
+-    }
+-  ],
+-  "robotJoysticks": [
+-    {
+-      "guid": "030000004c050000c405000000000000"
+-    }
+-  ]
+-}
+diff --git a/simgui-window.json b/simgui-window.json
+deleted file mode 100644
+index 35ee690..0000000
+--- a/simgui-window.json
++++ /dev/null
+@@ -1,59 +0,0 @@
+-{
+-  "Docking": {
+-    "Data": []
+-  },
+-  "MainWindow": {
+-    "GLOBAL": {
+-      "fps": "120",
+-      "height": "900",
+-      "maximized": "0",
+-      "style": "0",
+-      "userScale": "2",
+-      "width": "1600",
+-      "xpos": "-32000",
+-      "ypos": "-32000"
+-    }
+-  },
+-  "Window": {
+-    "###FMS": {
+-      "Collapsed": "0",
+-      "Pos": "6,675",
+-      "Size": "336,164"
+-    },
+-    "###Joysticks": {
+-      "Collapsed": "0",
+-      "Pos": "275,296",
+-      "Size": "976,278"
+-    },
+-    "###NetworkTables": {
+-      "Collapsed": "0",
+-      "Pos": "279,51",
+-      "Size": "937,231"
+-    },
+-    "###Other Devices": {
+-      "Collapsed": "0",
+-      "Pos": "1281,25",
+-      "Size": "312,868"
+-    },
+-    "###System Joysticks": {
+-      "Collapsed": "1",
+-      "Pos": "6,398",
+-      "Size": "340,254"
+-    },
+-    "###Timing": {
+-      "Collapsed": "0",
+-      "Pos": "6,187",
+-      "Size": "162,168"
+-    },
+-    "Debug##Default": {
+-      "Collapsed": "0",
+-      "Pos": "60,60",
+-      "Size": "400,400"
+-    },
+-    "Robot State": {
+-      "Collapsed": "0",
+-      "Pos": "5,20",
+-      "Size": "109,114"
+-    }
+-  }
+-}
+diff --git a/simgui.json b/simgui.json
+deleted file mode 100644
+index 449f4b1..0000000
+--- a/simgui.json
++++ /dev/null
+@@ -1,7 +0,0 @@
+-{
+-  "NTProvider": {
+-    "types": {
+-      "/FMSInfo": "FMSInfo"
+-    }
+-  }
+-}
+diff --git a/src/main/java/frc/robot/Constants.java b/src/main/java/frc/robot/Constants.java
+index 79bf110..bfcf195 100644
+--- a/src/main/java/frc/robot/Constants.java
++++ b/src/main/java/frc/robot/Constants.java
+@@ -4,7 +4,7 @@
+ 
+ package frc.robot;
+ 
+-import com.revrobotics.CANSparkMax.IdleMode;
++//import com.revrobotics.CANSparkMax.IdleMode;
+ 
+ import edu.wpi.first.math.geometry.Translation2d;
+ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+@@ -116,8 +116,8 @@ public final class Constants {
+     public static final double kTurningMinOutput = -1;
+     public static final double kTurningMaxOutput = 1;
+ 
+-    public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
+-    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
++    //public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
++    //public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
+ 
+     public static final int kDrivingMotorCurrentLimit = 50; // amps
+     public static final int kTurningMotorCurrentLimit = 20; // amps
+diff --git a/src/main/java/frc/robot/commands/SwerveSampleMoveCommand.java b/src/main/java/frc/robot/commands/SwerveSampleMoveCommand.java
+index 0a32447..2d58509 100644
+--- a/src/main/java/frc/robot/commands/SwerveSampleMoveCommand.java
++++ b/src/main/java/frc/robot/commands/SwerveSampleMoveCommand.java
+@@ -11,9 +11,9 @@ import edu.wpi.first.math.geometry.Pose2d;
+ import edu.wpi.first.math.kinematics.ChassisSpeeds;
+ import edu.wpi.first.math.kinematics.SwerveModuleState;
+ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ 
+-public class SwerveSampleMoveCommand extends CommandBase {
++public class SwerveSampleMoveCommand extends Command {
+ 
+ private boolean finished;
+   private boolean xflag;
+diff --git a/src/main/java/frc/robot/controller/AutonController.java b/src/main/java/frc/robot/controller/AutonController.java
+index b78b586..c7a3dd4 100644
+--- a/src/main/java/frc/robot/controller/AutonController.java
++++ b/src/main/java/frc/robot/controller/AutonController.java
+@@ -1,7 +1,7 @@
+ package frc.robot.controller;
+ 
+ import edu.wpi.first.math.geometry.Pose2d;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+ import frc.robot.Constants.DriveConstants;
+ import frc.robot.subsystems.DifferentialDriveSubsystem;
+@@ -11,11 +11,11 @@ import frc.robot.utils.SwerveDriveForDurationCommand;
+ import frc.robot.commands.SwerveSampleMoveCommand;
+ 
+ public class AutonController {
+-    public static CommandBase getAutonCommand() {
++    public static Command getAutonCommand() {
+         return DriveConstants.driveType.equals("DIFFER")? getDiffAutonomousCommand() : getSimpleSwerveCommand();
+     }
+ 
+-    private static CommandBase getSimpleSwerveCommand() {
++    private static Command getSimpleSwerveCommand() {
+         System.out.println("getSwerveAutonomousCommand called");
+         //return null;
+         SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
+@@ -45,7 +45,7 @@ public class AutonController {
+         return commandGroup;
+     }
+ 
+-    private static CommandBase getSwerveWithDurationsAutonCommand() {
++    private static Command getSwerveWithDurationsAutonCommand() {
+         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+         commandGroup.addCommands(new SwerveDriveForDurationCommand(2,0.05,0,0.0));
+         commandGroup.addCommands(new SwerveDriveForDurationCommand(2,-0.05,0,0.0));
+@@ -58,7 +58,7 @@ public class AutonController {
+         return commandGroup;
+     }
+ 
+-    private static CommandBase getDiffAutonomousCommand() {
++    private static Command getDiffAutonomousCommand() {
+         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+         commandGroup.addCommands(new DiffDriveForDurationCommand(2,0.2,0.0));
+         commandGroup.addCommands(DifferentialDriveSubsystem.getInstance().driveTimeCommand(3, 0.3, 0.4));
+diff --git a/src/main/java/frc/robot/subsystems/DifferentialDriveSubsystem.java b/src/main/java/frc/robot/subsystems/DifferentialDriveSubsystem.java
+index a2abd4f..23910de 100644
+--- a/src/main/java/frc/robot/subsystems/DifferentialDriveSubsystem.java
++++ b/src/main/java/frc/robot/subsystems/DifferentialDriveSubsystem.java
+@@ -7,7 +7,7 @@ package frc.robot.subsystems;
+ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+ import frc.robot.Constants.DriveConstants;
+ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import edu.wpi.first.wpilibj2.command.SubsystemBase;
+ 
+ import java.util.Date;
+@@ -57,11 +57,11 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
+    * @param fwd the commanded forward movement
+    * @param rot the commanded rotation
+    */
+-  public CommandBase driveCommand(DoubleSupplier speed, DoubleSupplier rotation) {
++  public Command driveCommand(DoubleSupplier speed, DoubleSupplier rotation) {
+     return driveCommand(speed.getAsDouble(), rotation.getAsDouble());
+   }
+ 
+-  public CommandBase driveCommand(Double speed, Double rotation) {
++  public Command driveCommand(Double speed, Double rotation) {
+     return run(() -> { this.drive(speed, rotation); }).withName("diffDrive");
+   }
+ 
+@@ -78,7 +78,7 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
+    * @param timeInSec The time to drive forward in seconds
+    * @param speed The fraction of max speed at which to drive
+    */
+-  public CommandBase driveTimeCommand(long timeInSec, double speed, double rotation) {
++  public Command driveTimeCommand(long timeInSec, double speed, double rotation) {
+     return driveCommand(speed, rotation).withTimeout(timeInSec);
+   }
+ }
+\ No newline at end of file
+diff --git a/src/main/java/frc/robot/subsystems/IntakeSubSystem.java b/src/main/java/frc/robot/subsystems/IntakeSubSystem.java
+index d7eb2bd..9630afc 100644
+--- a/src/main/java/frc/robot/subsystems/IntakeSubSystem.java
++++ b/src/main/java/frc/robot/subsystems/IntakeSubSystem.java
+@@ -1,10 +1,10 @@
+ package frc.robot.subsystems;
+ 
+ import com.revrobotics.CANSparkMax;
+-import com.revrobotics.CANSparkMax.IdleMode;
++//import com.revrobotics.CANSparkMax.IdleMode;
+ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+ 
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import edu.wpi.first.wpilibj2.command.SubsystemBase;
+ import frc.robot.Constants;
+ 
+@@ -19,11 +19,11 @@ public class IntakeSubSystem extends SubsystemBase {
+ 
+     public IntakeSubSystem() {
+         intake = new CANSparkMax(Constants.IntakeConstants.kMotorPort, MotorType.kBrushed);
+-        intake.setIdleMode(IdleMode.kCoast);
++        //intake.setIdleMode(IdleMode.kCoast);
+     }
+ 
+      /** Returns a command that grabs the item */
+-  public CommandBase intakeCommand(ItemType itemType) {
++  public Command intakeCommand(ItemType itemType) {
+     return run(() -> {
+       doIntake(itemType);
+     }).withName("Intake");
+@@ -38,7 +38,7 @@ public class IntakeSubSystem extends SubsystemBase {
+         // motor can receive
+   }
+ 
+-  public CommandBase holdCommand() {
++  public Command holdCommand() {
+     return run(() -> {
+         System.out.println(currItemType + " Holding in progress");
+         double speed = currItemType==ItemType.Cube ? 0.07 : -0.07;
+@@ -47,7 +47,7 @@ public class IntakeSubSystem extends SubsystemBase {
+     }).withName("Hold");
+   }
+ 
+-  public CommandBase releaseCommand() {
++  public Command releaseCommand() {
+     return run(() -> {
+         System.out.println(currItemType + " Releasing...");
+         double speed = currItemType==ItemType.Cube ? -1.0 : 1.0;
+@@ -56,7 +56,7 @@ public class IntakeSubSystem extends SubsystemBase {
+     }).withName("Release");
+   }
+ 
+-  public CommandBase stopCommand() {
++  public Command stopCommand() {
+     return runOnce(() -> {
+         System.out.println("Stopping...");
+         currItemType = null;
+diff --git a/src/main/java/frc/robot/subsystems/LiftSubsystem.java b/src/main/java/frc/robot/subsystems/LiftSubsystem.java
+index 7e1abc9..4057db6 100644
+--- a/src/main/java/frc/robot/subsystems/LiftSubsystem.java
++++ b/src/main/java/frc/robot/subsystems/LiftSubsystem.java
+@@ -4,12 +4,12 @@ import java.util.function.DoubleSupplier;
+ 
+ import com.revrobotics.CANSparkMax;
+ import com.revrobotics.RelativeEncoder;
+-import com.revrobotics.CANSparkMax.IdleMode;
++//import com.revrobotics.CANSparkMax.IdleMode;
+ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import edu.wpi.first.wpilibj2.command.SubsystemBase;
+ import frc.robot.Constants;
+ import frc.robot.Constants.LiftConstants;
+@@ -28,8 +28,8 @@ public class LiftSubsystem extends SubsystemBase{
+     private final DifferentialDrive lift = new DifferentialDrive(a_leftMotors, a_rightMotors);
+ 
+     public LiftSubsystem() {
+-        liftMotorRt.setIdleMode(IdleMode.kBrake);
+-        liftMotorLt.setIdleMode(IdleMode.kBrake);
++       // liftMotorRt.setIdleMode(IdleMode.kBrake);
++       // liftMotorLt.setIdleMode(IdleMode.kBrake);
+         liftMotorRt.setInverted(false);
+         liftMotorLt.setInverted(true);
+         m_encoder = liftMotorRt.getEncoder();       
+@@ -57,28 +57,28 @@ public class LiftSubsystem extends SubsystemBase{
+ 
+     // Returns true if target reached
+    
+-    public CommandBase raiseArmCommand(DoubleSupplier speed) {
++    public Command raiseArmCommand(DoubleSupplier speed) {
+         return run(() -> {
+             lift.arcadeDrive(speed.getAsDouble(), 0);
+             System.out.println("Arm is lifting.... with speed: " + speed.getAsDouble());
+         }); 
+     }
+ 
+-    public CommandBase lowerArmCommand(DoubleSupplier speed) {
++    public Command lowerArmCommand(DoubleSupplier speed) {
+         return run(() -> {
+             lift.arcadeDrive(speed.getAsDouble(), 0);
+             System.out.println("Arm is lowering.... with speed: " + speed.getAsDouble());
+         });
+     }
+ 
+-    public CommandBase arcadeDriveCommand(double speed) {
++    public Command arcadeDriveCommand(double speed) {
+         return run(() -> {
+             lift.arcadeDrive(speed, 0);
+             stopped = true;
+         }).withName("liftStopped");
+     }
+ 
+-    public CommandBase liftCommand(DoubleSupplier raise) {
++    public Command liftCommand(DoubleSupplier raise) {
+         return run(() -> {
+           double speed = raise.getAsDouble();
+           if (speed>=0.05 || speed<=-0.05) {
+diff --git a/src/main/java/frc/robot/subsystems/MAXSwerveModule.java b/src/main/java/frc/robot/subsystems/MAXSwerveModule.java
+index c54cbac..e1c0510 100644
+--- a/src/main/java/frc/robot/subsystems/MAXSwerveModule.java
++++ b/src/main/java/frc/robot/subsystems/MAXSwerveModule.java
+@@ -95,8 +95,8 @@ public class MAXSwerveModule {
+     m_turningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput,
+         ModuleConstants.kTurningMaxOutput);
+ 
+-    m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
+-    m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
++   // m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
++   // m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
+     m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
+     m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
+ 
+diff --git a/src/main/java/frc/robot/subsystems/SwerveDriveSubsystem.java b/src/main/java/frc/robot/subsystems/SwerveDriveSubsystem.java
+index 7853f2c..405bdfb 100644
+--- a/src/main/java/frc/robot/subsystems/SwerveDriveSubsystem.java
++++ b/src/main/java/frc/robot/subsystems/SwerveDriveSubsystem.java
+@@ -13,7 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
+ import edu.wpi.first.util.WPIUtilJNI;
+ import frc.robot.Constants.DriveConstants;
+ import frc.robot.utils.SwerveUtils;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import edu.wpi.first.wpilibj2.command.SubsystemBase;
+ 
+ public class SwerveDriveSubsystem extends SubsystemBase {
+@@ -120,14 +120,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
+         pose);
+   }
+ 
+-  public CommandBase driveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier rot, boolean fieldRelative, boolean rateLimit) {
++  public Command driveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier rot, boolean fieldRelative, boolean rateLimit) {
+     return run(() -> {
+       this.drive(xSpeed.getAsDouble(), ySpeed.getAsDouble(), rot.getAsDouble(), fieldRelative, rateLimit);
+     }
+     ).withName("swerveDrive");
+   }
+   
+-  public CommandBase driveCommand(Double xSpeed, Double ySpeed, Double rot, boolean fieldRelative, boolean rateLimit) {
++  public Command driveCommand(Double xSpeed, Double ySpeed, Double rot, boolean fieldRelative, boolean rateLimit) {
+   return run(() -> {
+       this.drive(xSpeed, ySpeed, rot, fieldRelative, rateLimit);
+       periodic();
+@@ -270,7 +270,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
+     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+   }
+ 
+-  public CommandBase driveTimeCommand(long timeInSec, double xspeed, double yspeed, double rotation, boolean fieldRelative, boolean rateLimit) {
++  public Command driveTimeCommand(long timeInSec, double xspeed, double yspeed, double rotation, boolean fieldRelative, boolean rateLimit) {
+     return driveCommand(xspeed, yspeed, rotation, fieldRelative, rateLimit).withTimeout(timeInSec);
+   }
+ 
+diff --git a/src/main/java/frc/robot/utils/DiffDriveForDurationCommand.java b/src/main/java/frc/robot/utils/DiffDriveForDurationCommand.java
+index e14d0ed..1a2c7ae 100644
+--- a/src/main/java/frc/robot/utils/DiffDriveForDurationCommand.java
++++ b/src/main/java/frc/robot/utils/DiffDriveForDurationCommand.java
+@@ -2,14 +2,14 @@ package frc.robot.utils;
+ 
+ import edu.wpi.first.util.sendable.SendableRegistry;
+ import edu.wpi.first.wpilibj.Timer;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import frc.robot.subsystems.DifferentialDriveSubsystem;
+ 
+ /**
+  * A command that runs the swerve drive for a specified amount of time
+  *
+  */
+-public class DiffDriveForDurationCommand extends CommandBase {
++public class DiffDriveForDurationCommand extends Command {
+   protected Timer m_timer = new Timer();
+   private final double m_duration;
+   private double speed, rotation;
+diff --git a/src/main/java/frc/robot/utils/SwerveDriveForDurationCommand.java b/src/main/java/frc/robot/utils/SwerveDriveForDurationCommand.java
+index 6fe39d4..7afacb0 100644
+--- a/src/main/java/frc/robot/utils/SwerveDriveForDurationCommand.java
++++ b/src/main/java/frc/robot/utils/SwerveDriveForDurationCommand.java
+@@ -2,14 +2,14 @@ package frc.robot.utils;
+ 
+ import edu.wpi.first.util.sendable.SendableRegistry;
+ import edu.wpi.first.wpilibj.Timer;
+-import edu.wpi.first.wpilibj2.command.CommandBase;
++import edu.wpi.first.wpilibj2.command.Command;
+ import frc.robot.subsystems.SwerveDriveSubsystem;
+ 
+ /**
+  * A command that runs the swerve drive for a specified amount of time
+  *
+  */
+-public class SwerveDriveForDurationCommand extends CommandBase {
++public class SwerveDriveForDurationCommand extends Command {
+   protected Timer m_timer = new Timer();
+   private final double m_duration;
+   private double xspeed, yspeed, rotation;
+diff --git a/vendordeps/NavX.json b/vendordeps/NavX.json
+index 29ec93a..e978a5f 100644
+--- a/vendordeps/NavX.json
++++ b/vendordeps/NavX.json
+@@ -1,17 +1,18 @@
+ {
+     "fileName": "NavX.json",
+-    "name": "KauaiLabs_navX_FRC",
+-    "version": "2023.0.3",
++    "name": "NavX",
++    "version": "2024.1.0",
+     "uuid": "cb311d09-36e9-4143-a032-55bb2b94443b",
++    "frcYear": "2024",
+     "mavenUrls": [
+-        "https://dev.studica.com/maven/release/2023/"
++        "https://dev.studica.com/maven/release/2024/"
+     ],
+-    "jsonUrl": "https://dev.studica.com/releases/2023/NavX.json",
++    "jsonUrl": "https://dev.studica.com/releases/2024/NavX.json",
+     "javaDependencies": [
+         {
+             "groupId": "com.kauailabs.navx.frc",
+             "artifactId": "navx-frc-java",
+-            "version": "2023.0.3"
++            "version": "2024.1.0"
+         }
+     ],
+     "jniDependencies": [],
+@@ -19,7 +20,7 @@
+         {
+             "groupId": "com.kauailabs.navx.frc",
+             "artifactId": "navx-frc-cpp",
+-            "version": "2023.0.3",
++            "version": "2024.1.0",
+             "headerClassifier": "headers",
+             "sourcesClassifier": "sources",
+             "sharedLibrary": false,
+@@ -30,7 +31,7 @@
+                 "linuxraspbian",
+                 "linuxarm32",
+                 "linuxarm64",
+-                "linux86-64",
++                "linuxx86-64",
+                 "osxuniversal",
+                 "windowsx86-64"
+             ]
+diff --git a/vendordeps/REVLib.json b/vendordeps/REVLib.json
+index c3d9cb9..0f3520e 100644
+--- a/vendordeps/REVLib.json
++++ b/vendordeps/REVLib.json
+@@ -1,24 +1,25 @@
+ {
+     "fileName": "REVLib.json",
+     "name": "REVLib",
+-    "version": "2023.1.3",
++    "version": "2024.2.0",
++    "frcYear": "2024",
+     "uuid": "3f48eb8c-50fe-43a6-9cb7-44c86353c4cb",
+     "mavenUrls": [
+         "https://maven.revrobotics.com/"
+     ],
+-    "jsonUrl": "https://software-metadata.revrobotics.com/REVLib.json",
++    "jsonUrl": "https://software-metadata.revrobotics.com/REVLib-2024.json",
+     "javaDependencies": [
+         {
+             "groupId": "com.revrobotics.frc",
+             "artifactId": "REVLib-java",
+-            "version": "2023.1.3"
++            "version": "2024.2.0"
+         }
+     ],
+     "jniDependencies": [
+         {
+             "groupId": "com.revrobotics.frc",
+             "artifactId": "REVLib-driver",
+-            "version": "2023.1.3",
++            "version": "2024.2.0",
+             "skipInvalidPlatforms": true,
+             "isJar": false,
+             "validPlatforms": [
+@@ -36,7 +37,7 @@
+         {
+             "groupId": "com.revrobotics.frc",
+             "artifactId": "REVLib-cpp",
+-            "version": "2023.1.3",
++            "version": "2024.2.0",
+             "libName": "REVLib",
+             "headerClassifier": "headers",
+             "sharedLibrary": false,
+@@ -54,7 +55,7 @@
+         {
+             "groupId": "com.revrobotics.frc",
+             "artifactId": "REVLib-driver",
+-            "version": "2023.1.3",
++            "version": "2024.2.0",
+             "libName": "REVLibDriver",
+             "headerClassifier": "headers",
+             "sharedLibrary": false,
+diff --git a/vendordeps/WPILibNewCommands.json b/vendordeps/WPILibNewCommands.json
+index bd535bf..67bf389 100644
+--- a/vendordeps/WPILibNewCommands.json
++++ b/vendordeps/WPILibNewCommands.json
+@@ -3,6 +3,7 @@
+   "name": "WPILib-New-Commands",
+   "version": "1.0.0",
+   "uuid": "111e20f7-815e-48f8-9dd6-e675ce75b266",
++  "frcYear": "2024",
+   "mavenUrls": [],
+   "jsonUrl": "",
+   "javaDependencies": [

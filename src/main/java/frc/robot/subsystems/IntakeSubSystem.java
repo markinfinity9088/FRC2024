@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -23,7 +23,7 @@ public class IntakeSubSystem extends SubsystemBase {
     }
 
      /** Returns a command that grabs the item */
-  public CommandBase intakeCommand(ItemType itemType) {
+  public Command intakeCommand(ItemType itemType) {
     return run(() -> {
       doIntake(itemType);
     }).withName("Intake");
@@ -38,7 +38,7 @@ public class IntakeSubSystem extends SubsystemBase {
         // motor can receive
   }
 
-  public CommandBase holdCommand() {
+  public Command holdCommand() {
     return run(() -> {
         System.out.println(currItemType + " Holding in progress");
         double speed = currItemType==ItemType.Cube ? 0.07 : -0.07;
@@ -47,7 +47,7 @@ public class IntakeSubSystem extends SubsystemBase {
     }).withName("Hold");
   }
 
-  public CommandBase releaseCommand() {
+  public Command releaseCommand() {
     return run(() -> {
         System.out.println(currItemType + " Releasing...");
         double speed = currItemType==ItemType.Cube ? -1.0 : 1.0;
@@ -56,7 +56,7 @@ public class IntakeSubSystem extends SubsystemBase {
     }).withName("Release");
   }
 
-  public CommandBase stopCommand() {
+  public Command stopCommand() {
     return runOnce(() -> {
         System.out.println("Stopping...");
         currItemType = null;
