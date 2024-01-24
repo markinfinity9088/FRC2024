@@ -1,43 +1,48 @@
 package frc.robot.controller;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.XboxController;
 
-public class XboxController implements TeleOpController{
-    CommandXboxController xboxController;
 
-    public XboxController(int port) {
-        xboxController = new CommandXboxController(port);
+public class MyXboxController implements TeleOpController{
+    XboxController xboxController;
+
+    public MyXboxController(int port) {
+        xboxController = new XboxController(port);
     }
 
     @Override
     public Trigger moveTrigger() {
-        return xboxController.leftTrigger();
+        return xboxController.leftTrigger(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
     @Override
     public Trigger releaseTrigger() {
-        return xboxController.a();
+        return xboxController.a(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
     @Override
     public Trigger coneIntakeTrigger() {
-        return xboxController.b();
+        return xboxController.b(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
     @Override
     public Trigger cubeIntakeTrigger() {
-        return xboxController.x();
+        return xboxController.x(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
     @Override
     public double getXSpeed() {
+        
         return xboxController.getLeftX();
     }
 
     @Override
     public double getYSpeed() {
-        return xboxController.getLeftX();
+        return xboxController.getLeftY();
     }
 
     @Override
@@ -67,7 +72,8 @@ public class XboxController implements TeleOpController{
     @Override
     public double getRotation() {
         // TODO Auto-generated method stub
-        return 0;
+        return xboxController.getRightX();
+        ///return 0;
     }
 
 }

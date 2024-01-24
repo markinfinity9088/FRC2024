@@ -50,8 +50,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
-  private double maximum_drive_speed = DriveConstants.kMaxSpeedMetersPerSecond;
-  private double maximum_rotation_speed = DriveConstants.kMaxAngularSpeed;
+  private double maximum_drive_speed = DriveConstants.kMaxDriveSubsystemSpeed; //0-1
+  private double maximum_rotation_speed = DriveConstants.kMaxDriveSubsystemTurnSpeed;
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -149,7 +149,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     double xSpeedCommanded;
     double ySpeedCommanded;
     if (xSpeed!=0 || ySpeed!=0 || rot!=0)
-      System.out.println("SDrive..xspeed:"+xSpeed+", yspeed:"+ySpeed+", rot:"+rot);
+      System.out.println("SDrive..xspeed:"+xSpeed+", yspeed:"+ySpeed+", rot:"+rot+ "gyro rot2d="+Rotation2d.fromDegrees(m_gyro.getAngle()));
+      
     if (rateLimit) {
       // Convert XY to polar for rate limiting
       double inputTranslationDir = Math.atan2(ySpeed, xSpeed);
@@ -199,16 +200,22 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     // Convert the commanded speeds into the correct units for the drivetrain
-    double xSpeedDelivered = xSpeedCommanded * maximum_drive_speed;
-    double ySpeedDelivered = ySpeedCommanded * maximum_drive_speed;
-    double rotDelivered = m_currentRotation * maximum_rotation_speed;
+    double xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
+    double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
+    double rotDelivered = m_currentRotation *  DriveConstants.kMaxAngularSpeed * maximum_rotation_speed;
+
+    //KP revisit this later, using this to correct swerve field relative work where it is going in reverse after we turn robot
+    int inverseangle=1;
+    if (fieldRelative && DriveConstants.kInverseGyroAngle) {
+      inverseangle = -1;
+    }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(m_gyro.getAngle()))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(inverseangle*m_gyro.getAngle()))
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        swerveModuleStates, maximum_drive_speed);
+        swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed);
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);

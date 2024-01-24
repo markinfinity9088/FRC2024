@@ -8,9 +8,9 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.controller.AutonController;
+import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
 import frc.robot.controller.TeleOpController;
-import frc.robot.controller.XboxController;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -59,7 +60,11 @@ public class CommandBot {
   private LiftSubsystem m_lift;
   TeleOpController teleOpController = OIConstants.controllerType.equals("PS4")
       ? new PS4Controller(OIConstants.kDriverControllerPort)
-      : new XboxController(OIConstants.kDriverControllerPort);
+      : new MyXboxController(OIConstants.kDriverControllerPort);
+
+   public void init() {
+    SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
+  }
 
   /**
    ****** Use this method to define bindings between conditions and commands. These are
@@ -83,11 +88,13 @@ public class CommandBot {
     } else {
       s_drive = SwerveDriveSubsystem.getInstance();
       drive = s_drive;
-      // Control the swerve drive with split-stick controls
+      // Control the swerve drive with split-stick controls (Field coordinates are y is horizontal and x is +ve towards alliance from center)
+      //hence you see x and y reversed when passing to drive
       s_drive.setDefaultCommand(s_drive.driveCommand(
-          () -> -teleOpController.getXSpeed(),
-          () -> -teleOpController.getYSpeed(),
-          () -> -teleOpController.getRotation(), true, true));
+          () -> -MathUtil.applyDeadband(teleOpController.getYSpeed(), OIConstants.kDriveDeadband),
+          () -> -MathUtil.applyDeadband(teleOpController.getXSpeed(), OIConstants.kDriveDeadband),
+          () -> -MathUtil.applyDeadband(teleOpController.getRotation(), OIConstants.kDriveDeadband), 
+          true, true));
       /*
        * teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(() ->
        * -teleOpController.getXSpeed(),
@@ -100,7 +107,7 @@ public class CommandBot {
     if(RuntimeConfig.is_simulator_mode == false) { 
       
       if (Constants.IntakeConstants.kMotorPort >= 0) {
-        m_intake = new IntakeSubSystem();
+        /*m_intake = new IntakeSubSystem();
         // Deploy the intake with the triangle button for the cone
         teleOpController.coneIntakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake(ItemType.Cone);}));
         teleOpController.coneIntakeTrigger().onFalse(m_intake.holdCommand());
@@ -112,18 +119,18 @@ public class CommandBot {
         teleOpController.cubeIntakeTrigger().onFalse(m_intake.holdCommand());
         // Release the intake with the circle button for the cube
         teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
-        teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
+        teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());*/
       }
-  }
+    }
     
 
     if (Constants.LiftConstants.LIFT_RT >= 0) {
-      m_lift = new LiftSubsystem();
+      /*m_lift = new LiftSubsystem();
       m_lift.setDefaultCommand(m_lift.arcadeDriveCommand(0));
       // Lifting the arm
       teleOpController.raiseArmTrigger().whileTrue(m_lift.raiseArmCommand(() -> teleOpController.getRaiseSpeed()));
       // Lowering the arm
-      teleOpController.lowerArmTrigger().whileTrue(m_lift.lowerArmCommand(() -> -teleOpController.getLowerSpeed()));
+      teleOpController.lowerArmTrigger().whileTrue(m_lift.lowerArmCommand(() -> -teleOpController.getLowerSpeed()));*/
     }
   }
 
@@ -142,6 +149,9 @@ public class CommandBot {
     drive.periodic();
     GyroSubsystem.getInstance().periodic();
   }
+
+ 
+
 
 
 

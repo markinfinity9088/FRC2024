@@ -26,6 +26,10 @@ public final class Constants {
     public static final int kRightMotor1Port = 19;
     public static final int kRightMotor2Port = 20;
 
+    //KP revisit this later, using this to correct swerve field relative work where it is going in reverse after we turn robot
+    public static final boolean kInverseGyroAngle = true;
+
+
     public static final String driveType = "SWERVE";  // DIFFER or SWERVE
 
     // Driving Parameters - Note that these are not the maximum capable speeds of
@@ -66,6 +70,10 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 5;
 
     public static final boolean kGyroReversed = false;
+
+    public static final double kMaxDriveSubsystemSpeed = 1; //0-1
+    public static final double kMaxDriveSubsystemTurnSpeed = 1; //0-1
+
   }
 
   public static final class NeoMotorConstants {
@@ -150,8 +158,8 @@ public final class Constants {
   }
 
   public static final class OIConstants {
-    public static final String controllerType = "PS4"; // PS4 or XBox
-    public static final int kDriverControllerPort = 0;
+    public static final String controllerType = "XBox";//"PS4"; // PS4 or XBox
+    public static final int kDriverControllerPort = 2;//0;
     public static final double kDriveDeadband = 0.05;
   }
 }
