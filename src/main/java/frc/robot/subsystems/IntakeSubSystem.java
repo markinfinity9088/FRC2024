@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubSystem extends SubsystemBase {
+    static IntakeSubSystem self;
     public enum ItemType {Cone, Cube};
     static final int INTAKE_CURRENT_LIMIT_A = 30; // How many amps the intake can use while picking up
     static final int INTAKE_HOLD_CURRENT_LIMIT_A = 5; // How many amps the intake can use while holding
@@ -17,9 +18,14 @@ public class IntakeSubSystem extends SubsystemBase {
     private final CANSparkMax intake;
     private ItemType currItemType;
 
-    public IntakeSubSystem() {
-        intake = new CANSparkMax(Constants.IntakeConstants.kMotorPort, MotorType.kBrushed);
+    private IntakeSubSystem() {
+        intake = new CANSparkMax(Constants.IntakeConstants.kMotorPort, MotorType.kBrushless);
         intake.setIdleMode(IdleMode.kCoast);
+    }
+
+    public static IntakeSubSystem getInstance() {
+      if (self==null) self =new IntakeSubSystem();
+      return self;
     }
 
      /** Returns a command that grabs the item */

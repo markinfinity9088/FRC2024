@@ -158,7 +158,7 @@ public final class Constants {
   }
 
   public static final class OIConstants {
-    public static final String controllerType = "XBox";//"PS4"; // PS4 or XBox
+    public static final String controllerType = "PS4"; // PS4 or XBox
     public static final int kDriverControllerPort = 2;//0;
     public static final double kDriveDeadband = 0.05;
   }
