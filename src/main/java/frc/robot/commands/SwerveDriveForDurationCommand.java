@@ -1,30 +1,31 @@
-package frc.robot.utils;
+package frc.robot.commands;
 
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DifferentialDriveSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 /**
  * A command that runs the swerve drive for a specified amount of time
  *
  */
-public class DiffDriveForDurationCommand extends Command {
+public class SwerveDriveForDurationCommand extends Command {
   protected Timer m_timer = new Timer();
   private final double m_duration;
-  private double speed, rotation;
+  private double xspeed, yspeed, rotation;
 
   /**
    * Creates a new SwerveDriveCommand. This command run the swerve drive, and end after the specified duration.
    *
    * @param seconds the time to run, in seconds
    */
-  public DiffDriveForDurationCommand(int seconds, double speed, double rotation) {
+  public SwerveDriveForDurationCommand(int seconds, double xspeed, double yspeed, double rotation) {
     m_duration = seconds;
     SendableRegistry.setName(this, getName() + ": " + seconds + " seconds");
-    this.speed = speed;
+    this.xspeed = xspeed;
+    this.yspeed = yspeed;
     this.rotation = rotation;
-    addRequirements(DifferentialDriveSubsystem.getInstance());
+    addRequirements(SwerveDriveSubsystem.getInstance());
   }
 
   @Override
@@ -35,7 +36,7 @@ public class DiffDriveForDurationCommand extends Command {
   @Override
   public void execute() {
     System.out.println("Executing "+getName());
-    DifferentialDriveSubsystem.getInstance().drive(speed, rotation);
+    SwerveDriveSubsystem.getInstance().drive(xspeed, yspeed, rotation,true, true);
   }
 
   @Override
