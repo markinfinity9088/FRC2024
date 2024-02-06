@@ -20,6 +20,7 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
   public static final class DriveConstants { 
     public static final int kLeftMotor1Port = 17;
     public static final int kLeftMotor2Port = 18;
@@ -132,14 +133,23 @@ public final class Constants {
   }
   
   public static final class IntakeConstants {
-    public static final int kMotorPort = 9;
+    public static final int intakeCanId = 12;
+    public static final int elbowCanId = 13;
+    public static final int CURRENT_LIMIT_A = 30;
+    public static final double MAX_SPEED = 1.0;
   }
 
-  public static final class LiftConstants {
-    public static final String LIFT_RANGE_LABEL = "Lift Range";
-    public static final String LIFT_LOW_LIMIT = "Low Lift Limit";
-    public static final int LIFT_RT = 10;
-    public static final int LIFT_LT = 11;
+  public static final class ElevatorConstants {
+    public static final int elevatorCanId = 14;
+    public static final  int CURRENT_LIMIT_A = 30;
+    public static final  double MAX_SPEED = 1.0;
+  }
+
+  public static final class PulleyConstants {
+    public static final String PULLEY_RANGE_LABEL = "Pulley Range";
+    public static final String PULLEY_LOW_LIMIT = "Low Pulley Limit";
+    public static final int Pulley_RtCanId = 10;
+    public static final int Pulley_LtCanId = 11;
   }
 
   public static final class AutoConstants {

@@ -1,6 +1,5 @@
 package frc.robot.controller;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -20,17 +19,17 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public Trigger releaseTrigger() {
+    public Trigger releaseToAMPTrigger() {
         return xboxController.a(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
     @Override
-    public Trigger coneIntakeTrigger() {
+    public Trigger intakeTrigger() {
         return xboxController.b(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
     @Override
-    public Trigger cubeIntakeTrigger() {
+    public Trigger releaseToShooterTrigger() {
         return xboxController.x(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
     }
 
@@ -74,6 +73,12 @@ public class MyXboxController implements TeleOpController{
         // TODO Auto-generated method stub
         return xboxController.getRightX();
         ///return 0;
+    }
+
+    @Override
+    public double getElbowSpeed() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }

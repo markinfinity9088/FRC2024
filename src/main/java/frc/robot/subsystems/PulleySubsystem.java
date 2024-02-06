@@ -11,43 +11,49 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.LiftConstants;
 
-public class LiftSubsystem extends SubsystemBase{
-    private final CANSparkMax liftMotorRt = new CANSparkMax(Constants.LiftConstants.LIFT_RT, MotorType.kBrushless);
-    private final CANSparkMax liftMotorLt= new CANSparkMax(Constants.LiftConstants.LIFT_LT, MotorType.kBrushless);
+public class PulleySubsystem extends SubsystemBase{
+    private CANSparkMax pulleyMotorRt;
+    private CANSparkMax pulleyMotorLt;
     private boolean stopped = true;
     private RelativeEncoder m_encoder;
     private double currSpeed = 0;
     private double stoppedPos;
-    private double liftRange = 0; // Difference between high and low encode values
+    private double pulleyRange = 0; // Difference between high and low encode values
     private double lowLimit = 0;
-    private final DifferentialDrive lift = new DifferentialDrive(liftMotorLt, liftMotorRt);
-    static private LiftSubsystem self;
+    private DifferentialDrive pulley;
+    static private PulleySubsystem self;
 
-    private LiftSubsystem() {
-        liftMotorRt.setIdleMode(IdleMode.kBrake);
-        liftMotorLt.setIdleMode(IdleMode.kBrake);
-        liftMotorRt.setInverted(false);
-        liftMotorLt.setInverted(true);
-        m_encoder = liftMotorRt.getEncoder();       
+    private PulleySubsystem() {
+        pulleyMotorRt = new CANSparkMax(Constants.PulleyConstants.Pulley_RtCanId, MotorType.kBrushless);
+        pulleyMotorLt= new CANSparkMax(Constants.PulleyConstants.Pulley_LtCanId, MotorType.kBrushless);
+
+        pulleyMotorRt.setIdleMode(IdleMode.kBrake);
+        pulleyMotorLt.setIdleMode(IdleMode.kBrake);
+        pulleyMotorRt.setInverted(false);
+        pulleyMotorLt.setInverted(true);
+
+        pulley = new DifferentialDrive(pulleyMotorLt, pulleyMotorRt);
+
+        m_encoder = pulleyMotorRt.getEncoder();       
 /*             
         m_pidController.setP(0.6);
         m_pidController.setI(0.0);
         m_pidController.setD(0.0);
 */
         stoppedPos = m_encoder.getPosition();
-        SmartDashboard.putNumber(LiftConstants.LIFT_RANGE_LABEL, liftRange);
+        SmartDashboard.putNumber(Constants.PulleyConstants.PULLEY_RANGE_LABEL, pulleyRange);
     }
 
-    public static LiftSubsystem getInstance() {
-        if (self==null) self =new LiftSubsystem();
+    public static PulleySubsystem getInstance() {
+        if (self==null && Constants.PulleyConstants.Pulley_LtCanId>=0) 
+            self =new PulleySubsystem();
         return self;
       }
 
     public void init() {
-        lowLimit = SmartDashboard.getNumber(LiftConstants.LIFT_LOW_LIMIT, lowLimit);
-        liftRange = SmartDashboard.getNumber(LiftConstants.LIFT_RANGE_LABEL, liftRange);
+        lowLimit = SmartDashboard.getNumber(Constants.PulleyConstants.PULLEY_LOW_LIMIT, lowLimit);
+        pulleyRange = SmartDashboard.getNumber(Constants.PulleyConstants.PULLEY_RANGE_LABEL, pulleyRange);
     }
 
     public void setPosition(double position) {
@@ -62,37 +68,37 @@ public class LiftSubsystem extends SubsystemBase{
    
     public Command raiseArmCommand(DoubleSupplier speed) {
         return run(() -> {
-            lift.arcadeDrive(speed.getAsDouble(), 0);
-            System.out.println("Arm is lifting.... with speed: " + speed.getAsDouble());
+            pulley.arcadeDrive(speed.getAsDouble(), 0);
+            System.out.println("Arm is pulleying.... with speed: " + speed.getAsDouble());
         }); 
     }
 
     public Command lowerArmCommand(DoubleSupplier speed) {
         return run(() -> {
-            lift.arcadeDrive(speed.getAsDouble(), 0);
+            pulley.arcadeDrive(speed.getAsDouble(), 0);
             System.out.println("Arm is lowering.... with speed: " + speed.getAsDouble());
         });
     }
 
     public Command arcadeDriveCommand(double speed) {
         return run(() -> {
-            lift.arcadeDrive(speed, 0);
+            pulley.arcadeDrive(speed, 0);
             stopped = true;
-        }).withName("liftStopped");
+        }).withName("pulleyStopped");
     }
 
-    public Command liftCommand(DoubleSupplier raise) {
+    public Command pulleyCommand(DoubleSupplier raise) {
         return run(() -> {
           double speed = raise.getAsDouble();
           if (speed>=0.05 || speed<=-0.05) {
-            System.out.println("liftCommand:"+speed);
+            System.out.println("pulleyCommand:"+speed);
             stopped = false;
           } else  {
             speed = 0;
             stopped = true;
           }
-          lift.arcadeDrive(speed, 0);
-        }).withName("liftDrive");
+          pulley.arcadeDrive(speed, 0);
+        }).withName("pulleyDrive");
       }
 
     public boolean isStopped() {

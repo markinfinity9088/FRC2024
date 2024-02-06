@@ -4,70 +4,46 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubSystem extends SubsystemBase {
-    static IntakeSubSystem self;
-    public enum ItemType {Cone, Cube};
-    static final int INTAKE_CURRENT_LIMIT_A = 30; // How many amps the intake can use while picking up
-    static final int INTAKE_HOLD_CURRENT_LIMIT_A = 5; // How many amps the intake can use while holding
-    static final double INTAKE_HOLD_POWER = 0.07; // Percent output for holding
-    static final int RELEASE_POWER_LIMIT = 0; // Speed for releasing
-    private final CANSparkMax intake;
-    private ItemType currItemType;
+  static final double intakeSpeed = 1.0;
+  static final double releaseToAMPSpeed = 0.9;
+  static final double releaseToShooterSpeed = -1.0;
+  static IntakeSubSystem self;
+  static final int INTAKE_CURRENT_LIMIT_A = 30; // How many amps the intake can use while picking up
+  private CANSparkMax intake = null;
 
-    private IntakeSubSystem() {
-        intake = new CANSparkMax(Constants.IntakeConstants.kMotorPort, MotorType.kBrushless);
-        intake.setIdleMode(IdleMode.kCoast);
-    }
-
-    public static IntakeSubSystem getInstance() {
-      if (self==null) self =new IntakeSubSystem();
-      return self;
-    }
-
-     /** Returns a command that grabs the item */
-  public Command intakeCommand(ItemType itemType) {
-    return run(() -> {
-      doIntake(itemType);
-    }).withName("Intake");
+  private IntakeSubSystem() {
+    intake = new CANSparkMax(Constants.IntakeConstants.intakeCanId, MotorType.kBrushless);
+    intake.setIdleMode(IdleMode.kBrake);
+    intake.setSmartCurrentLimit(INTAKE_CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
   }
 
-  public void doIntake(ItemType itemType) {
-        System.out.println("Intake " + itemType + " in progress");
-        double speed = itemType==ItemType.Cube ? 1.0 : -1.0;
-        currItemType = itemType;
-        intake.set(speed); // makes the intake motor rotate at given speed
-        intake.setSmartCurrentLimit(INTAKE_CURRENT_LIMIT_A); // gives a limit for how much power, the 
-        // motor can receive
+  public static IntakeSubSystem getInstance() {
+    if (self == null && Constants.IntakeConstants.intakeCanId >= 0)
+      self = new IntakeSubSystem();
+    return self;
   }
 
-  public Command holdCommand() {
-    return run(() -> {
-        System.out.println(currItemType + " Holding in progress");
-        double speed = currItemType==ItemType.Cube ? 0.07 : -0.07;
-        intake.set(speed);
-        intake.setSmartCurrentLimit(INTAKE_HOLD_CURRENT_LIMIT_A);
-    }).withName("Hold");
+  public void doIntake() {
+    System.out.println("Intake in progress");
+    intake.set(intakeSpeed); // makes the intake motor rotate at given speed
   }
 
-  public Command releaseCommand() {
-    return run(() -> {
-        System.out.println(currItemType + " Releasing...");
-        double speed = currItemType==ItemType.Cube ? -1.0 : 1.0;
-        intake.set(speed);
-        intake.setSmartCurrentLimit(RELEASE_POWER_LIMIT);
-    }).withName("Release");
+  public void releaseToAMP() {
+    System.out.println("Releasing to AMP..");
+    intake.set(releaseToAMPSpeed);
   }
 
-  public Command stopCommand() {
-    return runOnce(() -> {
-        System.out.println("Stopping...");
-        currItemType = null;
-        int speed = 0;
-        intake.set(speed);
-    }).withName("Stop");
+  public void releaseToShooter() {
+    System.out.println("Releasing to Shooter..");
+    intake.set(releaseToShooterSpeed);
+  }
+
+  public void stop() {
+    System.out.println("Stopping...");
+    intake.set(0);
   }
 }

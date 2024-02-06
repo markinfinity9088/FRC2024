@@ -11,11 +11,11 @@ import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
 import frc.robot.controller.TeleOpController;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
+import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
-import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.IntakeSubSystem.ItemType;
+import frc.robot.subsystems.PulleySubsystem;
 
 import java.util.Date;
 import edu.wpi.first.math.MathUtil;
@@ -81,24 +81,27 @@ public class CommandBot {
        * () -> -teleOpController.getRotation(), true, true));
        */
     }   
-    if (Constants.IntakeConstants.kMotorPort >= 0) {
-      IntakeSubSystem m_intake = IntakeSubSystem.getInstance();
+    IntakeSubSystem m_intake = IntakeSubSystem.getInstance();
+    if (m_intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.coneIntakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake(ItemType.Cone);}));
-      teleOpController.coneIntakeTrigger().onFalse(m_intake.holdCommand());
+      teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake();}));
+      teleOpController.intakeTrigger().onFalse(Commands.run(() -> {m_intake.stop();}));
       // Release the intake with the cross button for the cube
-      teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
-      teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
+      teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {m_intake.releaseToAMP();}));
+      teleOpController.releaseToAMPTrigger().onFalse(Commands.run(() -> {m_intake.stop();}));
       // Deploy the intake with the square button for the cube
-      teleOpController.cubeIntakeTrigger().whileTrue(m_intake.intakeCommand(ItemType.Cube));
-      teleOpController.cubeIntakeTrigger().onFalse(m_intake.holdCommand());
-      // Release the intake with the circle button for the cube
-      teleOpController.releaseTrigger().whileTrue(m_intake.releaseCommand());
-      teleOpController.releaseTrigger().onFalse(m_intake.stopCommand());
+      teleOpController.releaseToShooterTrigger().whileTrue(Commands.run(() -> {m_intake.releaseToShooter();}));
+      teleOpController.releaseToShooterTrigger().onFalse(Commands.run(() -> {m_intake.stop();}));
     }
 
-    if (Constants.LiftConstants.LIFT_RT >= 0) {
-      LiftSubsystem m_lift = LiftSubsystem.getInstance();
+    ElbowSubsystem elbow = ElbowSubsystem.getInstance();
+    if (elbow != null)
+          elbow.setDefaultCommand(elbow.moveCommand(
+          () -> -MathUtil.applyDeadband(teleOpController.getElbowSpeed(), OIConstants.kDriveDeadband))); 
+
+
+    PulleySubsystem m_lift = PulleySubsystem.getInstance();
+    if (m_lift!=null) {
       m_lift.setDefaultCommand(m_lift.arcadeDriveCommand(0));
       // Lifting the arm
       teleOpController.raiseArmTrigger().whileTrue(m_lift.raiseArmCommand(() -> teleOpController.getRaiseSpeed()));
