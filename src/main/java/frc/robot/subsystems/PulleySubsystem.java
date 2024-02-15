@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class PulleySubsystem extends SubsystemBase{
+public class PulleySubsystem extends SubsystemBase implements PositionalableSubsystem {
     private CANSparkMax pulleyMotorRt;
     private CANSparkMax pulleyMotorLt;
     private boolean stopped = true;
@@ -109,5 +109,17 @@ public class PulleySubsystem extends SubsystemBase{
         return currSpeed;
     }
 
+    public void moveToPosition(double pos) {
+    }
+
+    public boolean isAtPosition(double pos) {
+        double delta = pulleyMotorRt.getEncoder().getPosition() - pos;
+        return Math.abs(delta)<0.5;
+    }
+    
+    public void stop() {
+        stopped = true;
+        pulley.arcadeDrive(0, 0);
+    }
     
 }

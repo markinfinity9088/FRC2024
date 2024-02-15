@@ -9,11 +9,12 @@ import java.util.Date;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ElbowSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.utils.RuntimeConfig;
 
 import org.littletonrobotics.junction.LoggedRobot;
+
+import com.revrobotics.REVPhysicsSim;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -106,15 +107,19 @@ public class Robot extends LoggedRobot {
   public void testPeriodic() {}
 
   @Override
-  public void simulationInit(){
+  public void simulationInit() {    
+    ElbowSubsystem.getInstance().initSimulation();
+
     RuntimeConfig.is_simulator_mode = true;
     // Configure default commands and condition bindings on robot startup
     m_robot.configureBindings();
   }
+
   @Override
   public void simulationPeriodic(){
+    REVPhysicsSim.getInstance().run();
     ElbowSubsystem.getInstance().updateSimulatedPosition();
-    ElevatorSubsystem.getInstance().updateSimulatedPosition();
+    //ElevatorSubsystem.getInstance().updateSimulatedPosition();
   }
 
 }

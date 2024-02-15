@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ElevatorSubsystem extends SubsystemBase {
+public class ElevatorSubsystem extends SubsystemBase implements PositionalableSubsystem {
   private final CANSparkMax elevator;
   private static ElevatorSubsystem self;
   private double currentSpeed = 0;
