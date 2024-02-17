@@ -9,14 +9,13 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class PulleySubsystem extends SubsystemBase{
+public class PulleySubsystem extends PositionalableSubsystem {
     private CANSparkMax pulleyMotorRt;
     private CANSparkMax pulleyMotorLt;
     private boolean stopped = true;
-    private RelativeEncoder m_encoder;
+    private RelativeEncoder rencoder;
     private double currSpeed = 0;
     private double stoppedPos;
     private double pulleyRange = 0; // Difference between high and low encode values
@@ -27,7 +26,7 @@ public class PulleySubsystem extends SubsystemBase{
     private PulleySubsystem() {
         pulleyMotorRt = new CANSparkMax(Constants.PulleyConstants.Pulley_RtCanId, MotorType.kBrushless);
         pulleyMotorLt= new CANSparkMax(Constants.PulleyConstants.Pulley_LtCanId, MotorType.kBrushless);
-
+        rencoder = pulleyMotorRt.getEncoder();
         pulleyMotorRt.setIdleMode(IdleMode.kBrake);
         pulleyMotorLt.setIdleMode(IdleMode.kBrake);
         pulleyMotorRt.setInverted(false);
@@ -35,14 +34,16 @@ public class PulleySubsystem extends SubsystemBase{
 
         pulley = new DifferentialDrive(pulleyMotorLt, pulleyMotorRt);
 
-        m_encoder = pulleyMotorRt.getEncoder();       
+        rencoder = pulleyMotorRt.getEncoder();       
 /*             
         m_pidController.setP(0.6);
         m_pidController.setI(0.0);
         m_pidController.setD(0.0);
 */
-        stoppedPos = m_encoder.getPosition();
+        stoppedPos = rencoder.getPosition();
         SmartDashboard.putNumber(Constants.PulleyConstants.PULLEY_RANGE_LABEL, pulleyRange);
+
+        super.init(pulleyMotorRt);
     }
 
     public static PulleySubsystem getInstance() {
@@ -57,11 +58,11 @@ public class PulleySubsystem extends SubsystemBase{
     }
 
     public void setPosition(double position) {
-        m_encoder.setPosition(position);
+        rencoder.setPosition(position);
     }
 
     public double getPosition() {
-        return m_encoder.getPosition();
+        return rencoder.getPosition();
     }
 
     // Returns true if target reached
@@ -105,9 +106,9 @@ public class PulleySubsystem extends SubsystemBase{
         return stopped;
     }
 
-    public double getCurrentSpeed() {
-        return currSpeed;
+    public void stop() {
+        stopped = true;
+        pulley.arcadeDrive(0, 0);
+        super.stop();
     }
-
-    
 }

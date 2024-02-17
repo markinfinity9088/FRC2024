@@ -152,6 +152,12 @@ public final class Constants {
     public static final int Pulley_LtCanId = 11;
   }
 
+  public static final class ClimbConstants {
+    public static final double extenisonLimit = 2; //2 feet
+    public static final int Climb_RtCanId = 14;
+    public static final int Climb_LtCanId = 15;
+  }
+
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
