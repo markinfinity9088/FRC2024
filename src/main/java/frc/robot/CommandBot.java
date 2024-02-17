@@ -10,6 +10,7 @@ import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
 import frc.robot.controller.TeleOpController;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
@@ -107,6 +108,14 @@ public class CommandBot {
       teleOpController.raiseArmTrigger().whileTrue(m_lift.raiseArmCommand(() -> teleOpController.getRaiseSpeed()));
       // Lowering the arm
       teleOpController.lowerArmTrigger().whileTrue(m_lift.lowerArmCommand(() -> -teleOpController.getLowerSpeed()));
+    }
+
+    ClimbSubsystem m_hook = ClimbSubsystem.getInstance();
+    if (m_hook!=null) {
+      // Lifting the robot up on to chain
+      teleOpController.raiseArmTrigger().whileTrue(m_hook.raiseCommand(() -> teleOpController.getRaiseSpeed()));
+      // Lowering the hook
+      teleOpController.lowerArmTrigger().whileTrue(m_hook.lowerCommand(() -> -teleOpController.getLowerSpeed()));
     }
   }
 

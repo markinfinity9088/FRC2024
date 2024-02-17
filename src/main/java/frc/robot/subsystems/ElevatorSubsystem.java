@@ -3,22 +3,24 @@ package frc.robot.subsystems;
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ElevatorSubsystem extends SubsystemBase implements PositionalableSubsystem {
+public class ElevatorSubsystem extends PositionalableSubsystem {
   private final CANSparkMax elevator;
   private static ElevatorSubsystem self;
   private double currentSpeed = 0;
+  RelativeEncoder rencoder;
 
   private ElevatorSubsystem() {
     elevator = new CANSparkMax(Constants.ElevatorConstants.elevatorCanId, MotorType.kBrushless);
     elevator.setIdleMode(IdleMode.kBrake);
     elevator.setSmartCurrentLimit(Constants.ElevatorConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
+    rencoder = elevator.getEncoder();
   }
 
   public static ElevatorSubsystem getInstance() {
@@ -56,11 +58,8 @@ public class ElevatorSubsystem extends SubsystemBase implements PositionalableSu
     });
   }
 
-  public void updateSimulatedPosition() {
-    elevator.getEncoder().setPosition(elevator.getEncoder().getPosition()+currentSpeed/50);
-  }
-
   public void stop() {
     move(0);
+    super.stop();
   }
 }

@@ -8,8 +8,11 @@ import java.util.Date;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.PulleyConstants;
 import frc.robot.subsystems.ElbowSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
+import frc.robot.subsystems.PulleySubsystem;
 import frc.robot.utils.RuntimeConfig;
 
 import org.littletonrobotics.junction.LoggedRobot;
@@ -118,8 +121,9 @@ public class Robot extends LoggedRobot {
   @Override
   public void simulationPeriodic(){
     REVPhysicsSim.getInstance().run();
-    ElbowSubsystem.getInstance().updateSimulatedPosition();
-    //ElevatorSubsystem.getInstance().updateSimulatedPosition();
+    ElbowSubsystem.getInstance().simulationPeriodic();
+    //ElevatorSubsystem.getInstance().simulationPeriodic();
+    //PulleySubsystem.getInstance().simulationPeriodic();
   }
 
 }
