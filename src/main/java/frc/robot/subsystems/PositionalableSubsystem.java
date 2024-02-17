@@ -32,7 +32,7 @@ public abstract class PositionalableSubsystem extends SubsystemBase {
     public void moveToPosition(double pos) {
         double currentPos = relativeToAbsolutePostition(posEncoder.getPosition());
 
-        currentSpeed = pos - currentPos; // Just to help with simulation
+        currentSpeed = (pos - currentPos)/Math.abs(pos); // Just to help with simulation
 
         System.out.println("Moving to " + pos + ".. CurrentPos:" + currentPos + " with currentSpeed:"
                 + currentSpeed);
