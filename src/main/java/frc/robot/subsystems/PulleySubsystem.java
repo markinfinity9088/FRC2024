@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 
-public class PulleySubsystem extends PositionalableSubsystem {
+public class PulleySubsystem extends PositionableSubsystem {
     private CANSparkMax pulleyMotorRt;
     private CANSparkMax pulleyMotorLt;
     private boolean stopped = true;
@@ -57,14 +57,6 @@ public class PulleySubsystem extends PositionalableSubsystem {
         pulleyRange = SmartDashboard.getNumber(Constants.PulleyConstants.PULLEY_RANGE_LABEL, pulleyRange);
     }
 
-    public void setPosition(double position) {
-        rencoder.setPosition(position);
-    }
-
-    public double getPosition() {
-        return rencoder.getPosition();
-    }
-
     // Returns true if target reached
    
     public Command raiseArmCommand(DoubleSupplier speed) {
@@ -81,34 +73,11 @@ public class PulleySubsystem extends PositionalableSubsystem {
         });
     }
 
-    public Command arcadeDriveCommand(double speed) {
-        return run(() -> {
-            pulley.arcadeDrive(speed, 0);
-            stopped = true;
-        }).withName("pulleyStopped");
-    }
-
-    public Command pulleyCommand(DoubleSupplier raise) {
-        return run(() -> {
-          double speed = raise.getAsDouble();
-          if (speed>=0.05 || speed<=-0.05) {
-            System.out.println("pulleyCommand:"+speed);
-            stopped = false;
-          } else  {
-            speed = 0;
-            stopped = true;
-          }
-          pulley.arcadeDrive(speed, 0);
-        }).withName("pulleyDrive");
-      }
-
-    public boolean isStopped() {
-        return stopped;
+    public void move(double speed) {
+        pulley.arcadeDrive(speed, 0);
     }
 
     public void stop() {
-        stopped = true;
-        pulley.arcadeDrive(0, 0);
-        super.stop();
+        move(0);
     }
 }

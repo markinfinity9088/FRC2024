@@ -13,8 +13,10 @@ import frc.robot.controller.TeleOpController;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.ElbowSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PulleySubsystem;
 
@@ -55,8 +57,8 @@ public class CommandBot {
    */
   public void configureBindings() {
     TeleOpController teleOpController = OIConstants.controllerType.equals("PS4")
-      ? new PS4Controller(OIConstants.kDriverControllerPort)
-      : new MyXboxController(OIConstants.kDriverControllerPort);
+      ? PS4Controller.getInstance()
+      : MyXboxController.getInstance();
 
     System.out.println("Configring Bindings with driveType:" + DriveConstants.driveType);
     if (DriveConstants.driveType.startsWith("DIFF")) {
@@ -96,26 +98,29 @@ public class CommandBot {
     }
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
-    if (elbow != null)
-          elbow.setDefaultCommand(elbow.moveCommand(
-          () -> -MathUtil.applyDeadband(teleOpController.getElbowSpeed(), OIConstants.kDriveDeadband))); 
-
-
-    PulleySubsystem m_lift = PulleySubsystem.getInstance();
-    if (m_lift!=null) {
-      m_lift.setDefaultCommand(m_lift.arcadeDriveCommand(0));
-      // Lifting the arm
-      teleOpController.raiseArmTrigger().whileTrue(m_lift.raiseArmCommand(() -> teleOpController.getRaiseSpeed()));
-      // Lowering the arm
-      teleOpController.lowerArmTrigger().whileTrue(m_lift.lowerArmCommand(() -> -teleOpController.getLowerSpeed()));
+    if (elbow != null) {
+      //elbow.setDefaultCommand(Commands.run(() -> {elbow.stop();}));
+      teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
     }
 
-    ClimbSubsystem m_hook = ClimbSubsystem.getInstance();
-    if (m_hook!=null) {
+    WristSubsystem wrist = WristSubsystem.getInstance();
+    if (wrist != null) {
+      //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
+      teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+    }
+
+    ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
+    if (elevator != null) {
+      //elevator.setDefaultCommand(Commands.run(() -> {elevator.stop();}));
+      teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+    }
+
+    ClimbSubsystem hook = ClimbSubsystem.getInstance();
+    if (hook!=null) {
       // Lifting the robot up on to chain
-      teleOpController.raiseArmTrigger().whileTrue(m_hook.raiseCommand(() -> teleOpController.getRaiseSpeed()));
+      teleOpController.raiseHookTrigger().whileTrue(hook.raiseCommand(() -> teleOpController.getHookRaiseSpeed()));
       // Lowering the hook
-      teleOpController.lowerArmTrigger().whileTrue(m_hook.lowerCommand(() -> -teleOpController.getLowerSpeed()));
+      teleOpController.lowerHookTrigger().whileTrue(hook.lowerCommand(() -> -teleOpController.getHookRaiseSpeed()));
     }
   }
 

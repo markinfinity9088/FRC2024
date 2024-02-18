@@ -1,85 +1,132 @@
 package frc.robot.controller;
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
-
 
 public class MyXboxController implements TeleOpController{
     XboxController xboxController;
+    CommandXboxController xboxController1;
+    static private MyXboxController self;
 
-    public MyXboxController(int port) {
-        xboxController = new XboxController(port);
+    private MyXboxController() {
+        xboxController1 = new CommandXboxController(Constants.OIConstants.kDriverControllerPort);
     }
 
-    @Override
-    public Trigger moveTrigger() {
-        return xboxController.leftTrigger(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
+    static public TeleOpController getInstance() {
+        if (self==null) self = new MyXboxController();
+        return self;
     }
 
     @Override
     public Trigger releaseToAMPTrigger() {
-        return xboxController.a(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
+        return xboxController1.a();
     }
 
     @Override
     public Trigger intakeTrigger() {
-        return xboxController.b(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
+        return xboxController1.b();
     }
 
     @Override
     public Trigger releaseToShooterTrigger() {
-        return xboxController.x(CommandScheduler.getInstance().getDefaultButtonLoop()).castTo(Trigger::new);
+        return xboxController1.x();
     }
 
     @Override
     public double getXSpeed() {
-        
-        return xboxController.getLeftX();
+        return xboxController1.getLeftX();
     }
 
     @Override
     public double getYSpeed() {
-        return xboxController.getLeftY();
+        return xboxController1.getLeftY();
     }
 
     @Override
-    public Trigger raiseArmTrigger() {
+    public Trigger hookTrigger() {
         // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Unimplemented method 'hookTrigger'");
     }
 
     @Override
-    public Trigger lowerArmTrigger() {
+    public Trigger raiseHookTrigger() {
         // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Unimplemented method 'raiseHookTrigger'");
     }
 
     @Override
-    public double getRaiseSpeed() {
+    public Trigger lowerHookTrigger() {
         // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public double getLowerSpeed() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public double getRotation() {
-        // TODO Auto-generated method stub
-        return xboxController.getRightX();
-        ///return 0;
+        throw new UnsupportedOperationException("Unimplemented method 'lowerHookTrigger'");
     }
 
     @Override
     public double getElbowSpeed() {
         // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Unimplemented method 'getElbowSpeed'");
     }
+
+    @Override
+    public double getPivotspeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPivotspeed'");
+    }
+
+    @Override
+    public double getElevatorSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getElevatorSpeed'");
+    }
+
+    @Override
+    public double getHookRaiseSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookRaiseSpeed'");
+    }
+
+    @Override
+    public double getHookLowerSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookLowerSpeed'");
+    }
+
+    @Override
+    public double getRotation() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRotation'");
+    }
+
+    @Override
+    public Trigger getElbowTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getElbowTrigger'");
+    }
+
+    @Override
+    public Trigger getWristTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getWristTrigger'");
+    }
+
+    @Override
+    public Trigger getElevatorTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getElevatorTrigger'");
+    }
+
+    @Override
+    public Trigger getPivotTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPivotTrigger'");
+    }
+
+    @Override
+    public double getWristSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getWristSpeed'");
+    } 
 
 }
 
