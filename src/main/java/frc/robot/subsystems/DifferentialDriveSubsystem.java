@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants.DriveConstants;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,7 +14,7 @@ import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class DifferentialDriveSubsystem extends SubsystemBase {
   Date autonStart = null;
@@ -25,14 +24,8 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
   private final CANSparkMax m_leftDrive1 = new CANSparkMax(DriveConstants.kLeftMotor1Port, MotorType.kBrushless);
   private final CANSparkMax m_leftDrive2 = new CANSparkMax(DriveConstants.kLeftMotor2Port, MotorType.kBrushless);
 
-  // The motors on the left side of the drive.
-  private final MotorControllerGroup m_leftMotors = new MotorControllerGroup(m_leftDrive1, m_leftDrive2);
-
-  // The motors on the right side of the drive.
-  private final MotorControllerGroup m_rightMotors = new MotorControllerGroup(m_rightDrive1, m_rightDrive2);
-
   // The robot's drive
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+  private final DifferentialDrive m_drive;
 
   RelativeEncoder rtEncoder1 = m_rightDrive1.getEncoder();
 
@@ -43,7 +36,13 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    m_rightMotors.setInverted(true);
+    m_rightDrive1.setInverted(true);
+    m_rightDrive2.setInverted(true);
+
+    m_rightDrive1.follow(m_rightDrive2);
+    m_leftDrive1.follow(m_leftDrive2);
+
+    m_drive = new DifferentialDrive(m_leftDrive1, m_rightDrive1);
   }
 
   static public DifferentialDriveSubsystem getInstance() {

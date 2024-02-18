@@ -6,13 +6,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.utils.DiffDriveForDurationCommand;
-import frc.robot.utils.SwerveDriveForDurationCommand;
+import frc.robot.commands.DiffDriveForDurationCommand;
+import frc.robot.commands.IntakeCommands;
+import frc.robot.commands.SwerveDriveForDurationCommand;
 import frc.robot.commands.SwerveSampleMoveCommand;
 
 public class AutonController {
     public static Command getAutonCommand() {
-        return DriveConstants.driveType.equals("DIFFER")? getDiffAutonomousCommand() : getSimpleSwerveCommand();
+        return IntakeCommands.takeRingAndSecureCommand();
+        //return DriveConstants.driveType.equals("DIFFER")? getDiffAutonomousCommand() : getSimpleSwerveCommand();
     }
 
     private static Command getSimpleSwerveCommand() {

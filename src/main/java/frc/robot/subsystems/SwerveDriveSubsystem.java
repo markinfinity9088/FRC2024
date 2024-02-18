@@ -204,6 +204,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
     double rotDelivered = m_currentRotation *  DriveConstants.kMaxAngularSpeed * maximum_rotation_speed;
 
+
+  double xEncoderDelta = xSpeedDelivered;
+  double YEncoderDelta = ySpeedDelivered;
+
+
     //KP revisit this later, using this to correct swerve field relative work where it is going in reverse after we turn robot
     int inverseangle=1;
     if (fieldRelative && DriveConstants.kInverseGyroAngle) {

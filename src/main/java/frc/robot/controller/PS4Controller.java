@@ -14,22 +14,22 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public Trigger releaseTrigger() {
+    public Trigger releaseToAMPTrigger() {
         return ps4Controller.cross();
     }
 
     @Override
-    public Trigger coneIntakeTrigger() {
-        return ps4Controller.triangle();
-    }
-
-    @Override
-    public Trigger cubeIntakeTrigger() {
+    public Trigger moveTrigger() {
         return ps4Controller.square();
     }
 
     @Override
-    public Trigger moveTrigger() {
+    public Trigger releaseToShooterTrigger() {
+        return ps4Controller.triangle();
+    }
+
+    @Override
+    public Trigger intakeTrigger() {
         return ps4Controller.circle();
     }
 
@@ -76,6 +76,11 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getLowerSpeed() {
+        return ps4Controller.getR2Axis();
+    }
+
+    @Override
+    public double getElbowSpeed() {
         return ps4Controller.getR2Axis();
     }
 }

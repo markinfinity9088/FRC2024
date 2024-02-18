@@ -4,31 +4,20 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.PulleyConstants;
+import frc.robot.subsystems.ElbowSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
-import frc.robot.utils.AprilTagUtils;
+import frc.robot.subsystems.PulleySubsystem;
 import frc.robot.utils.RuntimeConfig;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
+import org.littletonrobotics.junction.LoggedRobot;
 
 import com.revrobotics.REVPhysicsSim;
-
-import edu.wpi.first.apriltag.AprilTagDetection;
-import edu.wpi.first.apriltag.AprilTagDetector;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.math.system.plant.DCMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -36,7 +25,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private final CommandBot m_robot = new CommandBot();
@@ -121,14 +110,20 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {}
 
   @Override
-  public void simulationInit(){
+  public void simulationInit() {    
+    ElbowSubsystem.getInstance().initSimulation();
+
     RuntimeConfig.is_simulator_mode = true;
     // Configure default commands and condition bindings on robot startup
     m_robot.configureBindings();
   }
+
   @Override
   public void simulationPeriodic(){
-    
+    REVPhysicsSim.getInstance().run();
+    ElbowSubsystem.getInstance().simulationPeriodic();
+    //ElevatorSubsystem.getInstance().simulationPeriodic();
+    //PulleySubsystem.getInstance().simulationPeriodic();
   }
 
 }
