@@ -4,7 +4,7 @@ import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.PositionalableSubsystem;
+import frc.robot.subsystems.PositionableSubsystem;
 
 /**
  * A command that performs the intake
@@ -12,7 +12,7 @@ import frc.robot.subsystems.PositionalableSubsystem;
  */
 public class PositionSubsystemCommand extends Command {
   private double position; // Encoder value for subsystem to be positioned
-  private PositionalableSubsystem subsystem;
+  private PositionableSubsystem subsystem;
 
   /**
    * Creates a new command to be in poistion
@@ -21,7 +21,7 @@ public class PositionSubsystemCommand extends Command {
    */
   public PositionSubsystemCommand(double position, SubsystemBase subsystem) {
     this.position = position;
-    this.subsystem = (PositionalableSubsystem) subsystem;
+    this.subsystem = (PositionableSubsystem) subsystem;
     SendableRegistry.setName(this, getName());
     addRequirements(ElevatorSubsystem.getInstance());
   }

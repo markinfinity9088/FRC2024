@@ -65,7 +65,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     // Configure default commands and condition bindings on robot startup
-    m_robot.configureBindings();
     GyroSubsystem.getInstance().init();
 
     m_autonomousCommand = m_robot.getAutonomousCommand(new Date());
@@ -110,12 +109,8 @@ public class Robot extends LoggedRobot {
   public void testPeriodic() {}
 
   @Override
-  public void simulationInit() {    
-    ElbowSubsystem.getInstance().initSimulation();
-
+  public void simulationInit() {
     RuntimeConfig.is_simulator_mode = true;
-    // Configure default commands and condition bindings on robot startup
-    m_robot.configureBindings();
   }
 
   @Override

@@ -24,7 +24,7 @@ public class GyroSubsystem {
     }
 
     public static GyroSubsystem getInstance() {
-        return self==null?new GyroSubsystem():self;
+        return self==null?self=new GyroSubsystem():self;
     }
 
     public void init() {

@@ -3,84 +3,126 @@ package frc.robot.controller;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import frc.robot.Constants.OIConstants;
 
 public class PS4Controller implements TeleOpController {
     // The driver's controller
-    CommandPS4Controller ps4Controller;
+    private CommandPS4Controller ps4Controller1;
+    static private PS4Controller self;
 
-    public PS4Controller(int port) {
-        ps4Controller = new CommandPS4Controller(port);
+    private PS4Controller() {
+        ps4Controller1 = new CommandPS4Controller(Constants.OIConstants.kDriverControllerPort);
+    }
+
+    static public TeleOpController getInstance() {
+        if (self==null) self = new PS4Controller();
+        return self;
     }
 
     @Override
     public Trigger releaseToAMPTrigger() {
-        return ps4Controller.cross();
-    }
-
-    @Override
-    public Trigger moveTrigger() {
-        return ps4Controller.square();
+        return ps4Controller1.R1();
     }
 
     @Override
     public Trigger releaseToShooterTrigger() {
-        return ps4Controller.triangle();
+        return ps4Controller1.PS();
     }
 
     @Override
     public Trigger intakeTrigger() {
-        return ps4Controller.circle();
+        return ps4Controller1.L1();
     }
 
     @Override
     public double getXSpeed() {
-        double leftx = ps4Controller.getLeftX();
-        if (leftx>0.2)
-            leftx=0.2;
-        else if (leftx<-0.2)
-            leftx=-0.2;
+        double rightx = ps4Controller1.getRightX();
+        if (rightx>0.2)
+            rightx=0.2;
+        else if (rightx<-0.2)
+            rightx=-0.2;
         //System.out.println("xspeed:"+leftx);
-        return MathUtil.applyDeadband(leftx, OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(rightx, OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getYSpeed() {
-        double lefty = ps4Controller.getLeftY();
-        if (lefty>0.2)
-            lefty=0.2;
-        else if (lefty<-0.2)
-            lefty=-0.2;
-        return MathUtil.applyDeadband(lefty, OIConstants.kDriveDeadband);
+        double righty = ps4Controller1.getRightY();
+        if (righty>0.2)
+            righty=0.2;
+        else if (righty<-0.2)
+            righty=-0.2;
+        return MathUtil.applyDeadband(righty, OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getRotation() {
-        return MathUtil.applyDeadband(ps4Controller.getRightX(), OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(ps4Controller1.getRightX(), OIConstants.kDriveDeadband);
     }
 
     @Override
-    public Trigger raiseArmTrigger() {
-        return ps4Controller.L2();
+    public Trigger raiseHookTrigger() {
+        return ps4Controller1.L2();
     }
 
     @Override
-    public Trigger lowerArmTrigger() {
-        return ps4Controller.R2();
+    public Trigger lowerHookTrigger() {
+        return ps4Controller1.R2();
     }
 
     @Override
-    public double getRaiseSpeed() {
-        return ps4Controller.getL2Axis();
-    }
-
-    @Override
-    public double getLowerSpeed() {
-        return ps4Controller.getR2Axis();
+    public double getWristSpeed() {
+        return ps4Controller1.getLeftX();
     }
 
     @Override
     public double getElbowSpeed() {
-        return ps4Controller.getR2Axis();
+        return ps4Controller1.getLeftX();
+    }
+
+    @Override
+    public double getPivotspeed() {
+        return ps4Controller1.getLeftX();
+    }
+
+    @Override
+    public double getElevatorSpeed() {
+        return ps4Controller1.getLeftX();
+    }
+
+    @Override
+    public double getHookRaiseSpeed() {
+        return ps4Controller1.getL2Axis();
+    }
+
+    @Override
+    public double getHookLowerSpeed() {
+        return ps4Controller1.getR2Axis();
+    }
+
+    @Override
+    public Trigger hookTrigger() {
+        return ps4Controller1.triangle();
+    }
+
+    @Override
+    public Trigger getElbowTrigger() {
+        return ps4Controller1.circle();
+    }
+
+    @Override
+    public Trigger getWristTrigger() {
+        return ps4Controller1.square();
+    }
+
+    @Override
+    public Trigger getElevatorTrigger() {
+        return ps4Controller1.cross();
+    }
+
+    @Override
+    public Trigger getPivotTrigger() {
+        return ps4Controller1.L3();
     }
 }
