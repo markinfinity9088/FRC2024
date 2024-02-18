@@ -29,13 +29,6 @@ public class ElevatorSubsystem extends PositionalableSubsystem {
     return self;
   }
 
-  public void moveToPosition(double pos) {
-    double currentPos = elevator.getEncoder().getPosition();
-    double speed = pos - currentPos;
-    System.out.println("Moving elevator to "+pos+".. CurrentPos:"+currentPos+" with speed:"+speed);
-    this.move(speed);
-  }
-
   public boolean isAtPosition(double pos) {
     double delta = elevator.getEncoder().getPosition() - pos;
     return Math.abs(delta)<0.5;
