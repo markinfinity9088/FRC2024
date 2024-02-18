@@ -59,15 +59,32 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 2;
-    public static final int kRearLeftDrivingCanId = 8;
-    public static final int kFrontRightDrivingCanId = 4;
-    public static final int kRearRightDrivingCanId = 6;
+    // using intake as front
+    public static final int kFrontLeftDrivingCanId = 7;
+    public static final int kRearLeftDrivingCanId = 5;
+    public static final int kFrontRightDrivingCanId = 1;
+    public static final int kRearRightDrivingCanId = 3;
 
-    public static final int kFrontLeftTurningCanId = 1;
-    public static final int kRearLeftTurningCanId = 7;
-    public static final int kFrontRightTurningCanId = 3;
-    public static final int kRearRightTurningCanId = 5;
+    public static final int kFrontLeftTurningCanId = 8;
+    public static final int kRearLeftTurningCanId = 6;
+    public static final int kFrontRightTurningCanId = 2;
+    public static final int kRearRightTurningCanId = 4;
+
+    public static final int frontRightShooterCanId = 13;
+    public static final int backRightShooterCanId = 12;
+    public static final int frontLeftShooterCanId = 15;
+    public static final int backLeftShooterCanId = 14;
+    public static final int shooterAimerCanId = 11;
+
+    public static final int intakeCanId = 17;
+    public static final int intakeWristCanId = 16;
+    public static final int elevatorWristFrontCanId = 18;
+    public static final int elevatorWristBackCanId = 19;
+    public static final int elevatorCanId = 10;
+
+    public static final int leftClimbCanId = 20;
+    public static final int rightClimbCanId = 9; 
+
 
     public static final boolean kGyroReversed = false;
 
