@@ -12,26 +12,30 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
 
-  public static final class DriveConstants { 
+  public static final class DriveConstants {
     public static final int kLeftMotor1Port = 17;
     public static final int kLeftMotor2Port = 18;
     public static final int kRightMotor1Port = 19;
     public static final int kRightMotor2Port = 20;
 
-    //KP revisit this later, using this to correct swerve field relative work where it is going in reverse after we turn robot
+    // KP revisit this later, using this to correct swerve field relative work where
+    // it is going in reverse after we turn robot
     public static final boolean kInverseGyroAngle = true;
 
-
-    public static final String driveType = "SWERVE";  // DIFFER or SWERVE
+    public static final String driveType = "SWERVE"; // DIFFER or SWERVE
 
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
@@ -73,17 +77,10 @@ public final class Constants {
     public static final int kFrontRightTurningCanId = 7;
     public static final int kRearRightTurningCanId = 1;
 
-    public static final int frontRightShooterCanId = 13;
-    public static final int backRightShooterCanId = 12;
-    public static final int frontLeftShooterCanId = 15;
-    public static final int backLeftShooterCanId = 14;
-    public static final int shooterAimerCanId = 11;
-
-
     public static final boolean kGyroReversed = false;
 
-    public static final double kMaxDriveSubsystemSpeed = 1; //0-1
-    public static final double kMaxDriveSubsystemTurnSpeed = 1; //0-1
+    public static final double kMaxDriveSubsystemSpeed = 1; // 0-1
+    public static final double kMaxDriveSubsystemTurnSpeed = 1; // 0-1
 
   }
 
@@ -92,12 +89,15 @@ public final class Constants {
   }
 
   public static final class ModuleConstants {
-    // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
-    // This changes the drive speed of the module (a pinion gear with more teeth will result in a
+    // The MAXSwerve module can be configured with one of three pinion gears: 12T,
+    // 13T, or 14T.
+    // This changes the drive speed of the module (a pinion gear with more teeth
+    // will result in a
     // robot that drives faster).
     public static final int kDrivingMotorPinionTeeth = 14;
 
-    // Invert the turning encoder, since the output shaft rotates in the opposite direction of
+    // Invert the turning encoder, since the output shaft rotates in the opposite
+    // direction of
     // the steering motor in the MAXSwerve Module.
     public static final boolean kTurningEncoderInverted = true;
 
@@ -105,7 +105,8 @@ public final class Constants {
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(3.0);;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
+    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
+    // teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
@@ -141,7 +142,7 @@ public final class Constants {
     public static final int kDrivingMotorCurrentLimit = 50; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
-  
+
   public static final class IntakeConstants {
     public static final int elbowCanId = 13;
     public static final int CURRENT_LIMIT_A = 30;
@@ -150,9 +151,17 @@ public final class Constants {
     public static final int intakeWristCanId = 16;
   }
 
+  public static final class ShooterConstants {
+    public static final int frontRightShooterCanId = 13;
+    public static final int backRightShooterCanId = 12;
+    public static final int frontLeftShooterCanId = 15;
+    public static final int backLeftShooterCanId = 14;
+    public static final int shooterPivotCanId = 11;
+  }
+
   public static final class ElevatorConstants {
-    public static final  int CURRENT_LIMIT_A = 30;
-    public static final  double MAX_SPEED = 1.0;
+    public static final int CURRENT_LIMIT_A = 30;
+    public static final double MAX_SPEED = 1.0;
     public static final int elbowFrontCanId = 18;
     public static final int elbowBackCanId = 19;
     public static final int elevatorCanId = 10;
@@ -166,9 +175,10 @@ public final class Constants {
   }
 
   public static final class ClimbConstants {
-    public static final double extenisonLimit = 2; //2 feet
+    public static final double extenisonLimit = 2; // 2 feet
     public static final int leftClimbCanId = 20;
     public static final int rightClimbCanId = 9;
+    public static final double MAX_SPEED = 1.0;
   }
 
   public static final class AutoConstants {
