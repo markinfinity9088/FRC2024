@@ -11,8 +11,8 @@ import frc.robot.Constants;
  * This sample program to control 2 motors
  */
 public class ClimbSubsystem extends SubsystemBase {
-    private static final int leadDeviceID = 16;
-    private static final int followDeviceID = 17;
+    private static final int leadDeviceID = Constants.ClimbConstants.rightClimbCanId;
+    private static final int followDeviceID = Constants.ClimbConstants.leftClimbCanId;
     static private ClimbSubsystem self;
     // private double extenisonLimit = 2; //2 feet
 
@@ -45,7 +45,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     // Method to create new singleton object
     public static ClimbSubsystem getInstance() {
-        if (self==null && Constants.ClimbConstants.Climb_LtCanId>=0) 
+        if (self==null && Constants.ClimbConstants.leftClimbCanId>=0) 
             self =new ClimbSubsystem();
         return self;
       }

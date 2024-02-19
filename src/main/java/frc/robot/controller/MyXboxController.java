@@ -128,6 +128,10 @@ public class MyXboxController implements TeleOpController{
         throw new UnsupportedOperationException("Unimplemented method 'getWristSpeed'");
     } 
 
+    @Override
+    public Trigger swerveTrigger() {
+           throw new UnsupportedOperationException("Unimplemented method 'getWristSpeed'");
+    }
 }
 
 
