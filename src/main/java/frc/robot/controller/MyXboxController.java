@@ -93,6 +93,30 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
+    public Trigger getShooterTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getShooterTrigger'");
+    }
+
+    @Override
+    public Trigger getTiltTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTiltTrigger'");
+    }
+
+    @Override
+    public double getTiltSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTiltSpeed'");
+    }
+
+     @Override
+    public double getShooterSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getShooterSpeed'");
+    }
+
+    @Override
     public Trigger getWristTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getWristTrigger'");

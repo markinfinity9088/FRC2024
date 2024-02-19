@@ -36,6 +36,11 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller1.L2();
     }
 
+    
+  
+
+
+
     @Override
     public Trigger swerveTrigger() {
         return ps4Controller1.L1();
@@ -87,6 +92,19 @@ public class PS4Controller implements TeleOpController {
         return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
+    //get Shooter speed
+    @Override
+    public double getShooterSpeed() {
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
+    }
+
+    //get trigger speed
+     @Override
+    public double getTiltSpeed() {
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
+    }
+
+
     @Override
     public double getPivotspeed() {
         return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
@@ -105,6 +123,16 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger getElbowTrigger() {
         return ps4Controller1.circle();
+    }
+
+    @Override
+    public Trigger getShooterTrigger() {
+        return ps4Controller1.cross();
+    }
+
+    @Override
+    public Trigger getTiltTrigger() {
+        return ps4Controller1.square();
     }
 
     @Override

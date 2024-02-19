@@ -71,11 +71,7 @@ public final class Constants {
     public static final int kFrontRightTurningCanId = 7;
     public static final int kRearRightTurningCanId = 2;
 
-    public static final int frontRightShooterCanId = 13;
-    public static final int backRightShooterCanId = 12;
-    public static final int frontLeftShooterCanId = 15;
-    public static final int backLeftShooterCanId = 14;
-    public static final int shooterAimerCanId = 11;
+    
 
 
     public static final boolean kGyroReversed = false;
@@ -189,4 +185,17 @@ public final class Constants {
     public static final int kDriverControllerPort = 0; 
     public static final double kDriveDeadband = 0.05;
   }
+
+  public static final class ShooterConstants {
+    public static final  int CURRENT_LIMIT_A = 30;
+    public static final  double MAX_SPEED = 1.0;
+    public static final int leftShooter1CanId = 15; 
+    public static final int leftShooter2CanId = 14; 
+    public static final int rightShooter1CanId = 13; 
+    public static final int rightShooter2CanId = 12; 
+    public static final int tiltMotorCanId = 11; 
+    
+  }
+
+  
 }

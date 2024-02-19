@@ -7,7 +7,6 @@ public interface TeleOpController {
     Trigger intakeTrigger(); // Release take ring from floor
     Trigger releaseToAMPTrigger(); // Release ring to AMP
     Trigger getShootTrigger(); // Shoot the ring out
-
     Trigger swerveTrigger();
 
     Trigger getHookTrigger();
@@ -23,9 +22,16 @@ public interface TeleOpController {
     double getPivotspeed();
     double getElevatorSpeed();
     double getHookSpeed();
-
+    double getShooterSpeed();
+    double getTiltSpeed();
     // Drive Bindings
     double getXSpeed();
     double getYSpeed();
     double getRotation();
+
+    //Shooter Bindings
+    Trigger getShooterTrigger();
+    Trigger getTiltTrigger();
+    
+    
 }

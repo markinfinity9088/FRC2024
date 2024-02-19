@@ -19,6 +19,8 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PulleySubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
 
 import java.util.Date;
 import edu.wpi.first.math.MathUtil;
@@ -107,6 +109,19 @@ public class CommandBot {
       teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
     }
 
+    ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+    if (shooter != null) {
+      //elbow.setDefaultCommand(Commands.run(() -> {elbow.stop();}));
+      teleOpController.getShooterTrigger().whileTrue(Commands.runOnce(() -> {shooter.startShooterWheels(0.3);}));
+      teleOpController.getShooterTrigger().onFalse(Commands.runOnce(() -> {shooter.stop();}));
+
+    ShooterSubsystem tilt = ShooterSubsystem.getInstance();
+    if (tilt != null) {
+      //elbow.setDefaultCommand(Commands.run(() -> {elbow.stop();}));
+     teleOpController.getTiltTrigger().onFalse(Commands.runOnce(() -> {tilt.runTilt(0);}));
+      teleOpController.getTiltTrigger().onFalse(Commands.runOnce(() -> {tilt.stop();}));
+    }
+
     WristSubsystem wrist = WristSubsystem.getInstance();
     if (wrist != null) {
       //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
@@ -126,7 +141,7 @@ public class CommandBot {
       // Lifting the robot up on to chain
       teleOpController.getHookTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookSpeed()));
       teleOpController.getHookTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
-    }
+    }}
   }
 
   /**
