@@ -50,17 +50,16 @@ public class ClimbSubsystem extends SubsystemBase {
         return self;
       }
 
-    public Command raiseCommand(DoubleSupplier speed) {
+    public Command moveCommand(DoubleSupplier speedSupplier) {
         return run(() -> {
-            m_leadMotor.set(speed.getAsDouble());
-            System.out.println("Hook is raising.... with speed: " + speed.getAsDouble());
+            double speed = speedSupplier.getAsDouble();
+            m_leadMotor.set(speed);
+            System.out.println("Hook is moving.... with speed: " + speed);
         });
     }
 
-    public Command lowerCommand(DoubleSupplier speed) {
-        return run(() -> {
-            m_leadMotor.set(speed.getAsDouble());
-            System.out.println("Hook is lowering.... with speed: " + speed.getAsDouble());
-        });
+    public void stop() {
+        m_leadMotor.set(0);
+        System.out.println("Hook stopped");
     }
 }

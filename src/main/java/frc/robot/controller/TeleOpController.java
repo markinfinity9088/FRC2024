@@ -6,25 +6,23 @@ public interface TeleOpController {
     //Bindings for button toggle
     Trigger intakeTrigger(); // Release take ring from floor
     Trigger releaseToAMPTrigger(); // Release ring to AMP
-    Trigger releaseToShooterTrigger(); // Shoot the ring out
+    Trigger getShootTrigger(); // Shoot the ring out
 
     Trigger swerveTrigger();
 
-    Trigger raiseHookTrigger();
-    Trigger lowerHookTrigger();
-
+    Trigger getHookTrigger();
     Trigger getElbowTrigger();
     Trigger getWristTrigger();
     Trigger getElevatorTrigger();
     Trigger getPivotTrigger();
 
     // Bindings for Axis value
+    double getIntakeSpeed();
     double getWristSpeed();
     double getElbowSpeed();
     double getPivotspeed();
     double getElevatorSpeed();
-    double getHookRaiseSpeed();
-    double getHookLowerSpeed();
+    double getHookSpeed();
 
     // Drive Bindings
     double getXSpeed();

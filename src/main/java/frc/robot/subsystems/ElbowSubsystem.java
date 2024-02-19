@@ -24,10 +24,8 @@ public class ElbowSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    double currentSpeed;
-    elbowf.set(currentSpeed=limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    if (currentSpeed!=0.0)
-      System.out.println("Moving elbow at speed:"+currentSpeed);
+    setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
+    elbowf.set(getCurrentSpeed());
   }
 
   public void stop() {

@@ -89,45 +89,43 @@ public class CommandBot {
        * () -> -teleOpController.getRotation(), true, true));
        */
     }   
-    IntakeSubSystem m_intake = IntakeSubSystem.getInstance();
-    if (m_intake != null) {
+    IntakeSubSystem intake = IntakeSubSystem.getInstance();
+    if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake();}));
-      teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {m_intake.stop();}));
-      /* 
-      // Release the intake with the cross button for the cube
-      teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {m_intake.releaseToAMP();}));
-      teleOpController.releaseToAMPTrigger().onFalse(Commands.run(() -> {m_intake.stop();}));
-      // Deploy the intake with the square button for the cube
-      teleOpController.releaseToShooterTrigger().whileTrue(Commands.run(() -> {m_intake.releaseToShooter();}));
-      teleOpController.releaseToShooterTrigger().onFalse(Commands.run(() -> {m_intake.stop();}));
-      */
+      teleOpController.intakeTrigger().whileTrue(intake.moveCommand(() -> teleOpController.getIntakeSpeed()));
+      teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {intake.releaseToAMP();}));
+      teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {intake.releaseToShooter();}));
+      teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
     }
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
     if (elbow != null) {
       //elbow.setDefaultCommand(Commands.run(() -> {elbow.stop();}));
       teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+      teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
     }
 
     WristSubsystem wrist = WristSubsystem.getInstance();
     if (wrist != null) {
       //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
       teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+      teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
     }
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
       //elevator.setDefaultCommand(Commands.run(() -> {elevator.stop();}));
       teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+      teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
     }
 
     ClimbSubsystem hook = ClimbSubsystem.getInstance();
     if (hook!=null) {
       // Lifting the robot up on to chain
-      teleOpController.raiseHookTrigger().whileTrue(hook.raiseCommand(() -> teleOpController.getHookRaiseSpeed()));
-      // Lowering the hook
-      teleOpController.lowerHookTrigger().whileTrue(hook.lowerCommand(() -> -teleOpController.getHookRaiseSpeed()));
+      teleOpController.getHookTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookSpeed()));
+      teleOpController.getHookTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
     }
   }
 
