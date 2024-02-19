@@ -61,30 +61,21 @@ public final class Constants {
 
     // SPARK MAX CAN IDs
     // using intake as front
-    public static final int kFrontLeftDrivingCanId = 7;
-    public static final int kRearLeftDrivingCanId = 5;
-    public static final int kFrontRightDrivingCanId = 1;
-    public static final int kRearRightDrivingCanId = 3;
+    public static final int kFrontLeftDrivingCanId = 6;
+    public static final int kRearLeftDrivingCanId = 4;
+    public static final int kFrontRightDrivingCanId = 8;
+    public static final int kRearRightDrivingCanId = 1;
 
-    public static final int kFrontLeftTurningCanId = 8;
-    public static final int kRearLeftTurningCanId = 6;
-    public static final int kFrontRightTurningCanId = 2;
-    public static final int kRearRightTurningCanId = 4;
+    public static final int kFrontLeftTurningCanId = 5;
+    public static final int kRearLeftTurningCanId = 3;
+    public static final int kFrontRightTurningCanId = 7;
+    public static final int kRearRightTurningCanId = 2;
 
     public static final int frontRightShooterCanId = 13;
     public static final int backRightShooterCanId = 12;
     public static final int frontLeftShooterCanId = 15;
     public static final int backLeftShooterCanId = 14;
     public static final int shooterAimerCanId = 11;
-
-    public static final int intakeCanId = 17;
-    public static final int intakeWristCanId = 16;
-    public static final int elevatorWristFrontCanId = 18;
-    public static final int elevatorWristBackCanId = 19;
-    public static final int elevatorCanId = 10;
-
-    public static final int leftClimbCanId = 20;
-    public static final int rightClimbCanId = 9; 
 
 
     public static final boolean kGyroReversed = false;
@@ -150,17 +141,19 @@ public final class Constants {
   }
   
   public static final class IntakeConstants {
-    public static final int intakeCanId = 12;
     public static final int elbowCanId = 13;
-    public static final int wristCanId = 14;
     public static final int CURRENT_LIMIT_A = 30;
     public static final double MAX_SPEED = 1.0;
+    public static final int intakeCanId = 17;
+    public static final int intakeWristCanId = 16;
   }
 
   public static final class ElevatorConstants {
-    public static final int elevatorCanId = 15;
     public static final  int CURRENT_LIMIT_A = 30;
     public static final  double MAX_SPEED = 1.0;
+    public static final int elbowFrontCanId = 18;
+    public static final int elbowBackCanId = 19;
+    public static final int elevatorCanId = 10;
   }
 
   public static final class PulleyConstants {
@@ -172,8 +165,8 @@ public final class Constants {
 
   public static final class ClimbConstants {
     public static final double extenisonLimit = 2; //2 feet
-    public static final int Climb_RtCanId = 16;
-    public static final int Climb_LtCanId = 17;
+    public static final int leftClimbCanId = 20;
+    public static final int rightClimbCanId = 9;
   }
 
   public static final class AutoConstants {

@@ -9,6 +9,8 @@ public interface TeleOpController {
     Trigger releaseToShooterTrigger(); // Shoot the ring out
     Trigger hookTrigger(); // Raise or lower the climb hook
 
+    Trigger swerveTrigger();
+
     Trigger raiseHookTrigger();
     Trigger lowerHookTrigger();
 

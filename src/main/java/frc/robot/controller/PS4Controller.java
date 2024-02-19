@@ -32,27 +32,32 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger intakeTrigger() {
+        return ps4Controller1.R1();
+    }
+
+    @Override
+    public Trigger swerveTrigger() {
         return ps4Controller1.L1();
     }
 
     @Override
     public double getXSpeed() {
-        double rightx = ps4Controller1.getRightX();
-        if (rightx>0.2)
-            rightx=0.2;
-        else if (rightx<-0.2)
-            rightx=-0.2;
+        double rightx = ps4Controller1.getLeftX();
+        if (rightx>0.4)
+            rightx=0.4;
+        else if (rightx<-0.4)
+            rightx=-0.4;
         //System.out.println("xspeed:"+leftx);
         return MathUtil.applyDeadband(rightx, OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getYSpeed() {
-        double righty = ps4Controller1.getRightY();
-        if (righty>0.2)
-            righty=0.2;
-        else if (righty<-0.2)
-            righty=-0.2;
+        double righty = ps4Controller1.getLeftY();
+        if (righty>0.4)
+            righty=0.4;
+        else if (righty<-0.4)
+            righty=-0.4;
         return MathUtil.applyDeadband(righty, OIConstants.kDriveDeadband);
     }
 
