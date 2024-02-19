@@ -20,7 +20,6 @@ public class GyroSubsystem {
 
     private GyroSubsystem() {
         init();
-        self = this;
     }
 
     public static GyroSubsystem getInstance() {
