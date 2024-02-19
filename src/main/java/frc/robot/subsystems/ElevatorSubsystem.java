@@ -22,10 +22,8 @@ public class ElevatorSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    double currentSpeed;
-    elevator.set(currentSpeed=limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    if (currentSpeed!=0.0)
-      System.out.println("Moving elevator at speed:"+currentSpeed);
+    setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
+    elevator.set(getCurrentSpeed());
   }
 
   public void stop() {

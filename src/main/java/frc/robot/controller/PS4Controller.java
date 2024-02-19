@@ -23,17 +23,17 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger releaseToAMPTrigger() {
-        return ps4Controller1.touchpad();
-    }
-
-    @Override
-    public Trigger releaseToShooterTrigger() {
         return ps4Controller1.PS();
     }
 
     @Override
+    public Trigger getShootTrigger() {
+        return ps4Controller1.R2();
+    }
+
+    @Override
     public Trigger intakeTrigger() {
-        return ps4Controller1.R1();
+        return ps4Controller1.L2();
     }
 
     @Override
@@ -68,13 +68,13 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public Trigger raiseHookTrigger() {
-        return ps4Controller1.R2();
+    public Trigger getHookTrigger() {
+        return ps4Controller1.R1();
     }
 
     @Override
-    public Trigger lowerHookTrigger() {
-        return ps4Controller1.L2();
+    public double getIntakeSpeed() {
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -98,13 +98,8 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public double getHookRaiseSpeed() {
-        return MathUtil.applyDeadband(ps4Controller1.getR2Axis(), OIConstants.kDriveDeadband);
-    }
-
-    @Override
-    public double getHookLowerSpeed() {
-        return MathUtil.applyDeadband(ps4Controller1.getL2Axis(), OIConstants.kDriveDeadband);
+    public double getHookSpeed() {
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -119,11 +114,11 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getElevatorTrigger() {
-        return ps4Controller1.cross();
+        return ps4Controller1.triangle();
     }
 
     @Override
     public Trigger getPivotTrigger() {
-        return ps4Controller1.triangle();
+        return ps4Controller1.cross();
     }
 }

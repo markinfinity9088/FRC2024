@@ -1,9 +1,12 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -30,6 +33,15 @@ public class IntakeSubSystem extends SubsystemBase {
   public void doIntake() {
     System.out.println("Intake in progress");
     intake.set(intakeSpeed); // makes the intake motor rotate at given speed
+  }
+
+  public Command moveCommand(DoubleSupplier speedSupplier) {
+        return run(() -> {
+          double speed = speedSupplier.getAsDouble();
+          if (speed!=0)
+            System.out.println("Intake with speed:"+speed);
+          intake.set(speed);
+        });
   }
 
   public void releaseToAMP() {

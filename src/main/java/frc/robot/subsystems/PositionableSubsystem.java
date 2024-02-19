@@ -1,10 +1,9 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkBase.ControlType;
-
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
@@ -21,8 +20,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private AbsoluteEncoder aencoder;
     private SparkPIDController m_pidController;
     private RelativeEncoder posEncoder;
-    private final String ABS_KEY = getName().replace("Subsystem","") + "_ABS";
-    private final String REL_KEY = getName().replace("Subsystem","") + "_REL";
+    private final String name = getName().replace("Subsystem","");
+    private final String ABS_KEY = name + "_ABS";
+    private final String REL_KEY = name + "_REL";
 
     abstract void move(double speed);
     public abstract void stop();
@@ -71,6 +71,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     protected void setCurrentSpeed(double speed) {
+        if (speed!=0)
+            System.out.println("Moving "+name+" at speed:"+currentSpeed);
         currentSpeed = speed;
     }
 
@@ -84,7 +86,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     public void setPosition(double pos) {
-        System.out.println("Setting encoder position to " + pos);
+        System.out.println("Setting "+name+" encoder position to " + pos);
         if (posEncoder != null)
             posEncoder.setPosition(pos);
     }
@@ -97,6 +99,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public Command moveCommand(DoubleSupplier speedSupplier) {
         return run(() -> {
             move(speedSupplier.getAsDouble());
+            SmartDashboard.putNumber(ABS_KEY, aencoder.getPosition());
+            SmartDashboard.putNumber(REL_KEY, posEncoder.getPosition());
         });
     }
 

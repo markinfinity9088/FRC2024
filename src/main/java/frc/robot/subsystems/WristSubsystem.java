@@ -22,10 +22,8 @@ public class WristSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    double currentSpeed;
-    wrist.set(currentSpeed=limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    if (currentSpeed!=0.0)
-      System.out.println("Moving wrist at speed:"+currentSpeed);
+    setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
+    wrist.set(getCurrentSpeed());
   }
 
   public void stop() {

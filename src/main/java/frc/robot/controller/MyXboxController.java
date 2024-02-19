@@ -30,7 +30,7 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public Trigger releaseToShooterTrigger() {
+    public Trigger getShootTrigger() {
         return xboxController1.x();
     }
 
@@ -45,15 +45,15 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public Trigger raiseHookTrigger() {
+    public Trigger getHookTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'raiseHookTrigger'");
     }
 
     @Override
-    public Trigger lowerHookTrigger() {
+    public double getIntakeSpeed() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lowerHookTrigger'");
+        throw new UnsupportedOperationException("Unimplemented method 'getIntakeSpeed'");
     }
 
     @Override
@@ -75,15 +75,9 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public double getHookRaiseSpeed() {
+    public double getHookSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getHookRaiseSpeed'");
-    }
-
-    @Override
-    public double getHookLowerSpeed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHookLowerSpeed'");
     }
 
     @Override
