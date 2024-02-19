@@ -1,16 +1,13 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 /**
  * This sample program to control 2 motors
  */
-public class ClimbSubsystem extends SubsystemBase {
+public class ClimbSubsystem extends PositionableSubsystem {
     private static final int leadDeviceID = Constants.ClimbConstants.rightClimbCanId;
     private static final int followDeviceID = Constants.ClimbConstants.leftClimbCanId;
     static private ClimbSubsystem self;
@@ -41,6 +38,8 @@ public class ClimbSubsystem extends SubsystemBase {
          * by passing as a parameter the SPARK MAX you want to configure as a leader.
          */
         m_followMotor.follow(m_leadMotor);
+
+        super.init(m_leadMotor);
     }
 
     // Method to create new singleton object
@@ -50,16 +49,14 @@ public class ClimbSubsystem extends SubsystemBase {
         return self;
       }
 
-    public Command moveCommand(DoubleSupplier speedSupplier) {
-        return run(() -> {
-            double speed = speedSupplier.getAsDouble();
-            m_leadMotor.set(speed);
-            System.out.println("Hook is moving.... with speed: " + speed);
-        });
+    public void move(double speed) {
+        setCurrentSpeed(limitValue(speed,Constants.ClimbConstants.MAX_SPEED));
+        m_leadMotor.set(getCurrentSpeed());
+        //elbowf.getPIDController().setReference(getCurrentSpeed(), ControlType.kVelocity);
     }
 
     public void stop() {
-        m_leadMotor.set(0);
+        move(0);
         System.out.println("Hook stopped");
     }
 }
