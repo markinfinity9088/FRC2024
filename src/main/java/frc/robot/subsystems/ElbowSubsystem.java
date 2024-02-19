@@ -8,6 +8,7 @@ import frc.robot.Constants;
 public class ElbowSubsystem extends PositionableSubsystem {
   private final CANSparkMax elbowf, elbowb;
   private static ElbowSubsystem self;
+  private static double speedPercent = 0.2;
 
   private ElbowSubsystem() {
     elbowf = new CANSparkMax(Constants.ElevatorConstants.elbowFrontCanId, MotorType.kBrushless);
@@ -25,7 +26,7 @@ public class ElbowSubsystem extends PositionableSubsystem {
 
   public void move(double speed) {
     setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    elbowf.set(getCurrentSpeed());
+    elbowf.set(-getCurrentSpeed() * speedPercent);
   }
 
   public void stop() {

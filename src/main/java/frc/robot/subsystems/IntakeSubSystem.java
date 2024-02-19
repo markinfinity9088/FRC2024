@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubSystem extends SubsystemBase {
-  static final double intakeSpeed = 1.0;
-  static final double releaseToAMPSpeed = 0.9;
-  static final double releaseToShooterSpeed = -1.0;
+  static final double intakeSpeed = .6;
+  static final double releaseToAMPSpeed = -0.8;
+  static final double releaseToShooterSpeed = 1.0;
   static IntakeSubSystem self;
   static final int INTAKE_CURRENT_LIMIT_A = 30; // How many amps the intake can use while picking up
   private CANSparkMax intake = null;

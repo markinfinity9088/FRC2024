@@ -8,6 +8,7 @@ import frc.robot.Constants;
 public class WristSubsystem extends PositionableSubsystem {
   private final CANSparkMax wrist;
   private static WristSubsystem self;
+  private static double speedPercent = 0.4;
 
   private WristSubsystem() {
     wrist = new CANSparkMax(Constants.IntakeConstants.intakeWristCanId, MotorType.kBrushless);
@@ -23,7 +24,7 @@ public class WristSubsystem extends PositionableSubsystem {
 
   public void move(double speed) {
     setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    wrist.set(getCurrentSpeed());
+    wrist.set(-getCurrentSpeed() * speedPercent);
   }
 
   public void stop() {
