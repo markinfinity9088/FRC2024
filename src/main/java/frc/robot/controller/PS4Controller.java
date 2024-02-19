@@ -10,6 +10,7 @@ public class PS4Controller implements TeleOpController {
     // The driver's controller
     private CommandPS4Controller ps4Controller1;
     static private PS4Controller self;
+    final double maxSpeed = 0.5;
 
     private PS4Controller() {
         ps4Controller1 = new CommandPS4Controller(Constants.OIConstants.kDriverControllerPort);
@@ -22,7 +23,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger releaseToAMPTrigger() {
-        return ps4Controller1.R1();
+        return ps4Controller1.touchpad();
     }
 
     @Override
@@ -42,23 +43,23 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getXSpeed() {
-        double rightx = ps4Controller1.getLeftX();
-        if (rightx>0.4)
-            rightx=0.4;
-        else if (rightx<-0.4)
-            rightx=-0.4;
+        double speed = ps4Controller1.getLeftX();
+        if (speed>maxSpeed)
+            speed=maxSpeed;
+        else if (speed<-maxSpeed)
+            speed=-maxSpeed;
         //System.out.println("xspeed:"+leftx);
-        return MathUtil.applyDeadband(rightx, OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getYSpeed() {
-        double righty = ps4Controller1.getLeftY();
-        if (righty>0.4)
-            righty=0.4;
-        else if (righty<-0.4)
-            righty=-0.4;
-        return MathUtil.applyDeadband(righty, OIConstants.kDriveDeadband);
+        double speed = ps4Controller1.getLeftY();
+        if (speed>maxSpeed)
+            speed=maxSpeed;
+        else if (speed<-maxSpeed)
+            speed=-maxSpeed;
+        return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -68,47 +69,42 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger raiseHookTrigger() {
-        return ps4Controller1.L2();
-    }
-
-    @Override
-    public Trigger lowerHookTrigger() {
         return ps4Controller1.R2();
     }
 
     @Override
+    public Trigger lowerHookTrigger() {
+        return ps4Controller1.L2();
+    }
+
+    @Override
     public double getWristSpeed() {
-        return ps4Controller1.getLeftX();
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getElbowSpeed() {
-        return ps4Controller1.getLeftX();
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getPivotspeed() {
-        return ps4Controller1.getLeftX();
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getElevatorSpeed() {
-        return ps4Controller1.getLeftX();
+        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getHookRaiseSpeed() {
-        return ps4Controller1.getL2Axis();
+        return MathUtil.applyDeadband(ps4Controller1.getR2Axis(), OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getHookLowerSpeed() {
-        return ps4Controller1.getR2Axis();
-    }
-
-    @Override
-    public Trigger hookTrigger() {
-        return ps4Controller1.triangle();
+        return MathUtil.applyDeadband(ps4Controller1.getL2Axis(), OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -128,6 +124,6 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getPivotTrigger() {
-        return ps4Controller1.L3();
+        return ps4Controller1.triangle();
     }
 }

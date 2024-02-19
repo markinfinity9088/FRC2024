@@ -45,12 +45,6 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public Trigger hookTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hookTrigger'");
-    }
-
-    @Override
     public Trigger raiseHookTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'raiseHookTrigger'");

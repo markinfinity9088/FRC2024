@@ -21,8 +21,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private AbsoluteEncoder aencoder;
     private SparkPIDController m_pidController;
     private RelativeEncoder posEncoder;
-    private final String ABS_KEY = getName().replace("Subsytem","") + "_ABS";
-    private final String REL_KEY = getName().replace("Subsytem","") + "_REL";
+    private final String ABS_KEY = getName().replace("Subsystem","") + "_ABS";
+    private final String REL_KEY = getName().replace("Subsystem","") + "_REL";
 
     abstract void move(double speed);
     public abstract void stop();

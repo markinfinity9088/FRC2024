@@ -93,7 +93,7 @@ public class CommandBot {
     if (m_intake != null) {
       // Deploy the intake with the triangle button for the cone
       teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {m_intake.doIntake();}));
-      teleOpController.intakeTrigger().onFalse(Commands.run(() -> {m_intake.stop();}));
+      teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {m_intake.stop();}));
       /* 
       // Release the intake with the cross button for the cube
       teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {m_intake.releaseToAMP();}));
