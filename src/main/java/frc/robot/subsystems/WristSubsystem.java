@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
@@ -8,7 +9,7 @@ import frc.robot.Constants;
 public class WristSubsystem extends PositionableSubsystem {
   private final CANSparkMax wrist;
   private static WristSubsystem self;
-  private static double speedPercent = 0.4;
+  private static double speedPercent = 0.2;
 
   private WristSubsystem() {
     wrist = new CANSparkMax(Constants.IntakeConstants.intakeWristCanId, MotorType.kBrushless);
@@ -24,7 +25,8 @@ public class WristSubsystem extends PositionableSubsystem {
 
   public void move(double speed) {
     setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    wrist.set(-getCurrentSpeed() * speedPercent);
+    wrist.getPIDController().setReference(-getCurrentSpeed() * speedPercent, ControlType.kVelocity);
+    // wrist.set(-getCurrentSpeed() * speedPercent);
   }
 
   public void stop() {

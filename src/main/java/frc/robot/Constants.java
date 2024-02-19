@@ -145,7 +145,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int elbowCanId = 13;
     public static final int CURRENT_LIMIT_A = 30;
-    public static final double MAX_SPEED = 1.0;
+    public static final double MAX_SPEED = 0.5;
     public static final int intakeCanId = 17;
     public static final int intakeWristCanId = 16;
   }
