@@ -66,22 +66,22 @@ public class CommandBot {
       drive = d_drive;
       // Note: Pass lamdba fn to get speed/rot and not the current speed/rot
       d_drive.setDefaultCommand(
-          d_drive.driveCommand(() -> -teleOpController.getYSpeed(), () -> -teleOpController.getRotation()));
+          d_drive.driveCommand(() -> -teleOpController.getYSpeedSwerve(), () -> -teleOpController.getRotation()));
     } else {
       SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
       drive = s_drive;
       // Control the swerve drive with split-stick controls (Field coordinates are y is horizontal and x is +ve towards alliance from center)
       //hence you see x and y reversed when passing to drive
-   /*    s_drive.setDefaultCommand(s_drive.driveCommand(
-          () -> -MathUtil.applyDeadband(teleOpController.getYSpeed(), OIConstants.kDriveDeadband),
-          () -> -MathUtil.applyDeadband(teleOpController.getXSpeed(), OIConstants.kDriveDeadband),
-          () -> -MathUtil.applyDeadband(teleOpController.getRotation(), OIConstants.kDriveDeadband), 
-          true, true));*/
-          teleOpController.swerveTrigger().whileTrue(s_drive.driveCommand(
-          () -> -MathUtil.applyDeadband(teleOpController.getYSpeed(), OIConstants.kDriveDeadband),
-          () -> -MathUtil.applyDeadband(teleOpController.getXSpeed(), OIConstants.kDriveDeadband),
+       s_drive.setDefaultCommand(s_drive.driveCommand(
+          () -> -MathUtil.applyDeadband(teleOpController.getYSpeedSwerve(), OIConstants.kDriveDeadband),
+          () -> -MathUtil.applyDeadband(teleOpController.getXSpeedSwerve(), OIConstants.kDriveDeadband),
           () -> -MathUtil.applyDeadband(teleOpController.getRotation(), OIConstants.kDriveDeadband), 
           true, true));
+          // teleOpController.whileTrue(s_drive.driveCommand(
+          // () -> -MathUtil.applyDeadband(teleOpController.getYSpeed(), OIConstants.kDriveDeadband),
+          // () -> -MathUtil.applyDeadband(teleOpController.getXSpeed(), OIConstants.kDriveDeadband),
+          // () -> -MathUtil.applyDeadband(teleOpController.getRotation(), OIConstants.kDriveDeadband), 
+          // true, true));
       /*
        * teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(() ->
        * -teleOpController.getXSpeed(),
@@ -92,7 +92,7 @@ public class CommandBot {
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.intakeTrigger().whileTrue(intake.moveCommand(() -> teleOpController.getIntakeSpeed()));
+      teleOpController.intakeTrigger().whileTrue(Commands.runOnce(() -> {intake.doIntake();}));
       teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {intake.releaseToAMP();}));
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
@@ -103,22 +103,23 @@ public class CommandBot {
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
     if (elbow != null) {
       //elbow.setDefaultCommand(Commands.run(() -> {elbow.stop();}));
-      teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
-      teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
+      elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+      // teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
     }
 
     WristSubsystem wrist = WristSubsystem.getInstance();
     if (wrist != null) {
       //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
-      teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
-      teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
+      wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+      // teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
+      teleOpController.getElbowTrigger().whileTrue(Commands.run(() -> wrist.moveToPosition(0.1)));
     }
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
       //elevator.setDefaultCommand(Commands.run(() -> {elevator.stop();}));
-      teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
-      teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
+      elevator.setDefaultCommand(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+      // teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
     }
 
     ClimbSubsystem hook = ClimbSubsystem.getInstance();

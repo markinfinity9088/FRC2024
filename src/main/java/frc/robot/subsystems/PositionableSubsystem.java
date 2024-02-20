@@ -33,7 +33,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         aencoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
 
         arEncoderDifference = posEncoder.getPosition() - aencoder.getPosition();
-        m_pidController.setFeedbackDevice(posEncoder);
+        m_pidController.setFeedbackDevice(aencoder);
         // set PID coefficients
         m_pidController.setP(0.1);
         m_pidController.setI(1e-4);
@@ -41,6 +41,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         m_pidController.setIZone(0);
         m_pidController.setFF(0);
         m_pidController.setOutputRange(1, -1);
+        m_pidController.setSmartMotionMaxVelocity(0.5, 0);
 
         SmartDashboard.putNumber(ABS_KEY, aencoder.getPosition());
         SmartDashboard.putNumber(REL_KEY, posEncoder.getPosition());

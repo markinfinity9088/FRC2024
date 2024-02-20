@@ -11,7 +11,7 @@ public class MyXboxController implements TeleOpController{
     static private MyXboxController self;
 
     private MyXboxController() {
-        xboxController1 = new CommandXboxController(Constants.OIConstants.kDriverControllerPort);
+        xboxController1 = new CommandXboxController(Constants.OIConstants.kDriverControllerPort1);
     }
 
     static public TeleOpController getInstance() {
@@ -35,12 +35,12 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public double getXSpeed() {
+    public double getXSpeedSwerve() {
         return xboxController1.getLeftX();
     }
 
     @Override
-    public double getYSpeed() {
+    public double getYSpeedSwerve() {
         return xboxController1.getLeftY();
     }
 

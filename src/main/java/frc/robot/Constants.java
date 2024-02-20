@@ -61,19 +61,21 @@ public final class Constants {
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
+    // public static final double kBackRightChassisAngularOffset = Math.PI / 2;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
+
 
     // SPARK MAX CAN IDs
     // using intake as front
     public static final int kFrontLeftDrivingCanId = 6;
     public static final int kRearLeftDrivingCanId = 4;
     public static final int kFrontRightDrivingCanId = 8;
-    public static final int kRearRightDrivingCanId = 1;
+    public static final int kRearRightDrivingCanId = 2;
 
     public static final int kFrontLeftTurningCanId = 5;
     public static final int kRearLeftTurningCanId = 3;
     public static final int kFrontRightTurningCanId = 7;
-    public static final int kRearRightTurningCanId = 2;
+    public static final int kRearRightTurningCanId = 1;
 
     public static final boolean kGyroReversed = false;
 
@@ -144,7 +146,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int elbowCanId = 13;
     public static final int CURRENT_LIMIT_A = 30;
-    public static final double MAX_SPEED = 1.0;
+    public static final double MAX_SPEED = 0.5;
     public static final int intakeCanId = 17;
     public static final int intakeWristCanId = 16;
   }
@@ -196,7 +198,8 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final String controllerType = "PS4"; // PS4 or XBox
-    public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort0 = 0;
+    public static final int kDriverControllerPort1 = 1;  
     public static final double kDriveDeadband = 0.05;
   }
 }

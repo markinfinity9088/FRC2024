@@ -25,7 +25,7 @@ public interface TeleOpController {
     double getHookSpeed();
 
     // Drive Bindings
-    double getXSpeed();
-    double getYSpeed();
+    double getXSpeedSwerve();
+    double getYSpeedSwerve();
     double getRotation();
 }
