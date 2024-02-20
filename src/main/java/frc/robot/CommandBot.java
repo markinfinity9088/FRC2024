@@ -112,6 +112,7 @@ public class CommandBot {
       //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
       wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
       // teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
+      teleOpController.getElbowTrigger().whileTrue(Commands.run(() -> wrist.moveToPosition(0.1)));
     }
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
