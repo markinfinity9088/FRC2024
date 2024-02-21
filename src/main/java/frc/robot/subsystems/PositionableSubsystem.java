@@ -66,7 +66,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         double speed;
         double MAX_SPEED = 0.5;
 
-        speed =  MathUtil.clamp(pid.calculate(currentPos, pos)*10, -MAX_SPEED, MAX_SPEED);
+        speed =  MathUtil.clamp(pid.calculate(currentPos, pos)*20, -MAX_SPEED, MAX_SPEED);
 
         System.out.println("Moving "+ name+ " to " + pos + " from CurrentPos:" + currentPos + " with speed:" + speed);
 
@@ -82,9 +82,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     protected void setCurrentSpeed(double speed) {
+        currentSpeed = speed;
         if (speed!=0)
             System.out.println("Moving "+name+" at speed:"+currentSpeed);
-        currentSpeed = speed;
     }
 
     public boolean isAtPosition(double pos) {

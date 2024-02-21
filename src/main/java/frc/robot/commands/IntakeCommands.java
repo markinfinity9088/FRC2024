@@ -29,7 +29,7 @@ public class IntakeCommands {
     commandGroup.addCommands(new PositionSubsystemCommand(wristIntakePosition, WristSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(pulleyIntakePosition, PulleySubsystem.getInstance()));
-    commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}).withTimeout(1.0));
+    //commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}).withTimeout(1.0));
   //commandGroup.addCommands(new PositionElbowCommand(elbowSecurePosition));
     return commandGroup;
   }

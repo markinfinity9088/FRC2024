@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -114,6 +115,8 @@ public class CommandBot {
       // teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
       teleOpController.getElbowTrigger().whileTrue(Commands.run(() -> wrist.moveToPosition(0.1)));
     }
+
+    teleOpController.getWristTrigger().whileTrue(new PositionSubsystemCommand(0.2, WristSubsystem.getInstance()));
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
