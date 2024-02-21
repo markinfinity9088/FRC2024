@@ -157,6 +157,7 @@ public final class Constants {
     public static final int frontLeftShooterCanId = 15;
     public static final int backLeftShooterCanId = 14;
     public static final int shooterPivotCanId = 11;
+    public static final int CURRENT_LIMIT_A = 1;
   }
 
   public static final class ElevatorConstants {

@@ -88,7 +88,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getWristSpeed() {
-        return MathUtil.applyDeadband(ps4Controller2.getRightY(), OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(-ps4Controller2.getRightY(), OIConstants.kDriveDeadband);
     }
 
     @Override
