@@ -19,7 +19,6 @@ import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
-import frc.robot.subsystems.PulleySubsystem;
 
 import java.util.Date;
 import edu.wpi.first.math.MathUtil;
@@ -93,7 +92,7 @@ public class CommandBot {
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.intakeTrigger().whileTrue(Commands.runOnce(() -> {intake.doIntake();}));
+      teleOpController.intakeTrigger().whileTrue(Commands.runOnce(() -> {intake.doIntake(1.0);}));
       teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {intake.releaseToAMP();}));
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
@@ -113,10 +112,10 @@ public class CommandBot {
       //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
       wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
       // teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
-      teleOpController.getElbowTrigger().whileTrue(Commands.run(() -> wrist.moveToPosition(0.1)));
+      teleOpController.getElbowTrigger().whileTrue(Commands.run(() -> wrist.moveToPosition(100)));
     }
 
-    teleOpController.getWristTrigger().whileTrue(new PositionSubsystemCommand(0.2, WristSubsystem.getInstance()));
+    teleOpController.getWristTrigger().whileTrue(new PositionSubsystemCommand(200, WristSubsystem.getInstance()));
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
