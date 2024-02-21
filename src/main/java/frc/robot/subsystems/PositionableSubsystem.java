@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import org.opencv.core.Mat;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkMax;
@@ -10,16 +12,20 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.utils.RuntimeConfig;
 
 public abstract class PositionableSubsystem extends SubsystemBase {
     private double currentSpeed;
     private double arEncoderDifference;
-    private AbsoluteEncoder aencoder;
+    private AbsoluteEncoder aEncoder;
+    private PIDController pid = new PIDController(0.1, 0, 0);
     private SparkPIDController m_pidController;
-    private RelativeEncoder posEncoder;
+    private RelativeEncoder rEncoder;
     private final String name = getName().replace("Subsystem","");
     private final String ABS_KEY = name + "_ABS";
     private final String REL_KEY = name + "_REL";
@@ -29,11 +35,13 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     protected void init(CANSparkMax motorController) {
         m_pidController = motorController.getPIDController();
-        posEncoder = motorController.getEncoder();
-        aencoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
+        rEncoder = motorController.getEncoder();
+        aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
 
-        arEncoderDifference = posEncoder.getPosition() - aencoder.getPosition();
-        m_pidController.setFeedbackDevice(aencoder);
+        arEncoderDifference = 0; //aEncoder.getPosition()-rEncoder.getPosition();
+        
+        System.out.println("Initialized "+name+" with arDiff:"+arEncoderDifference);
+        m_pidController.setFeedbackDevice(aEncoder);
         // set PID coefficients
         m_pidController.setP(0.1);
         m_pidController.setI(1e-4);
@@ -43,28 +51,30 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         m_pidController.setOutputRange(1, -1);
         m_pidController.setSmartMotionMaxVelocity(0.5, 0);
 
-        SmartDashboard.putNumber(ABS_KEY, aencoder.getPosition());
-        SmartDashboard.putNumber(REL_KEY, posEncoder.getPosition());
+        SmartDashboard.putNumber(ABS_KEY, aEncoder.getPosition());
+        SmartDashboard.putNumber(REL_KEY, rEncoder.getPosition());
         REVPhysicsSim.getInstance().addSparkMax(motorController, 2.6F, 5676.0F); // DCMotor.getNEO(1));
     }
 
     double relativeToAbsolutePostition(double poistion) {
-        return poistion + arEncoderDifference; // Convert to relative
+        return poistion + arEncoderDifference; // Convert to absolute
     }
 
     // Input is absolute position to move to
     public void moveToPosition(double pos) {
-        double currentPos = relativeToAbsolutePostition(posEncoder.getPosition());
+        double currentPos = RuntimeConfig.is_simulator_mode?rEncoder.getPosition():aEncoder.getPosition(); //relativeToAbsolutePostition(rEncoder.getPosition());
+        double speed;
+        double MAX_SPEED = 0.5;
 
-        currentSpeed = (pos - currentPos) / 10; // Just to help with simulation
+        speed =  MathUtil.clamp(pid.calculate(currentPos, pos)*10, -MAX_SPEED, MAX_SPEED);
 
-        System.out.println("Moving " + getName() + " to " + pos + ".. CurrentPos:" + currentPos + " with currentSpeed:"
-                + currentSpeed);
+        System.out.println("Moving "+ name+ " to " + pos + " from CurrentPos:" + currentPos + " with speed:" + speed);
 
-        m_pidController.setReference(pos, ControlType.kPosition);
-        SmartDashboard.putNumber(ABS_KEY, aencoder.getPosition());
-        SmartDashboard.putNumber(REL_KEY, posEncoder.getPosition());
-        // move(speed); // makes the intake motor rotate at given speed*/
+        //m_pidController.setReference(pos, ControlType.kPosition);
+        move(speed); // makes the intake motor rotate at given speed
+
+        SmartDashboard.putNumber(ABS_KEY, aEncoder.getPosition());
+        SmartDashboard.putNumber(REL_KEY, rEncoder.getPosition());
     }
 
     protected double getCurrentSpeed() {
@@ -79,17 +89,17 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public boolean isAtPosition(double pos) {
         double delta = getPosition() - relativeToAbsolutePostition(pos);
-        return Math.abs(delta) < 0.25;
+        return Math.abs(delta) < 0.1;
     }
 
     public double getPosition() {
-        return posEncoder == null ? 0 : posEncoder.getPosition();
+        return rEncoder == null ? 0 : rEncoder.getPosition();
     }
 
     public void setPosition(double pos) {
         System.out.println("Setting "+name+" encoder position to " + pos);
-        if (posEncoder != null)
-            posEncoder.setPosition(pos);
+        if (rEncoder != null)
+            rEncoder.setPosition(pos);
     }
 
     public void simulationPeriodic() {
@@ -100,8 +110,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public Command moveCommand(DoubleSupplier speedSupplier) {
         return run(() -> {
             move(speedSupplier.getAsDouble());
-            SmartDashboard.putNumber(ABS_KEY, aencoder.getPosition());
-            SmartDashboard.putNumber(REL_KEY, posEncoder.getPosition());
+            SmartDashboard.putNumber(ABS_KEY, aEncoder.getPosition());
+            SmartDashboard.putNumber(REL_KEY, rEncoder.getPosition());
         });
     }
 

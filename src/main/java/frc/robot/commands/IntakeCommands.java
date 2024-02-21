@@ -7,10 +7,12 @@ import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PulleySubsystem;
+import frc.robot.subsystems.WristSubsystem;
 
 /** Returns a command that grabs the item */
 public class IntakeCommands {
-  final static double elbowIntakePosition = 2.0;
+  final static double wristIntakePosition = 0.20;
+  final static double elbowIntakePosition = 0.20;
   final static double elevatorIntakePosition = 0;
   final static double pulleyIntakePosition = 0;
 
@@ -24,7 +26,7 @@ public class IntakeCommands {
   public static Command takeRingAndSecureCommand() {
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
-    commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
+    commandGroup.addCommands(new PositionSubsystemCommand(wristIntakePosition, WristSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(pulleyIntakePosition, PulleySubsystem.getInstance()));
     commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}).withTimeout(1.0));

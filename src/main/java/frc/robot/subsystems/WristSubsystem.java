@@ -25,7 +25,7 @@ public class WristSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    if (wrist.getAbsoluteEncoder(Type.kDutyCycle).getPosition() > 0.2){
+    if (wrist.getAbsoluteEncoder(Type.kDutyCycle).getPosition() > 0.21){
       if(speed < 0){
         speed = -speed *0.01;
       }
@@ -35,9 +35,8 @@ public class WristSubsystem extends PositionableSubsystem {
         speed = -speed *0.01;
       }
     }
-    setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
-    // wrist.getPIDController().setReference(-getCurrentSpeed() * speedPercent, ControlType.kVelocity);
-    wrist.set(-getCurrentSpeed() * speedPercent);
+    setCurrentSpeed(limitValue(speed, Constants.IntakeConstants.MAX_SPEED));
+    wrist.set(getCurrentSpeed()* speedPercent);
   }
 
   public void stop() {
