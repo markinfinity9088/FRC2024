@@ -47,10 +47,7 @@ public class PS4Controller implements TeleOpController {
     @Override
     public double getXSpeedSwerve() {
         double speed = ps4Controller1.getLeftX();
-        if (speed>maxSpeed)
-            speed=maxSpeed;
-        else if (speed<-maxSpeed)
-            speed=-maxSpeed;
+        speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
         //System.out.println("xspeed:"+leftx);
         return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
@@ -58,10 +55,7 @@ public class PS4Controller implements TeleOpController {
     @Override
     public double getYSpeedSwerve() {
         double speed = ps4Controller1.getLeftY();
-        if (speed>maxSpeed)
-            speed=maxSpeed;
-        else if (speed<-maxSpeed)
-            speed=-maxSpeed;
+        speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
         return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
 
@@ -93,12 +87,12 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getElbowSpeed() {
-        return MathUtil.applyDeadband(ps4Controller2.getLeftY(), OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(-ps4Controller2.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getPivotspeed() {
-        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -108,7 +102,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getHookSpeed() {
-        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override

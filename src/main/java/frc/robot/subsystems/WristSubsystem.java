@@ -10,7 +10,6 @@ import frc.robot.Constants;
 public class WristSubsystem extends PositionableSubsystem {
   private final CANSparkMax wrist;
   private static WristSubsystem self;
-  private static double speedPercent = 1.0;
 
   private WristSubsystem() {
     wrist = new CANSparkMax(Constants.IntakeConstants.intakeWristCanId, MotorType.kBrushless);
@@ -18,6 +17,9 @@ public class WristSubsystem extends PositionableSubsystem {
     wrist.setSmartCurrentLimit(Constants.IntakeConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
 
     super.init(wrist);
+    super.setMaxSpeed(0.7);
+    super.setMinPoint(100);
+    super.setRange(140);
   }
 
   public static WristSubsystem getInstance() {
@@ -25,20 +27,8 @@ public class WristSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    if (wrist.getAbsoluteEncoder(Type.kDutyCycle).getPosition() > 0.21){
-      if(speed > 0){
-        System.out.println("Limiting >0 speed");
-        speed = 0;
-      }
-    }
-    if(wrist.getAbsoluteEncoder(Type.kDutyCycle).getPosition() < 0.07){
-      if(speed < 0){
-        System.out.println("Limiting <0 speed");
-        speed = 0;
-      }
-    }
-    setCurrentSpeed(limitValue(speed, Constants.IntakeConstants.MAX_SPEED));
-    wrist.set(getCurrentSpeed()* speedPercent);
+    setCurrentSpeed(speed);
+    wrist.set(getCurrentSpeed());
   }
 
   public void stop() {

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubSystem extends SubsystemBase {
-  static final double intakeSpeed = .6;
+  static final double intakeSpeed = 1.0;
   static final double releaseToAMPSpeed = -0.8;
   static final double releaseToShooterSpeed = 1.0;
   static IntakeSubSystem self;
@@ -31,17 +31,19 @@ public class IntakeSubSystem extends SubsystemBase {
   }
 
   public void doIntake() {
-    System.out.println("Intake in progress");
+    doIntake(intakeSpeed);
+  }
+
+  public void doIntake(double intakeSpeed) {
+    if (intakeSpeed!=0) System.out.println("Intake in progress");
     intake.set(intakeSpeed); // makes the intake motor rotate at given speed
   }
 
   public Command moveCommand(DoubleSupplier speedSupplier) {
-        return run(() -> {
-          double speed = speedSupplier.getAsDouble();
-          if (speed!=0)
-            System.out.println("Intake with speed:"+speed);
-          intake.set(speed);
-        });
+    return run(() -> {
+      double speed = speedSupplier.getAsDouble();
+      doIntake(speed);
+    });
   }
 
   public void releaseToAMP() {

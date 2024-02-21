@@ -14,7 +14,8 @@ public class ElevatorSubsystem extends PositionableSubsystem {
     elevator = new CANSparkMax(Constants.ElevatorConstants.elevatorCanId, MotorType.kBrushless);
     elevator.setIdleMode(IdleMode.kBrake);
     elevator.setSmartCurrentLimit(Constants.ElevatorConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
-    init(elevator);
+    super.init(elevator);
+    super.setMaxSpeed(Constants.ElevatorConstants.MAX_SPEED);
   }
 
   public static ElevatorSubsystem getInstance() {
@@ -22,7 +23,7 @@ public class ElevatorSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    setCurrentSpeed(limitValue(speed,Constants.IntakeConstants.MAX_SPEED));
+    setCurrentSpeed(speed);
     elevator.set(getCurrentSpeed());
   }
 
