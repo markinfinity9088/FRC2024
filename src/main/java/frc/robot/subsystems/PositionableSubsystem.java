@@ -2,15 +2,11 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import org.opencv.core.Mat;
-
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
-import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -32,7 +28,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private long minEncoder = 0;
     private long maxEncoder = 0;
     private Long range = null;
-    private int speedReverseFactor = 1;
+    private int encoderReversed = 1; // 1 if +speed increases encoder, -1 if +speed decreases encoder
     private int encoderFactor = 1000;
 
     abstract void move(double speed);
@@ -48,8 +44,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         this.maxSpeed = maxSpeed;
     }
 
-    public void setSpeedReversed() {
-        speedReverseFactor = -1;
+    public void setEncoderReversed() {
+        encoderReversed = -1;
     }
 
     protected void init(CANSparkMax motorController) {
@@ -100,13 +96,13 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     protected void setCurrentSpeed(double speed) {
         long currentPosition = getPosition();
-
-        if (currentPosition >= maxEncoder && (speed*speedReverseFactor > 0)) {
-            System.out.println("Limiting >0 speed");
-            speed = 0;
-        } else if (currentPosition < minEncoder && (speed*speedReverseFactor < 0)) {
-            System.out.println("Limiting <0 speed");
-            speed = 0;
+        long delta;
+        if ((delta=(currentPosition-maxEncoder)) >= -10 && (speed*encoderReversed > 0)) {
+            System.out.println("Limiting + speed with delta:"+delta);
+            speed = delta>=0 ? 0 : speed*(-delta/10.0);
+        } else if ((delta=(currentPosition-minEncoder)) <= 10  && (speed*encoderReversed < 0)) {
+            System.out.println("Limiting - speed with delta:"+delta);
+            speed = currentPosition-minEncoder<=0 ? 0 : speed*(delta/10.0);
         }
 
         if ((speed != 0) || currentSpeed != 0) {
@@ -137,7 +133,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public void simulationPeriodic() {
         if (getCurrentSpeed() != 0)
-            setPosition(getPosition() + speedReverseFactor*getCurrentSpeed()*10);
+            setPosition(getPosition() + encoderReversed*getCurrentSpeed()*10);
     }
 
     public Command moveCommand(DoubleSupplier speedSupplier) {
