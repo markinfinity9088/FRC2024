@@ -25,6 +25,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String name = getName().replace("Subsystem", "");
     private final String ABS_KEY = name + "_ABS";
     private final String REL_KEY = name + "_REL";
+    private final String SPEED_KEY = name + " SPEED";
     private long minEncoder = 0;
     private long maxEncoder = 0;
     private Long range = null;
@@ -38,6 +39,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public void showPositionOnDashboard() {
         SmartDashboard.putNumber(ABS_KEY, Math.round(aEncoder.getPosition() * encoderFactor));
         SmartDashboard.putNumber(REL_KEY, Math.round(rEncoder.getPosition() * encoderFactor));
+        SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
     }
 
     public void setMaxSpeed(double maxSpeed) {
@@ -72,7 +74,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
         speed = pid.calculate(currentPos, pos) * 20;
 
-        System.out.println("Moving " + name + " to " + pos + " from CurrentPos:" + currentPos + ". Calculated speed:" + speed);
+        System.out.println("Moving " + name + " to: " + pos + " from:" + currentPos + ". Calculated speed:" + speed);
 
         move(speed);
 
