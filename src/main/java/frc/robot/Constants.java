@@ -146,7 +146,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int elbowCanId = 13;
     public static final int CURRENT_LIMIT_A = 30;
-    public static final double MAX_SPEED = 0.5;
+    public static final double MAX_SPEED = 1.0;
     public static final int intakeCanId = 17;
     public static final int intakeWristCanId = 16;
   }
@@ -165,7 +165,7 @@ public final class Constants {
     public static final double MAX_SPEED = 0.8;
     public static final int elbowFrontCanId = 18;
     public static final int elbowBackCanId = 19;
-    public static final int elevatorCanId = 10;
+    public static final int elevatorCanId = 20;
   }
 
   public static final class PulleyConstants {
@@ -177,7 +177,7 @@ public final class Constants {
 
   public static final class ClimbConstants {
     public static final double extenisonLimit = 2; // 2 feet
-    public static final int leftClimbCanId = 20;
+    public static final int leftClimbCanId = 10;
     public static final int rightClimbCanId = 9;
     public static final double MAX_SPEED = 0.7;
   }

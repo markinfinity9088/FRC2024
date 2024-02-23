@@ -6,10 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
+import frc.robot.controller.PS4ControllerSingle;
 import frc.robot.controller.TeleOpController;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
@@ -19,6 +19,8 @@ import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
+import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 import java.util.Date;
 import edu.wpi.first.math.MathUtil;
@@ -56,9 +58,19 @@ public class CommandBot {
    * Event binding methods are available on the {@link Trigger} class.
    */
   public void configureBindings() {
-    TeleOpController teleOpController = OIConstants.controllerType.equals("PS4")
-      ? PS4Controller.getInstance()
-      : MyXboxController.getInstance();
+    boolean dualController;
+    TeleOpController teleOpController;
+    
+    if (OIConstants.controllerType.equals("PS4")) {
+      teleOpController = PS4Controller.getInstance();
+      dualController = true;
+    } else if (OIConstants.controllerType.equals("PS4S")) {
+       teleOpController = PS4ControllerSingle.getInstance();
+       dualController = false;
+    } else {
+      teleOpController = MyXboxController.getInstance();
+      dualController = true;
+    }
 
     System.out.println("Configring Bindings with driveType:" + DriveConstants.driveType);
     if (DriveConstants.driveType.startsWith("DIFF")) {
@@ -72,61 +84,68 @@ public class CommandBot {
       drive = s_drive;
       // Control the swerve drive with split-stick controls (Field coordinates are y is horizontal and x is +ve towards alliance from center)
       //hence you see x and y reversed when passing to drive
-       s_drive.setDefaultCommand(s_drive.driveCommand(
-          () -> -MathUtil.applyDeadband(teleOpController.getYSpeedSwerve(), OIConstants.kDriveDeadband),
-          () -> -MathUtil.applyDeadband(teleOpController.getXSpeedSwerve(), OIConstants.kDriveDeadband),
-          () -> -MathUtil.applyDeadband(teleOpController.getRotation(), OIConstants.kDriveDeadband), 
-          true, true));
-          // teleOpController.whileTrue(s_drive.driveCommand(
-          // () -> -MathUtil.applyDeadband(teleOpController.getYSpeed(), OIConstants.kDriveDeadband),
-          // () -> -MathUtil.applyDeadband(teleOpController.getXSpeed(), OIConstants.kDriveDeadband),
-          // () -> -MathUtil.applyDeadband(teleOpController.getRotation(), OIConstants.kDriveDeadband), 
-          // true, true));
-      /*
-       * teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(() ->
-       * -teleOpController.getXSpeed(),
-       * () -> -teleOpController.getYSpeed(),
-       * () -> -teleOpController.getRotation(), true, true));
-       */
+      if (dualController)
+        s_drive.setDefaultCommand(s_drive.driveCommand(
+          () -> teleOpController.getXSpeedSwerve(), () -> teleOpController.getYSpeedSwerve(),
+          () -> teleOpController.getRotation(), true, true));
+      else
+        teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(
+          () -> -teleOpController.getXSpeedSwerve(), () -> -teleOpController.getYSpeedSwerve(),
+          () -> -teleOpController.getRotation(), true, true));
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
+    ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+    PivotSubsystem pivot = PivotSubsystem.getInstance();
+
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.intakeTrigger().whileTrue(Commands.runOnce(() -> {intake.doIntake(1.0);}));
+      teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
       teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      
       teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {intake.releaseToAMP();}));
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
-      teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {intake.releaseToShooter();}));
-      teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      
+      if (shooter!=null) {
+        teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {intake.releaseToShooter(); shooter.startShooterWheels(1.0);}));
+        teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {intake.stop(); shooter.stopShooterWheels();}));
+      }
+    }
+
+    if (pivot!=null) {
+      teleOpController.getPivotTrigger().whileTrue(pivot.moveCommand(() -> teleOpController.getPivotSpeed()));
+      teleOpController.getPivotTrigger().onFalse(Commands.runOnce(() -> {pivot.stop();}));
     }
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
     if (elbow != null) {
-      //elbow.setDefaultCommand(Commands.run(() -> {elbow.stop();}));
-      elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
-      // teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
+      if (dualController)
+        elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+      else {
+        teleOpController.getElbowTrigger().onTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+        teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
+      }
     }
 
     WristSubsystem wrist = WristSubsystem.getInstance();
     if (wrist != null) {
-      //wrist.setDefaultCommand(Commands.run(() -> {wrist.stop();}));
-      wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
-      // teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
-      teleOpController.getElbowTrigger().whileTrue(Commands.run(() -> wrist.moveToPosition(100)));
+      if (dualController)
+        wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+      else {
+        teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+        teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
+      }
     }
 
-    teleOpController.getWristTrigger().whileTrue(new PositionSubsystemCommand(200, WristSubsystem.getInstance()));
+    //teleOpController.getWristTrigger().whileTrue(new PositionSubsystemCommand(200, WristSubsystem.getInstance()));
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
-      //elevator.setDefaultCommand(Commands.run(() -> {elevator.stop();}));
-      elevator.setDefaultCommand(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
-      // teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
+      teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+      teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
     }
 
     ClimbSubsystem hook = ClimbSubsystem.getInstance();
     if (hook!=null) {
-      // Lifting the robot up on to chain
       teleOpController.getHookTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookSpeed()));
       teleOpController.getHookTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
     }
