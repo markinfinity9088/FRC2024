@@ -33,12 +33,16 @@ public class MoveWristCommand extends Command{
 
   @Override
   public boolean isFinished() {
+    
     if (up){
         if (wrist.getPosition() >= position){
+            System.out.println("Wrist command up finished "+wrist.getPosition()+" for given position"+position);
             return true;
         }
     } else {
         if (wrist.getPosition() <= position){
+                      System.out.println("Wrist command down finished "+wrist.getPosition()+" for given position"+position);
+
             return true;
         }
     }
