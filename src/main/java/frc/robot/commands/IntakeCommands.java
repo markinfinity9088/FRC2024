@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
@@ -34,6 +35,15 @@ public class IntakeCommands {
     commandGroup.addCommands(new PositionSubsystemCommand(pivotShootPosition, PivotSubsystem.getInstance()));
     commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake(1.0);}).withTimeout(1.0));
     commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1.0));
+    return commandGroup;
+  }
+
+  public static Command sampleWristCommand() {
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+
+    commandGroup.addCommands(new MoveWristCommand(970, true));
+    commandGroup.addCommands(new WaitCommand(3));
+    commandGroup.addCommands(new MoveWristCommand(966, false));
     return commandGroup;
   }
 }
