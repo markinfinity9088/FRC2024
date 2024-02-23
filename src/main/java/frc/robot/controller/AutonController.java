@@ -13,7 +13,8 @@ import frc.robot.commands.SwerveSampleMoveCommand;
 
 public class AutonController {
     public static Command getAutonCommand() {
-        return IntakeCommands.sampleAutonCommand();
+        // return IntakeCommands.sampleAutonCommand();
+        return IntakeCommands.sampleWristCommand();
         //return DriveConstants.driveType.equals("DIFFER")? getDiffAutonomousCommand() : getSimpleSwerveCommand();
     }
 
