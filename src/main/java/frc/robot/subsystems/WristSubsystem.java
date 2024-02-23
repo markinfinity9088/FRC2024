@@ -15,9 +15,9 @@ public class WristSubsystem extends PositionableSubsystem {
     wrist.setSmartCurrentLimit(Constants.IntakeConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
 
     super.init(wrist);
-    super.setMaxSpeed(0.7);
-    super.setMinPoint(100);
-    super.setRange(140);
+    super.setMaxSpeed(Constants.IntakeConstants.MAX_SPEED);
+    //super.setMinPoint(100);
+    //super.setRange(140);
   }
 
   public static WristSubsystem getInstance() {

@@ -18,7 +18,7 @@ import frc.robot.utils.RuntimeConfig;
 public abstract class PositionableSubsystem extends SubsystemBase {
     private double currentSpeed;
     private double maxSpeed = 0;
-    private long arEncoderDifference;
+    private long arEncoderDifference = 0;
     private AbsoluteEncoder aEncoder;
     private PIDController pid = new PIDController(.001, 0.0001, 0);
     private RelativeEncoder rEncoder;
@@ -54,8 +54,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         rEncoder = motorController.getEncoder();
         aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
 
-        arEncoderDifference = Math.round((aEncoder.getPosition() - rEncoder.getPosition()) * encoderFactor);
-        SmartDashboard.putNumber(name+"_ARD", arEncoderDifference);
+        if (aEncoder!=null)
+            arEncoderDifference = Math.round((aEncoder.getPosition() - rEncoder.getPosition()) * encoderFactor);
+        //SmartDashboard.putNumber(name+"_ARD", arEncoderDifference);
 
         System.out.println("Initialized " + name + " with arDiff:" + arEncoderDifference);
 
@@ -63,8 +64,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         REVPhysicsSim.getInstance().addSparkMax(motorController, 2.6F, 5676.0F); // DCMotor.getNEO(1));
     }
 
-    long relativeToAbsolutePostition(long poistion) {
-        return poistion + arEncoderDifference; // Convert to absolute
+    private long relativeToAbsolutePostition(long position) {
+        return position + arEncoderDifference; // Convert to absolute
     }
 
     // Input is absolute position to move to
@@ -99,14 +100,15 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     protected void setCurrentSpeed(double speed) {
         long currentPosition = getPosition();
         long delta;
-        if ((delta=(currentPosition-maxEncoder)) >= -10 && (speed*encoderReversed > 0)) {
-            System.out.println("Limiting + speed with delta:"+delta);
-            speed = delta>=0 ? 0 : speed*(-delta/10.0);
-        } else if ((delta=(currentPosition-minEncoder)) <= 10  && (speed*encoderReversed < 0)) {
-            System.out.println("Limiting - speed with delta:"+delta);
-            speed = currentPosition-minEncoder<=0 ? 0 : speed*(delta/10.0);
-        }
-
+        if (range!=null) {
+            if ((delta=(currentPosition-maxEncoder)) >= -10 && (speed*encoderReversed > 0)) {
+                System.out.println("Limiting + speed with delta:"+delta);
+                speed = delta>=0 ? 0 : speed*(-delta/10.0);
+            } else if ((delta=(currentPosition-minEncoder)) <= 10  && (speed*encoderReversed < 0)) {
+                System.out.println("Limiting - speed with delta:"+delta);
+                speed = currentPosition-minEncoder<=0 ? 0 : speed*(delta/10.0);
+            }
+        }  
         if ((speed != 0) || currentSpeed != 0) {
             if (maxSpeed != 0)
                 speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);

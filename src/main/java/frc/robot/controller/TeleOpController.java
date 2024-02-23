@@ -20,11 +20,12 @@ public interface TeleOpController {
     double getIntakeSpeed();
     double getWristSpeed();
     double getElbowSpeed();
-    double getPivotspeed();
+    double getPivotSpeed();
     double getElevatorSpeed();
     double getHookSpeed();
 
     // Drive Bindings
+    Trigger moveTrigger();
     double getXSpeedSwerve();
     double getYSpeedSwerve();
     double getRotation();

@@ -63,7 +63,7 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public double getPivotspeed() {
+    public double getPivotSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPivotspeed'");
     }
@@ -119,6 +119,11 @@ public class MyXboxController implements TeleOpController{
     @Override
     public Trigger swerveTrigger() {
            throw new UnsupportedOperationException("Unimplemented method 'getWristSpeed'");
+    }
+
+    @Override
+    public Trigger moveTrigger() {
+        throw new UnsupportedOperationException("Unimplemented method 'moveTrigger'");
     }
 }
 

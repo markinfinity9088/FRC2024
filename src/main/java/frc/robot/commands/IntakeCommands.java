@@ -15,9 +15,9 @@ import frc.robot.subsystems.WristSubsystem;
 public class IntakeCommands {
   final static long wristIntakePosition = 20;
   final static long elbowIntakePosition = 100;
-  final static long elevatorIntakePosition = 0;
+  final static long elevatorIntakePosition = 50;
   
-  final static long pivotShootPosition = 0;
+  final static long pivotShootPosition = 30;
 
   final static  long elbowSecurePosition = 250;
 
