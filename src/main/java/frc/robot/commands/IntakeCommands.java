@@ -6,31 +6,34 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
-import frc.robot.subsystems.PulleySubsystem;
+import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
 /** Returns a command that grabs the item */
 public class IntakeCommands {
-  final static double wristIntakePosition = 0.20;
-  final static double elbowIntakePosition = 0.20;
-  final static double elevatorIntakePosition = 0;
-  final static double pulleyIntakePosition = 0;
+  final static long wristIntakePosition = 20;
+  final static long elbowIntakePosition = 100;
+  final static long elevatorIntakePosition = 0;
+  
+  final static long pivotShootPosition = 0;
 
-  final static  double elbowSecurePosition = 5.5;
+  final static  long elbowSecurePosition = 250;
 
-  final static double elbowAMPPosition = 10;
-  final static double elevatorAMPPosition = 10;
-  final static double pulleyAMPPosition = 10;
+  final static long elbowAMPPosition = 10;
+  final static long elevatorAMPPosition = 10;
+  final static long pulleyAMPPosition = 10;
 
 
-  public static Command takeRingAndSecureCommand() {
+  public static Command sampleAutonCommand() {
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
     commandGroup.addCommands(new PositionSubsystemCommand(wristIntakePosition, WristSubsystem.getInstance()));
-    //commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
-    //commandGroup.addCommands(new PositionSubsystemCommand(pulleyIntakePosition, PulleySubsystem.getInstance()));
-    //commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}).withTimeout(1.0));
-  //commandGroup.addCommands(new PositionElbowCommand(elbowSecurePosition));
+    commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
+    commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
+    commandGroup.addCommands(new PositionSubsystemCommand(pivotShootPosition, PivotSubsystem.getInstance()));
+    commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake(1.0);}).withTimeout(1.0));
+    commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1.0));
     return commandGroup;
   }
 }

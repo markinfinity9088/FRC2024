@@ -40,6 +40,7 @@ public class ClimbSubsystem extends PositionableSubsystem {
         m_followMotor.follow(m_leadMotor);
 
         super.init(m_leadMotor);
+        super.setMaxSpeed(Constants.ClimbConstants.MAX_SPEED);
     }
 
     // Method to create new singleton object
@@ -50,9 +51,8 @@ public class ClimbSubsystem extends PositionableSubsystem {
       }
 
     public void move(double speed) {
-        setCurrentSpeed(limitValue(speed,Constants.ClimbConstants.MAX_SPEED));
+        setCurrentSpeed(speed);
         m_leadMotor.set(getCurrentSpeed());
-        //elbowf.getPIDController().setReference(getCurrentSpeed(), ControlType.kVelocity);
     }
 
     public void stop() {

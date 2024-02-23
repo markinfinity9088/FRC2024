@@ -12,7 +12,8 @@ import frc.robot.Constants.PulleyConstants;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
-import frc.robot.subsystems.PulleySubsystem;
+import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.RuntimeConfig;
 
 import org.littletonrobotics.junction.LoggedRobot;
@@ -102,11 +103,16 @@ public class Robot extends LoggedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    System.out.println("Test Init");
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    WristSubsystem.getInstance().showPositionOnDashboard();
+    ElbowSubsystem.getInstance().showPositionOnDashboard();
+    ElevatorSubsystem.getInstance().showPositionOnDashboard();
+  }
 
   @Override
   public void simulationInit() {
@@ -116,9 +122,10 @@ public class Robot extends LoggedRobot {
   @Override
   public void simulationPeriodic(){
     REVPhysicsSim.getInstance().run();
+    WristSubsystem.getInstance().simulationPeriodic();
     ElbowSubsystem.getInstance().simulationPeriodic();
-    //ElevatorSubsystem.getInstance().simulationPeriodic();
-    //PulleySubsystem.getInstance().simulationPeriodic();
+    ElevatorSubsystem.getInstance().simulationPeriodic();
+    PivotSubsystem.getInstance().simulationPeriodic();
   }
 
 }

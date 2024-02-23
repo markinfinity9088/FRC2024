@@ -162,7 +162,7 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static final int CURRENT_LIMIT_A = 30;
-    public static final double MAX_SPEED = 1.0;
+    public static final double MAX_SPEED = 0.8;
     public static final int elbowFrontCanId = 18;
     public static final int elbowBackCanId = 19;
     public static final int elevatorCanId = 20;
@@ -179,7 +179,7 @@ public final class Constants {
     public static final double extenisonLimit = 2; // 2 feet
     public static final int leftClimbCanId = 10;
     public static final int rightClimbCanId = 9;
-    public static final double MAX_SPEED = 1.0;
+    public static final double MAX_SPEED = 0.7;
   }
 
   public static final class AutoConstants {

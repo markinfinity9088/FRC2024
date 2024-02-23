@@ -11,7 +11,7 @@ import frc.robot.subsystems.PositionableSubsystem;
  *
  */
 public class PositionSubsystemCommand extends Command {
-  private double position; // Encoder value for subsystem to be positioned
+  private long position; // Encoder value for subsystem to be positioned
   private PositionableSubsystem subsystem;
 
   /**
@@ -19,21 +19,21 @@ public class PositionSubsystemCommand extends Command {
    *
    * @param seconds the time to run, in seconds
    */
-  public PositionSubsystemCommand(double position, SubsystemBase subsystem) {
+  public PositionSubsystemCommand(long position, SubsystemBase subsystem) {
     this.position = position;
     this.subsystem = (PositionableSubsystem) subsystem;
     SendableRegistry.setName(this, getName());
-    addRequirements(ElevatorSubsystem.getInstance());
+    addRequirements(subsystem);
   }
 
   @Override
   public void initialize() {
-    System.out.println("Position subsystemCommand initialized");
+    System.out.println("Position "+subsystem.getName()+" command initialized");
   }
 
   @Override
   public void execute() {
-    System.out.println("Executing "+getName());
+    //System.out.println("Executing "+getName());
     subsystem.moveToPosition(position);
   }
 
