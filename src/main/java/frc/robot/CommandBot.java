@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -88,10 +89,11 @@ public class CommandBot {
         s_drive.setDefaultCommand(s_drive.driveCommand(
           () -> teleOpController.getXSpeedSwerve(), () -> teleOpController.getYSpeedSwerve(),
           () -> teleOpController.getRotation(), true, true));
-      else
+     /*  else
         teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(
           () -> -teleOpController.getXSpeedSwerve(), () -> -teleOpController.getYSpeedSwerve(),
           () -> -teleOpController.getRotation(), true, true));
+        */
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
@@ -106,7 +108,7 @@ public class CommandBot {
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
       if (shooter!=null) {
-        teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {intake.releaseToShooter(); shooter.startShooterWheels(1.0);}));
+        teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {shooter.startShooterWheels(1.0);}));
         teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {intake.stop(); shooter.stopShooterWheels();}));
       }
     }
@@ -136,12 +138,20 @@ public class CommandBot {
       }
     }
 
-    //teleOpController.getWristTrigger().whileTrue(new PositionSubsystemCommand(200, WristSubsystem.getInstance()));
+    if (dualController) {
+      teleOpController.holdElbowInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+      teleOpController.holdWristInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+  
+    }
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
-      teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
-      teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
+        if (dualController)
+        elevator.setDefaultCommand(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+      else {
+        teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+        teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
+      }
     }
 
     ClimbSubsystem hook = ClimbSubsystem.getInstance();

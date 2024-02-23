@@ -125,6 +125,17 @@ public class MyXboxController implements TeleOpController{
     public Trigger moveTrigger() {
         throw new UnsupportedOperationException("Unimplemented method 'moveTrigger'");
     }
+
+    @Override
+    public Trigger holdElbowInPositionTrigger() {
+        throw new UnsupportedOperationException("Unimplemented method 'holdElbowInPositionTrigger'");
+    }
+
+    @Override
+    public Trigger holdWristInPositionTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'holdWristInPositionTrigger'");
+    }
 }
 
 

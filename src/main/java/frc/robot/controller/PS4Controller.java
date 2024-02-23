@@ -49,14 +49,14 @@ public class PS4Controller implements TeleOpController {
         double speed = ps4Controller1.getLeftX();
         speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
         //System.out.println("xspeed:"+leftx);
-        return -MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
 
     @Override
     public double getYSpeedSwerve() {
         double speed = ps4Controller1.getLeftY();
         speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
-        return -MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -128,5 +128,15 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger moveTrigger() {
         return ps4Controller1.R2();
+    }
+
+    @Override
+    public Trigger holdWristInPositionTrigger() {
+        return ps4Controller1.square();
+    }
+
+    @Override
+    public Trigger holdElbowInPositionTrigger() {
+        return ps4Controller1.circle();
     }
 }

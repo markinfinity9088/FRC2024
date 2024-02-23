@@ -126,4 +126,14 @@ public class PS4ControllerSingle implements TeleOpController {
     public Trigger moveTrigger() {
         return ps4Controller1.R2();
     }
+
+    @Override
+    public Trigger holdWristInPositionTrigger() {
+        return ps4Controller1.PS();
+    }
+
+    @Override
+    public Trigger holdElbowInPositionTrigger() {
+        return ps4Controller1.PS();
+    }
 }

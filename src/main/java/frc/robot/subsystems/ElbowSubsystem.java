@@ -17,7 +17,7 @@ public class ElbowSubsystem extends PositionableSubsystem {
     elbowb.follow(elbowf);
 
     super.init(elbowf);
-    super.setMaxSpeed(Constants.IntakeConstants.MAX_SPEED);
+    super.setMaxSpeed(Constants.IntakeConstants.ELBOW_MAX_SPEED);
     //super.setMinPoint(100);
     //super.setRange(140);
   }

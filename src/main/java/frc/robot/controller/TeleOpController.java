@@ -24,6 +24,9 @@ public interface TeleOpController {
     double getElevatorSpeed();
     double getHookSpeed();
 
+    Trigger holdElbowInPositionTrigger();
+    Trigger holdWristInPositionTrigger();
+
     // Drive Bindings
     Trigger moveTrigger();
     double getXSpeedSwerve();
