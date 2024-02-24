@@ -20,7 +20,6 @@ public class HoldSubsystemInPositionCommand extends Command {
    * @param seconds the time to run, in seconds
    */
   public HoldSubsystemInPositionCommand(SubsystemBase subsystem) {
-    this.position = ((PositionableSubsystem)subsystem).getPosition();
     this.subsystem = (PositionableSubsystem) subsystem;
     SendableRegistry.setName(this, getName());
     addRequirements(subsystem);
@@ -28,7 +27,8 @@ public class HoldSubsystemInPositionCommand extends Command {
 
   @Override
   public void initialize() {
-    System.out.println("Hold Position "+subsystem.getName()+" command initialized");
+    this.position = ((PositionableSubsystem)subsystem).getPosition();
+    System.out.println("Hold Position "+subsystem.getName()+" command initialized with pos:"+position);
   }
 
   @Override
