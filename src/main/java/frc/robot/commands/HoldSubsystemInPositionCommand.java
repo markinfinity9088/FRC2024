@@ -27,7 +27,7 @@ public class HoldSubsystemInPositionCommand extends Command {
 
   @Override
   public void initialize() {
-    this.position = ((PositionableSubsystem)subsystem).getPosition();
+    position = ((PositionableSubsystem)subsystem).getPosition();
     System.out.println("Hold Position "+subsystem.getName()+" command initialized with pos:"+position);
   }
 

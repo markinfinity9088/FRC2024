@@ -136,6 +136,30 @@ public class MyXboxController implements TeleOpController{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'holdWristInPositionTrigger'");
     }
+
+    @Override
+    public Trigger getHookUpTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookUpTrigger'");
+    }
+
+    @Override
+    public Trigger getHookDownTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookDownTrigger'");
+    }
+
+    @Override
+    public double getHookUpSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookUpSpeed'");
+    }
+
+    @Override
+    public double getHookDownSpeed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookDownSpeed'");
+    }
 }
 
 
