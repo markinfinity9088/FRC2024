@@ -88,7 +88,7 @@ public class CommandBot {
       if (dualController)
         s_drive.setDefaultCommand(s_drive.driveCommand(
           () -> teleOpController.getXSpeedSwerve(), () -> teleOpController.getYSpeedSwerve(),
-          () -> teleOpController.getRotation(), true, true));
+          () -> teleOpController.getRotation(), false, true));
      /*  else
         teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(
           () -> -teleOpController.getXSpeedSwerve(), () -> -teleOpController.getYSpeedSwerve(),
@@ -120,8 +120,9 @@ public class CommandBot {
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
     if (elbow != null) {
-      if (dualController)
+      if (dualController) {
         elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+      }
       else {
         teleOpController.getElbowTrigger().onTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
         teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));
