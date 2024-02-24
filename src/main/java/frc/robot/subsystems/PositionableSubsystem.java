@@ -31,6 +31,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private Long range = null;
     private int encoderReversed = 1; // 1 if +speed increases encoder, -1 if +speed decreases encoder
     private int encoderFactor = 1000;
+    private boolean hasAbsEncoder = false;
 
     abstract void move(double speed);
 
@@ -54,7 +55,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         rEncoder = motorController.getEncoder();
         aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
 
-        if (aEncoder!=null)
+        if (hasAbsEncoder==true)
             arEncoderDifference = Math.round((aEncoder.getPosition() - rEncoder.getPosition()) * encoderFactor);
         //SmartDashboard.putNumber(name+"_ARD", arEncoderDifference);
 
@@ -65,7 +66,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     private long relativeToAbsolutePostition(long position) {
-        return position + arEncoderDifference; // Convert to absolute
+        return position;// + arEncoderDifference; // Convert to absolute
     }
 
     // Input is absolute position to move to
@@ -74,8 +75,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         double speed;
 
         speed = pid.calculate(currentPos, pos) * 20;
-
-        System.out.println("Moving " + name + " to: " + pos + " from:" + currentPos + ". Calculated speed:" + speed);
+        //if (pos!=currentPos) //(speed!=0)
+            System.out.println("Moving " + name + " to: " + pos + " from:" + currentPos + ". Calculated speed:" + speed);
 
         move(speed);
 
@@ -119,12 +120,12 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public boolean isAtPosition(long pos) {
         long delta = getPosition() - relativeToAbsolutePostition(pos);
-        System.out.println("isAtPosition check: "+delta);
+        System.out.println("isAtPosition delta: "+delta);
         return Math.abs(delta) <= 10;
     }
 
     public long getPosition() {
-        double position = RuntimeConfig.is_simulator_mode || aEncoder == null ? rEncoder.getPosition()
+        double position = ((!RuntimeConfig.is_simulator_mode) && hasAbsEncoder) ? aEncoder.getPosition()
                 : rEncoder.getPosition();
         return Math.round(position * encoderFactor);
     }
@@ -136,8 +137,11 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     public void simulationPeriodic() {
+        double gravity = -1;
         if (getCurrentSpeed() != 0)
             setPosition(getPosition() + encoderReversed*getCurrentSpeed()*10);
+        else if (getPosition()!=0)
+            setPosition(getPosition() + encoderReversed*gravity);
     }
 
     public Command moveCommand(DoubleSupplier speedSupplier) {
@@ -153,5 +157,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         else if (value < -limit)
             return -limit;
         return value;
+    }
+
+    public void hasAbsEncoder(boolean b) {
+        hasAbsEncoder = b;
     }
 }

@@ -120,8 +120,11 @@ public class CommandBot {
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
     if (elbow != null) {
-      if (dualController)
-        elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+      if (dualController) {
+        //elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+        teleOpController.getElbowTrigger().whileFalse(new HoldSubsystemInPositionCommand(elbow));
+        teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+      }
       else {
         teleOpController.getElbowTrigger().onTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
         teleOpController.getElbowTrigger().onFalse(Commands.runOnce(() -> {elbow.stop();}));

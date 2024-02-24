@@ -121,9 +121,14 @@ public class PS4Controller implements TeleOpController {
         return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
+    private double getLeftY(CommandPS4Controller controller) {
+        double val = controller.getLeftY();
+        return Math.abs(val) > OIConstants.kDriveDeadband ? val:0.0;
+    }
+
     @Override
     public Trigger getElbowTrigger() {
-        return ps4Controller2.circle();
+        return new Trigger(()->(getLeftY(ps4Controller2)!=0.0));
     }
 
     @Override

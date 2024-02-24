@@ -116,6 +116,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void simulationInit() {
+    System.out.println("Simulation Mode Init");
     RuntimeConfig.is_simulator_mode = true;
   }
 
