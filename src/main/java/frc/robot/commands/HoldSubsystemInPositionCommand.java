@@ -3,13 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.PositionableSubsystem;
 
 /**
  * A command that performs the intake
  *
  */
-public class PositionSubsystemCommand extends Command {
+public class HoldSubsystemInPositionCommand extends Command {
   private long position; // Encoder value for subsystem to be positioned
   private PositionableSubsystem subsystem;
 
@@ -18,8 +19,8 @@ public class PositionSubsystemCommand extends Command {
    *
    * @param seconds the time to run, in seconds
    */
-  public PositionSubsystemCommand(long position, SubsystemBase subsystem) {
-    this.position = position;
+  public HoldSubsystemInPositionCommand(SubsystemBase subsystem) {
+    this.position = ((PositionableSubsystem)subsystem).getPosition();
     this.subsystem = (PositionableSubsystem) subsystem;
     SendableRegistry.setName(this, getName());
     addRequirements(subsystem);
@@ -27,7 +28,7 @@ public class PositionSubsystemCommand extends Command {
 
   @Override
   public void initialize() {
-    System.out.println("Position "+subsystem.getName()+" command initialized");
+    System.out.println("Hold Position "+subsystem.getName()+" command initialized");
   }
 
   @Override
@@ -43,7 +44,7 @@ public class PositionSubsystemCommand extends Command {
 
   @Override
   public boolean isFinished() {
-    return subsystem.isAtPosition(position);
+    return false; //subsystem.isAtPosition(position);
   }
 
   @Override
