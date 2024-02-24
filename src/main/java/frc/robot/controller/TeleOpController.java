@@ -10,6 +10,9 @@ public interface TeleOpController {
 
     Trigger swerveTrigger();
 
+
+    Trigger getHookUpTrigger();
+    Trigger getHookDownTrigger();
     Trigger getHookTrigger();
     Trigger getElbowTrigger();
     Trigger getWristTrigger();
@@ -23,6 +26,8 @@ public interface TeleOpController {
     double getPivotSpeed();
     double getElevatorSpeed();
     double getHookSpeed();
+    double getHookUpSpeed();
+    double getHookDownSpeed();
 
     Trigger holdElbowInPositionTrigger();
     Trigger holdWristInPositionTrigger();

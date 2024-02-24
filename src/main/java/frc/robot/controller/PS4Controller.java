@@ -31,7 +31,7 @@ public class PS4Controller implements TeleOpController {
     
     @Override
     public Trigger getShootTrigger() {
-        return ps4Controller1.R2();
+        return ps4Controller1.R1();
     }
 
     @Override
@@ -65,8 +65,24 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public Trigger getHookTrigger() {
-        return ps4Controller1.R1();
+    public Trigger getHookUpTrigger() {
+        return ps4Controller1.L2();
+    }
+
+    @Override
+    public double getHookUpSpeed() {
+        return ps4Controller1.getL2Axis();
+    }
+
+    @Override
+    public double getHookDownSpeed() {
+        return ps4Controller1.getR2Axis();
+    }
+    
+
+    @Override
+    public Trigger getHookDownTrigger() {
+        return ps4Controller1.R2();
     }
 
     @Override
@@ -132,11 +148,17 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger holdWristInPositionTrigger() {
-        return ps4Controller1.square();
+        return ps4Controller2.square();
     }
 
     @Override
     public Trigger holdElbowInPositionTrigger() {
-        return ps4Controller1.circle();
+        return ps4Controller2.circle();
+    }
+
+    @Override
+    public Trigger getHookTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
     }
 }

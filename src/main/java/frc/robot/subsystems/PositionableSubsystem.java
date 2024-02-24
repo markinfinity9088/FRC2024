@@ -125,7 +125,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public long getPosition() {
         double position = RuntimeConfig.is_simulator_mode || aEncoder == null ? rEncoder.getPosition()
-                : aEncoder.getPosition();
+                : rEncoder.getPosition();
         return Math.round(position * encoderFactor);
     }
 
