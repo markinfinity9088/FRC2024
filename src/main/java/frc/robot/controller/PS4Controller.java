@@ -126,6 +126,11 @@ public class PS4Controller implements TeleOpController {
         return Math.abs(val) > OIConstants.kDriveDeadband ? val:0.0;
     }
 
+    private double getRightY(CommandPS4Controller controller) {
+        double val = controller.getRightY();
+        return Math.abs(val) > OIConstants.kDriveDeadband ? val:0.0;
+    }
+
     @Override
     public Trigger getElbowTrigger() {
         return new Trigger(()->(getLeftY(ps4Controller2)!=0.0));
@@ -133,7 +138,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getWristTrigger() {
-        return ps4Controller2.square();
+        return new Trigger(()->(getRightY(ps4Controller2)!=0.0));
     }
 
     @Override

@@ -32,15 +32,19 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private int encoderReversed = 1; // 1 if +speed increases encoder, -1 if +speed decreases encoder
     private int encoderFactor = 1000;
     private boolean hasAbsEncoder = false;
+    private static int dcount = 0;
 
     abstract void move(double speed);
 
     public abstract void stop();
 
     public void showPositionOnDashboard() {
-        SmartDashboard.putNumber(ABS_KEY, Math.round(aEncoder.getPosition() * encoderFactor));
-        SmartDashboard.putNumber(REL_KEY, Math.round(rEncoder.getPosition() * encoderFactor));
-        SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
+        if (dcount++%16==0) {
+            if (hasAbsEncoder)
+                SmartDashboard.putNumber(ABS_KEY, Math.round(aEncoder.getPosition() * encoderFactor));
+            SmartDashboard.putNumber(REL_KEY, Math.round(rEncoder.getPosition() * encoderFactor));
+            SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
+        }
     }
 
     public void setMaxSpeed(double maxSpeed) {
@@ -54,7 +58,6 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     protected void init(CANSparkMax motorController) {
         rEncoder = motorController.getEncoder();
         aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
-
         if (hasAbsEncoder==true)
             arEncoderDifference = Math.round((aEncoder.getPosition() - rEncoder.getPosition()) * encoderFactor);
         //SmartDashboard.putNumber(name+"_ARD", arEncoderDifference);
@@ -62,7 +65,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         System.out.println("Initialized " + name + " with arDiff:" + arEncoderDifference);
 
         showPositionOnDashboard();
-        REVPhysicsSim.getInstance().addSparkMax(motorController, 2.6F, 5676.0F); // DCMotor.getNEO(1));
+        if (RuntimeConfig.is_simulator_mode)
+            REVPhysicsSim.getInstance().addSparkMax(motorController, 2.6F, 5676.0F); // DCMotor.getNEO(1));
     }
 
     private long relativeToAbsolutePostition(long position) {
@@ -79,8 +83,6 @@ public abstract class PositionableSubsystem extends SubsystemBase {
             System.out.println("Moving " + name + " to: " + pos + " from:" + currentPos + ". Calculated speed:" + speed);
 
         move(speed);
-
-        showPositionOnDashboard();
     }
 
     protected double getCurrentSpeed() {
@@ -131,7 +133,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     public void setPosition(double pos) {
-        System.out.println("Setting " + name + " encoder position to " + pos);
+        System.out.println("Setting " + name + " position to " + pos);
         if (rEncoder != null)
             rEncoder.setPosition(pos/encoderFactor);
     }
@@ -140,14 +142,14 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         double gravity = -1;
         if (getCurrentSpeed() != 0)
             setPosition(getPosition() + encoderReversed*getCurrentSpeed()*10);
-        else if (getPosition()!=0)
+        else if (getPosition()*encoderReversed>=0)
             setPosition(getPosition() + encoderReversed*gravity);
+        showPositionOnDashboard();
     }
 
     public Command moveCommand(DoubleSupplier speedSupplier) {
         return run(() -> {
             move(speedSupplier.getAsDouble());
-            showPositionOnDashboard();
         });
     }
 

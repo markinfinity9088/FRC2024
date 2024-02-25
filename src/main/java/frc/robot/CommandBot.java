@@ -122,6 +122,7 @@ public class CommandBot {
     if (elbow != null) {
       if (dualController) {
         //elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+        //teleOpController.getElbowTrigger().whileFalse(Commands.runOnce(() -> {elbow.stop();}));// new HoldSubsystemInPositionCommand(elbow));
         teleOpController.getElbowTrigger().whileFalse(new HoldSubsystemInPositionCommand(elbow));
         teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
       }
@@ -133,8 +134,11 @@ public class CommandBot {
 
     WristSubsystem wrist = WristSubsystem.getInstance();
     if (wrist != null) {
-      if (dualController)
-        wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+      if (dualController) {
+        //wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+        teleOpController.getWristTrigger().whileFalse(new HoldSubsystemInPositionCommand(wrist));
+        teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+      }
       else {
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
         teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
