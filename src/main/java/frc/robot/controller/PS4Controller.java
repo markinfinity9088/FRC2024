@@ -40,6 +40,11 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
+    public Trigger intakeTriggerDrive(){
+        return ps4Controller1.L1();
+    }
+
+    @Override
     public Trigger swerveTrigger() {
         return ps4Controller1.L1();
     }

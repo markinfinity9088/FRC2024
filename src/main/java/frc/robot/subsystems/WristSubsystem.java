@@ -13,6 +13,7 @@ public class WristSubsystem extends PositionableSubsystem {
     wrist = new CANSparkMax(Constants.IntakeConstants.intakeWristCanId, MotorType.kBrushless);
     wrist.setIdleMode(IdleMode.kBrake);
     wrist.setSmartCurrentLimit(Constants.IntakeConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
+    wrist.burnFlash();
 
     super.init(wrist);
     super.setMaxSpeed(Constants.IntakeConstants.MAX_SPEED);

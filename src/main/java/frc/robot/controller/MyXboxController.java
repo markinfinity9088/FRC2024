@@ -99,6 +99,11 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
+    public Trigger intakeTriggerDrive(){
+        throw new UnsupportedOperationException("Unimplemented method 'intakeTrigger'");
+    }
+
+    @Override
     public Trigger getElevatorTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getElevatorTrigger'");

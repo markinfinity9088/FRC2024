@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public interface TeleOpController {
     //Bindings for button toggle
     Trigger intakeTrigger(); // Release take ring from floor
+    Trigger intakeTriggerDrive();
     Trigger releaseToAMPTrigger(); // Release ring to AMP
     Trigger getShootTrigger(); // Shoot the ring out
 

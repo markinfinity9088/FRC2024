@@ -103,6 +103,8 @@ public class CommandBot {
       // Deploy the intake with the triangle button for the cone
       teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
       teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      teleOpController.intakeTriggerDrive().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
+      teleOpController.intakeTriggerDrive().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
       teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {intake.releaseToAMP();}));
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
@@ -123,10 +125,10 @@ public class CommandBot {
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();
     if (elbow != null) {
       if (dualController) {
-        //elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
-        //teleOpController.getElbowTrigger().whileFalse(Commands.runOnce(() -> {elbow.stop();}));// new HoldSubsystemInPositionCommand(elbow));
-        teleOpController.getElbowTrigger().whileFalse(new HoldSubsystemInPositionCommand(elbow));
-        teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+        elbow.setDefaultCommand(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
+        teleOpController.getElbowTrigger().whileFalse(Commands.runOnce(() -> {elbow.stop();}));// new HoldSubsystemInPositionCommand(elbow));
+        // teleOpController.getElbowTrigger().whileFalse(new HoldSubsystemInPositionCommand(elbow));
+        // teleOpController.getElbowTrigger().whileTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
       }
       else {
         teleOpController.getElbowTrigger().onTrue(elbow.moveCommand(() -> teleOpController.getElbowSpeed()));
@@ -138,8 +140,9 @@ public class CommandBot {
     if (wrist != null) {
       if (dualController) {
         //wrist.setDefaultCommand(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
-        teleOpController.getWristTrigger().whileFalse(new HoldSubsystemInPositionCommand(wrist));
+        // teleOpController.getWristTrigger().whileFalse(new HoldSubsystemInPositionCommand(wrist));
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
+        teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
       }
       else {
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));

@@ -31,9 +31,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public CANSparkMax createMotorController(int canId) {
         CANSparkMax motor = new CANSparkMax(canId, MotorType.kBrushless);
-        motor.setIdleMode(IdleMode.kBrake);
+        motor.setIdleMode(IdleMode.kCoast);
         motor.setSmartCurrentLimit(Constants.ShooterConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
 
+        motor.burnFlash();
         return motor;
     }
     
