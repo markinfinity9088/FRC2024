@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
 
@@ -29,13 +30,15 @@ public class ClimbSubsystem extends PositionableSubsystem {
         m_leadMotor = new CANSparkMax(leadDeviceID, MotorType.kBrushless);
         m_followMotor = new CANSparkMax(followDeviceID, MotorType.kBrushless);
         m_followMotor.setInverted(true);
-
-
+          
         /**
          * The RestoreFactoryDefaults method to reset the configuration
          */
         m_leadMotor.restoreFactoryDefaults();
         m_followMotor.restoreFactoryDefaults();
+
+        m_leadMotor.setIdleMode(IdleMode.kBrake);
+        m_followMotor.setIdleMode(IdleMode.kBrake);  
 
         /**
          * In CAN mode, one SPARK MAX can be configured to follow another. This is done
