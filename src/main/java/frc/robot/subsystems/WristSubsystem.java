@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 
 public class WristSubsystem extends PositionableSubsystem {
   private final CANSparkMax wrist;
@@ -16,6 +17,7 @@ public class WristSubsystem extends PositionableSubsystem {
     wrist.burnFlash();
 
     super.init(wrist);
+    super.setPIDValues(IntakeConstants.wristP, IntakeConstants.wristI, IntakeConstants.wristD);
     super.setMaxSpeed(Constants.IntakeConstants.MAX_SPEED);
     //super.onlyRelEncoder(false);
     //super.setMinPoint(100);
