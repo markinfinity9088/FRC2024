@@ -26,6 +26,12 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String ABS_KEY = name + "_ABS";
     private final String REL_KEY = name + "_REL";
     private final String SPEED_KEY = name + " SPEED";
+    private final String PIDKP_KEY=name+"_KP";
+    private final String PIDKI_KEY=name+"_KI";
+    private final String PIDKD_KEY=name+"_KD";
+    private Double currentKP = 0.0;
+    private Double currentKI = 0.0;
+    private Double currentKD = 0.0;
     private long minEncoder = 0;
     private long maxEncoder = 0;
     private Long range = null;
@@ -37,13 +43,31 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     abstract void move(double speed);
 
     public abstract void stop();
+    public void setPIDValues(double kP, double kI, double kD){
+        pid = new PIDController(kP, kI, kD);
+        currentKP = kP;
+        currentKI = kI;
+        currentKD = kD;
+    }
 
     public void showPositionOnDashboard() {
-        if (dcount++%16==0) {
+        //if (dcount++%16==0) 
+        {
             if (hasAbsEncoder)
                 SmartDashboard.putNumber(ABS_KEY, Math.round(aEncoder.getPosition() * encoderFactor));
             SmartDashboard.putNumber(REL_KEY, Math.round(rEncoder.getPosition() * encoderFactor));
             SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
+            
+            double kPVal = SmartDashboard.getNumber(PIDKP_KEY, 0);
+            double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
+            double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
+
+
+
+            if (kPVal != currentKP || kIVal != currentKI || kDVal != currentKD){
+                setPIDValues(kPVal, kIVal, kDVal);
+            }
+            
         }
     }
 
@@ -56,6 +80,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     protected void init(CANSparkMax motorController) {
+
         rEncoder = motorController.getEncoder();
         aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
         if (hasAbsEncoder==true)

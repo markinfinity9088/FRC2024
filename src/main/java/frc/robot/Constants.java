@@ -6,6 +6,8 @@ package frc.robot;
 
 //import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkBase.IdleMode;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -150,6 +152,10 @@ public final class Constants {
     public static final double ELBOW_MAX_SPEED = 0.5;
     public static final int intakeCanId = 17;
     public static final int intakeWristCanId = 16;
+
+    public static final double wristP = 0.1;
+    public static final double wristI = 0;
+    public static final double wristD = 0;
   }
 
   public static final class ShooterConstants {
