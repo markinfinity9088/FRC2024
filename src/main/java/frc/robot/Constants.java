@@ -153,10 +153,12 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int frontRightShooterCanId = 13;
-    public static final int backRightShooterCanId = 12;
-    public static final int frontLeftShooterCanId = 15;
-    public static final int backLeftShooterCanId = 14;
+    // public static final int frontRightShooterCanId = 13;
+    // public static final int backRightShooterCanId = 12;
+    // public static final int frontLeftShooterCanId = 15;
+    // public static final int backLeftShooterCanId = 14;
+    public static final int rightShooterCanId = 12;
+    public static final int leftShooterCanId = 15;
     public static final int shooterPivotCanId = 11;
     public static final int CURRENT_LIMIT_A = 30;
   }

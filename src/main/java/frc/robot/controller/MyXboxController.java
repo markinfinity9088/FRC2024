@@ -105,7 +105,13 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
-    public Trigger getPivotTrigger() {
+    public Trigger getPivotTriggerUp() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPivotTrigger'");
+    }
+
+    @Override
+    public Trigger getPivotTriggerDown() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPivotTrigger'");
     }

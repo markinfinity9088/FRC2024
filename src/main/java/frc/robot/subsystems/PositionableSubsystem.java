@@ -147,6 +147,20 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         });
     }
 
+    public Command moveUp(){
+        return run(() -> {
+            move(-.1);
+            showPositionOnDashboard();
+        });
+    }
+
+    public Command moveDown(){
+        return run(() -> {
+            move(.1);
+            showPositionOnDashboard();
+        });
+    }
+
     protected double limitValue(double value, double limit) {
         if (value > limit)
             return limit;

@@ -118,8 +118,13 @@ public class PS4ControllerSingle implements TeleOpController {
     }
 
     @Override
-    public Trigger getPivotTrigger() {
-        return ps4Controller1.cross();
+    public Trigger getPivotTriggerUp() {
+        return ps4Controller1.L1();
+    }
+
+    @Override
+    public Trigger getPivotTriggerDown() {
+        return ps4Controller1.R1();
     }
 
     @Override

@@ -87,8 +87,8 @@ public class CommandBot {
       //hence you see x and y reversed when passing to drive
       if (dualController)
         s_drive.setDefaultCommand(s_drive.driveCommand(
-          () -> teleOpController.getXSpeedSwerve(), () -> teleOpController.getYSpeedSwerve(),
-          () -> teleOpController.getRotation(), false, true));
+          () -> teleOpController.getYSpeedSwerve(), () -> teleOpController.getXSpeedSwerve(),
+          () -> teleOpController.getRotation(), true, true));
      /*  else
         teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(
           () -> -teleOpController.getXSpeedSwerve(), () -> -teleOpController.getYSpeedSwerve(),
@@ -108,14 +108,16 @@ public class CommandBot {
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
       if (shooter!=null) {
-        teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {shooter.startShooterWheels(1.0);}));
+        teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {shooter.startShooterWheels(1);}));
         teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {intake.stop(); shooter.stopShooterWheels();}));
       }
     }
 
     if (pivot!=null) {
-      teleOpController.getPivotTrigger().whileTrue(pivot.moveCommand(() -> teleOpController.getPivotSpeed()));
-      teleOpController.getPivotTrigger().onFalse(Commands.runOnce(() -> {pivot.stop();}));
+      teleOpController.getPivotTriggerDown().whileTrue(pivot.moveDown());
+      teleOpController.getPivotTriggerUp().whileTrue(pivot.moveUp());
+      teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();}));
+      teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();}));
     }
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();

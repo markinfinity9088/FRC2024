@@ -17,7 +17,8 @@ public interface TeleOpController {
     Trigger getElbowTrigger();
     Trigger getWristTrigger();
     Trigger getElevatorTrigger();
-    Trigger getPivotTrigger();
+    Trigger getPivotTriggerUp();
+    Trigger getPivotTriggerDown();
 
     // Bindings for Axis value
     double getIntakeSpeed();
