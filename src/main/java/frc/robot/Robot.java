@@ -9,7 +9,7 @@ import java.util.Date;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.PulleyConstants;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
@@ -79,7 +79,13 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    WristSubsystem.getInstance().periodic();
+    ElbowSubsystem.getInstance().periodic();
+    ElevatorSubsystem.getInstance().periodic();
+    PivotSubsystem.getInstance().periodic();
+    ClimbSubsystem.getInstance().periodic();
+  }
 
   @Override
   public void teleopInit() {
@@ -98,8 +104,12 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    WristSubsystem.getInstance().updatePIDValues();
     m_robot.periodic();
+    WristSubsystem.getInstance().periodic();
+    ElbowSubsystem.getInstance().periodic();
+    ElevatorSubsystem.getInstance().periodic();
+    PivotSubsystem.getInstance().periodic();
+    ClimbSubsystem.getInstance().periodic();
   }
 
   @Override
@@ -112,9 +122,6 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    WristSubsystem.getInstance().showPositionOnDashboard();
-    ElbowSubsystem.getInstance().showPositionOnDashboard();
-    ElevatorSubsystem.getInstance().showPositionOnDashboard();
   }
 
   @Override
@@ -130,6 +137,7 @@ public class Robot extends LoggedRobot {
     ElbowSubsystem.getInstance().simulationPeriodic();
     ElevatorSubsystem.getInstance().simulationPeriodic();
     PivotSubsystem.getInstance().simulationPeriodic();
+    ClimbSubsystem.getInstance().simulationPeriodic();
   }
 
 }
