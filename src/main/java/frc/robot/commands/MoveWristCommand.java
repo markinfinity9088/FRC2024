@@ -1,12 +1,24 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.WristSubsystem;
+import frc.robot.utils.PID.AsymmetricProfiledPIDController;
+import frc.robot.utils.PID.AsymmetricTrapezoidProfile.Constraints;
+import frc.robot.utils.PID.AsymmetricTrapezoidProfile.State;
+
 
 public class MoveWristCommand extends Command{
     private WristSubsystem wrist;
     private boolean up;
     private double position;
+   
+    public static final Constraints profileConstraints = new Constraints(1, 0.2, 0.5);
+    private AsymmetricProfiledPIDController wristPIDController = 
+      new AsymmetricProfiledPIDController(8.0,0,0.01, profileConstraints); //MUST START AT 0 P
+
+    TrapezoidProfile trapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(5, 10));
+  
     public MoveWristCommand(double position, boolean up){
         wrist = WristSubsystem.getInstance();
         this.up = up;
@@ -15,15 +27,25 @@ public class MoveWristCommand extends Command{
     
   @Override
   public void initialize() {
-    System.out.println("Position "+wrist.getName()+" command initialized");
+    // Creates a new state with a position of 5 meters
+    // and a velocity of 0 meters per second
+    TrapezoidProfile.State pidState = new TrapezoidProfile.State(position, 0);
+    
+     wristPIDController.setGoal(position);
+    System.out.println("Position "+wrist.getName()+" command initialized with position "+position);
   }
 
   @Override
   public void execute() {
-    //System.out.println("Executing "+getName());
-    double speed = 0.4;
+    System.out.println("Executing "+getName()+" position = "+wrist.getPosition());
+    double speed = wristPIDController.calculate(wrist.getPosition());
+    System.out.println("Wrist speed from PID = "+speed);
+    //wrist.move(speed);
+    
+    /*double speed = 0.4;
     if (!up){speed *= -1;}
     wrist.move(speed);
+    */
   }
 
   @Override

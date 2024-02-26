@@ -14,6 +14,7 @@ import frc.robot.subsystems.WristSubsystem;
 /** Returns a command that grabs the item */
 public class IntakeCommands {
   final static long wristIntakePosition = 20;
+  final static long wristHandoffPosition = 240;
   final static long elbowIntakePosition = 100;
   final static long elevatorIntakePosition = 50;
   
@@ -29,8 +30,11 @@ public class IntakeCommands {
   public static Command sampleAutonCommand() {
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
+    //commandGroup.addCommands(new PositionSubsystemCommand(wristHandoffPosition, WristSubsystem.getInstance()));
+    commandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance(), wristHandoffPosition, 0.5));
     //commandGroup.addCommands(new PositionSubsystemCommand(wristIntakePosition, WristSubsystem.getInstance()));
-    commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
+
+    //commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(pivotShootPosition, PivotSubsystem.getInstance()));
     //commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake(1.0);}).withTimeout(1.0));
@@ -41,9 +45,9 @@ public class IntakeCommands {
   public static Command sampleWristCommand() {
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
-    commandGroup.addCommands(new MoveWristCommand(970, true));
-    commandGroup.addCommands(new WaitCommand(3));
-    commandGroup.addCommands(new MoveWristCommand(966, false));
+    commandGroup.addCommands(new MoveWristCommand(240, true));
+    commandGroup.addCommands(new WaitCommand(10));
+    commandGroup.addCommands(new MoveWristCommand(0, false));
     return commandGroup;
   }
 }

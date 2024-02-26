@@ -14,13 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.RuntimeConfig;
+import frc.robot.utils.PID.AsymmetricProfiledPIDController;
+import frc.robot.utils.PID.AsymmetricTrapezoidProfile.Constraints;
 
 public abstract class PositionableSubsystem extends SubsystemBase {
     private double currentSpeed;
     private double maxSpeed = 0;
     private long arEncoderDifference = 0;
     private AbsoluteEncoder aEncoder;
-    private PIDController pid = new PIDController(.001, 0.0001, 0);
     private RelativeEncoder rEncoder;
     private final String name = getName().replace("Subsystem", "");
     private final String ABS_KEY = name + "_ABS";
@@ -29,9 +30,10 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String PIDKP_KEY=name+"_KP";
     private final String PIDKI_KEY=name+"_KI";
     private final String PIDKD_KEY=name+"_KD";
-    private Double currentKP = 0.1;
-    private Double currentKI = 0.0001;
-    private Double currentKD = 0.0;
+    private Double currentKP = 0.001;
+    private Double currentKI = 0.01;
+    private Double currentKD = 0.0001;
+    private PIDController pid = new PIDController(currentKP, currentKI, currentKD);
     private long minEncoder = 0;
     private long maxEncoder = 0;
     private Long range = null;
@@ -59,7 +61,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
             SmartDashboard.putNumber(REL_KEY, Math.round(rEncoder.getPosition() * encoderFactor));
             SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
 
-            System.out.print(REL_KEY+":"+Math.round(rEncoder.getPosition() * encoderFactor));
+            //System.out.print(REL_KEY+":"+Math.round(rEncoder.getPosition() * encoderFactor));
             
            
             
@@ -70,11 +72,12 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
         double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
 
+        //System.out.println("Dashboard PID Values = "+kPVal+" currentKP="+currentKP);
 
-
-            if (kPVal != currentKP || kIVal != currentKI || kDVal != currentKD){
-                setPIDValues(kPVal, kIVal, kDVal);
-            }
+        if (kPVal != currentKP || kIVal != currentKI || kDVal != currentKD) {
+            setPIDValues(kPVal, kIVal, kDVal);
+            System.out.println(name+" Setting PID with values "+currentKP+" KI="+currentKI+" KD= "+currentKD);
+        }
     }
 
     public void setMaxSpeed(double maxSpeed) {
@@ -111,17 +114,33 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     // Input is absolute position to move to
     public void moveToPosition(long pos) {
+        moveToPosition(pos, maxSpeed);
+    }
+
+    // Input is absolute position to move to
+    public void moveToPosition(long pos, double maxSpeed) {
         long currentPos = getPosition(); // relativeToAbsolutePostition(rEncoder.getPosition());
         double speed;
 
         speed = pid.calculate(currentPos, pos);
+        if (Math.abs(speed) > maxSpeed){
+            if (speed < 0){
+                speed = -maxSpeed;
+            } else {
+                speed = maxSpeed;
+            }
+        }
+
+        ////
+        // speed = asymetricPIDController.calculate(currentPos, pos);
+
         //if (pos!=currentPos) //(speed!=0)
             System.out.println("Moving " + name + " to: " + pos + " from:" + currentPos + ". Calculated speed:" + speed);
+        System.out.println(pid.getP() + "  " + pid.getI() + "  " + pid.getD()); 
 
         move(speed);
         showPositionOnDashboard();
 
-        System.out.println(pid.getP() + "  " + pid.getI() + "  " + pid.getD()); 
     }
 
     protected double getCurrentSpeed() {

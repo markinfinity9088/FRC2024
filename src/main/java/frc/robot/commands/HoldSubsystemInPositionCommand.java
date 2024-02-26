@@ -10,8 +10,9 @@ import frc.robot.subsystems.PositionableSubsystem;
  *
  */
 public class HoldSubsystemInPositionCommand extends Command {
-  private long position; // Encoder value for subsystem to be positioned
+  private long position=0; // Encoder value for subsystem to be positioned
   private PositionableSubsystem subsystem;
+  private double maxSpeed = 0.5;
 
   /**
    * Creates a new command to be in poistion
@@ -24,16 +25,28 @@ public class HoldSubsystemInPositionCommand extends Command {
     addRequirements(subsystem);
   }
 
+  public HoldSubsystemInPositionCommand(SubsystemBase subsystem, long holdPosition, double maxSpeed) {
+    this.subsystem = (PositionableSubsystem) subsystem;
+    SendableRegistry.setName(this, getName());
+    this.position = holdPosition;
+    addRequirements(subsystem);
+    this.maxSpeed = maxSpeed;
+
+    System.out.println("HoldSubsystemInPositionCommand called for " + subsystem.getName()+" with position= "+holdPosition);
+  }
+
   @Override
   public void initialize() {
-    position = ((PositionableSubsystem)subsystem).getPosition();
+    if (position == 0) {
+          position = ((PositionableSubsystem)subsystem).getPosition();
+    }
     System.out.println("Hold Position "+subsystem.getName()+" command initialized with pos:"+position);
   }
 
   @Override
   public void execute() {
     //System.out.println("Executing "+getName());
-    subsystem.moveToPosition(position);
+    subsystem.moveToPosition(position, maxSpeed);
   }
 
   @Override

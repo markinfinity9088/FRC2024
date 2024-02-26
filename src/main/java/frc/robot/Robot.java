@@ -51,6 +51,8 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotPeriodic() {
+    WristSubsystem.getInstance().updatePIDValues();
+    
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -83,6 +85,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
+    System.out.println("Teleop init called \n");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -98,7 +101,6 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    WristSubsystem.getInstance().updatePIDValues();
     m_robot.periodic();
   }
 
