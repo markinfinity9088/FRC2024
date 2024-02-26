@@ -10,6 +10,9 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,10 +36,18 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private int encoderFactor = 1000;
     private boolean hasAbsEncoder = false;
     private static int dcount = 0;
+    private StringLogEntry logger;
 
     abstract void move(double speed);
 
     public abstract void stop();
+
+    public void logInfo() {
+        String logString = getPosition()+" , "+ getCurrentSpeed();
+        System.out.println(logString);
+        if (logger!=null)
+            logger.append(logString);
+    }
 
     public void showPositionOnDashboard() {
         if (dcount++%16==0) {
@@ -61,6 +72,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         if (hasAbsEncoder==true)
             arEncoderDifference = Math.round((aEncoder.getPosition() - rEncoder.getPosition()) * encoderFactor);
         //SmartDashboard.putNumber(name+"_ARD", arEncoderDifference);
+
+        DataLog log = DataLogManager.getLog();
+        logger = new StringLogEntry(log, name);
 
         System.out.println("Initialized " + name + " with arDiff:" + arEncoderDifference);
 
