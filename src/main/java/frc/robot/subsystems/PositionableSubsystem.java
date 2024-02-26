@@ -12,12 +12,14 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
-import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.RuntimeConfig;
+import frc.robot.utils.PID.AsymmetricProfiledPIDController;
+import frc.robot.utils.PID.AsymmetricTrapezoidProfile.Constraints;
+import frc.robot.utils.PID.AsymmetricTrapezoidProfile.State;
 
 public abstract class PositionableSubsystem extends SubsystemBase {
     private double currentSpeed;
@@ -44,6 +46,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private boolean hasAbsEncoder = false;
     private static int dcount = 0;
     private DoubleLogEntry plogger, slogger;
+    private Long currentDestPos = null;
+
+    AsymmetricProfiledPIDController asmpid;
 
     abstract void move(double speed);
 
@@ -51,7 +56,12 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public void periodic() {
         logInfo();
+        //updatePIDValues();
+    }
+
+    public void reset() {
         updatePIDValues();
+        rEncoder.setPosition(0);
     }
 
     protected void setPIDValues(double kP, double kI, double kD) {
@@ -59,11 +69,15 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         currentKP = kP;
         currentKI = kI;
         currentKD = kD;
-        if (pid==null)
+        if (pid==null) {
             pid = new PIDController(kP, kI, kD);
-        else 
+            
+            Constraints c = new Constraints(1.0, 1, -1);
+            asmpid =  new AsymmetricProfiledPIDController(kP, kI, kD, c);
+        } else {
             pid.setPID(kP, kI, kD);
-    
+            asmpid.setPID(kP, kI, kD);
+        }
         System.out.println("PID values set to:"+pid.getP() + "  " + pid.getI() + "  " + pid.getD());
     }
 
@@ -134,10 +148,18 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public void moveToPosition(long pos) {
         long currentPos = getPosition(); // relativeToAbsolutePostition(rEncoder.getPosition());
         double speed;
+        double asymSpeed;
+        if (currentDestPos==null || currentDestPos!=pos) {
+            currentDestPos = pos;
+            speed = pid.calculate(currentPos, pos);
+            asymSpeed = asmpid.calculate(currentPos, new State(pos, currentSpeed));
+        } else {
+            speed = pid.calculate(currentPos);
+            asymSpeed = currentSpeed+asmpid.calculate(currentPos);
+        }
 
-        speed = pid.calculate(currentPos, pos);
         // if (pos!=currentPos) //(speed!=0)
-        System.out.println("Moving " + name +  " from:" + currentPos +" to:" + pos + ". Calculated PID speed:" + speed);
+        System.out.println("Moving " + name +  " from:" + currentPos +" to:" + pos + ". Calculated PID speed:" + speed+"..asym:"+asymSpeed);
 
         move(speed);
         showPositionOnDashboard();
@@ -215,7 +237,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         double gravity = -1;
         if (getCurrentSpeed() != 0)
             setPosition(getPosition() + encoderReversed * getCurrentSpeed() * 10);
-        else if (getPosition() * encoderReversed >= 0)
+        else if (getPosition() * encoderReversed > 0)
             setPosition(getPosition() + encoderReversed * gravity);
         showPositionOnDashboard();
     }
