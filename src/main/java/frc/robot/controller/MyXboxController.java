@@ -99,13 +99,24 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
+    public Trigger intakeTriggerDrive(){
+        throw new UnsupportedOperationException("Unimplemented method 'intakeTrigger'");
+    }
+
+    @Override
     public Trigger getElevatorTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getElevatorTrigger'");
     }
 
     @Override
-    public Trigger getPivotTrigger() {
+    public Trigger getPivotTriggerUp() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPivotTrigger'");
+    }
+
+    @Override
+    public Trigger getPivotTriggerDown() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPivotTrigger'");
     }
@@ -159,6 +170,12 @@ public class MyXboxController implements TeleOpController{
     public double getHookDownSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getHookDownSpeed'");
+    }
+
+    @Override
+    public Trigger moveWristTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'moveWristTrigger'");
     }
 }
 

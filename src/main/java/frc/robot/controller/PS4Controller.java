@@ -11,7 +11,7 @@ public class PS4Controller implements TeleOpController {
     private CommandPS4Controller ps4Controller1;
     private CommandPS4Controller ps4Controller2;
     static private PS4Controller self;
-    final double maxSpeed = 0.5;
+    final double maxSpeed = 0.8;
 
     private PS4Controller() {
         ps4Controller1 = new CommandPS4Controller(Constants.OIConstants.kDriverControllerPort0);
@@ -40,13 +40,18 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
+    public Trigger intakeTriggerDrive(){
+        return ps4Controller1.L1();
+    }
+
+    @Override
     public Trigger swerveTrigger() {
         return ps4Controller1.L1();
     }
 
     @Override
     public double getXSpeedSwerve() {
-        double speed = ps4Controller1.getLeftX();
+        double speed = -ps4Controller1.getLeftX();
         speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
         //System.out.println("xspeed:"+leftx);
         return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
@@ -54,7 +59,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getYSpeedSwerve() {
-        double speed = ps4Controller1.getLeftY();
+        double speed = -ps4Controller1.getLeftY();
         speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
         return MathUtil.applyDeadband(speed, OIConstants.kDriveDeadband);
     }
@@ -108,7 +113,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getPivotSpeed() {
-        return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
+        return MathUtil.applyDeadband(-ps4Controller2.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     @Override
@@ -147,8 +152,13 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public Trigger getPivotTrigger() {
-        return ps4Controller2.cross();
+    public Trigger getPivotTriggerUp() {
+        return ps4Controller1.triangle();
+    }
+
+    @Override
+    public Trigger getPivotTriggerDown() {
+        return ps4Controller1.cross();
     }
 
     @Override
@@ -171,4 +181,10 @@ public class PS4Controller implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
     }
+
+    @Override
+    public Trigger moveWristTrigger() {
+        return ps4Controller1.circle();
+    }
+
 }

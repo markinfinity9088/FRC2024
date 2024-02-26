@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.Date;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.PulleyConstants;
@@ -37,6 +38,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
+    CameraServer.startAutomaticCapture();
     m_robot.init();
   }
 
@@ -96,6 +98,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    WristSubsystem.getInstance().updatePIDValues();
     m_robot.periodic();
   }
 
