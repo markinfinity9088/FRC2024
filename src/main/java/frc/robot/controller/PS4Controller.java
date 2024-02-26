@@ -181,4 +181,10 @@ public class PS4Controller implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
     }
+
+    @Override
+    public Trigger moveWristTrigger() {
+        return ps4Controller1.circle();
+    }
+
 }

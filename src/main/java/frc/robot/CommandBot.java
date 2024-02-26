@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
+import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -143,6 +144,7 @@ public class CommandBot {
         // teleOpController.getWristTrigger().whileFalse(new HoldSubsystemInPositionCommand(wrist));
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
         teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
+        teleOpController.moveWristTrigger().whileTrue(new PositionSubsystemCommand(80, wrist));
       }
       else {
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));

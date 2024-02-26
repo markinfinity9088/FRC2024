@@ -39,4 +39,7 @@ public interface TeleOpController {
     double getXSpeedSwerve();
     double getYSpeedSwerve();
     double getRotation();
+
+    //Preset Bindings
+    Trigger moveWristTrigger();
 }

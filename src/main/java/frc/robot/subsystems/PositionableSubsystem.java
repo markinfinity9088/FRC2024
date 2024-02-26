@@ -29,8 +29,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String PIDKP_KEY=name+"_KP";
     private final String PIDKI_KEY=name+"_KI";
     private final String PIDKD_KEY=name+"_KD";
-    private Double currentKP = 0.0;
-    private Double currentKI = 0.0;
+    private Double currentKP = 0.1;
+    private Double currentKI = 0.0001;
     private Double currentKD = 0.0;
     private long minEncoder = 0;
     private long maxEncoder = 0;
@@ -53,22 +53,28 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public void showPositionOnDashboard() {
         //if (dcount++%16==0) 
         {
-            if (hasAbsEncoder)
+            //System.out.println(ABS_KEY+":"+aEncoder.getPosition() * encoderFactor);
+            //if (hasAbsEncoder)
                 SmartDashboard.putNumber(ABS_KEY, Math.round(aEncoder.getPosition() * encoderFactor));
             SmartDashboard.putNumber(REL_KEY, Math.round(rEncoder.getPosition() * encoderFactor));
             SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
+
+            System.out.print(REL_KEY+":"+Math.round(rEncoder.getPosition() * encoderFactor));
             
-            double kPVal = SmartDashboard.getNumber(PIDKP_KEY, 0);
-            double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
-            double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
+           
+            
+        }
+    }
+    public void updatePIDValues() {
+        double kPVal = SmartDashboard.getNumber(PIDKP_KEY, 0);
+        double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
+        double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
 
 
 
             if (kPVal != currentKP || kIVal != currentKI || kDVal != currentKD){
                 setPIDValues(kPVal, kIVal, kDVal);
             }
-            
-        }
     }
 
     public void setMaxSpeed(double maxSpeed) {
@@ -80,6 +86,11 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     protected void init(CANSparkMax motorController) {
+
+         SmartDashboard.putNumber(PIDKP_KEY, currentKP);
+            SmartDashboard.putNumber(PIDKI_KEY, currentKI);
+            SmartDashboard.putNumber(PIDKD_KEY, currentKD);
+
 
         rEncoder = motorController.getEncoder();
         aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
@@ -103,11 +114,14 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         long currentPos = getPosition(); // relativeToAbsolutePostition(rEncoder.getPosition());
         double speed;
 
-        speed = pid.calculate(currentPos, pos) * 20;
+        speed = pid.calculate(currentPos, pos);
         //if (pos!=currentPos) //(speed!=0)
             System.out.println("Moving " + name + " to: " + pos + " from:" + currentPos + ". Calculated speed:" + speed);
 
         move(speed);
+        showPositionOnDashboard();
+
+        System.out.println(pid.getP() + "  " + pid.getI() + "  " + pid.getD()); 
     }
 
     protected double getCurrentSpeed() {
@@ -140,6 +154,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         if ((speed != 0) || currentSpeed != 0) {
             if (maxSpeed != 0)
                 speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
+            if (Math.abs(currentSpeed-speed)>0.05) {
+                if (currentSpeed>speed) currentSpeed -= 0.05; else currentSpeed += 0.05;
+            }
             System.out.println("Set " + name + " speed:" + speed);
         }
         currentSpeed = speed;
@@ -175,6 +192,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public Command moveCommand(DoubleSupplier speedSupplier) {
         return run(() -> {
             move(speedSupplier.getAsDouble());
+            showPositionOnDashboard();
         });
     }
 

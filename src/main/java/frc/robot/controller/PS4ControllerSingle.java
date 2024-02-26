@@ -170,4 +170,9 @@ public class PS4ControllerSingle implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getHookDownSpeed'");
     }
+
+    @Override
+    public Trigger moveWristTrigger() {
+        return ps4Controller1.circle();
+    }
 }
