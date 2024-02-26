@@ -6,8 +6,7 @@ package frc.robot.utils.PID;
 
 import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
 
-
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.utils.PID.AsymmetricTrapezoidProfile.State;
 
@@ -23,7 +22,7 @@ import java.util.function.Supplier;
  *
  * <p>This class is provided by the NewCommands VendorDep
  */
-public class AsymmetricProfiledPIDCommand extends CommandBase {
+public class AsymmetricProfiledPIDCommand extends Command {
   protected final AsymmetricProfiledPIDController m_controller;
   protected DoubleSupplier m_measurement;
   protected Supplier<State> m_goal;

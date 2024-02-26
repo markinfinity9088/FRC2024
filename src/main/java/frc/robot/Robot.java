@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.Date;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -40,6 +41,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     CameraServer.startAutomaticCapture();
     m_robot.init();
+    SmartDashboard.putBoolean("Reset", false);
   }
 
   /**
@@ -56,6 +58,16 @@ public class Robot extends LoggedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    boolean refresh = SmartDashboard.getBoolean("Reset", false);
+    if (refresh) {
+      System.out.println("Resetting subsystems..");
+      WristSubsystem.getInstance().reset();
+      ElbowSubsystem.getInstance().reset();
+      ElevatorSubsystem.getInstance().reset();
+      PivotSubsystem.getInstance().reset();
+      ClimbSubsystem.getInstance().reset();
+      SmartDashboard.putBoolean("Reset", false); 
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
