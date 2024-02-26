@@ -51,6 +51,8 @@ public class ClimbSubsystem extends PositionableSubsystem {
 
         super.init(m_leadMotor);
         super.setMaxSpeed(Constants.ClimbConstants.MAX_SPEED);
+        m_leadMotor.burnFlash();
+        m_followMotor.burnFlash();
     }
 
     // Method to create new singleton object

@@ -37,6 +37,11 @@ public class PS4ControllerSingle implements TeleOpController {
     }
 
     @Override
+    public Trigger intakeTriggerDrive() {
+        return ps4Controller1.L1();
+    }    
+
+    @Override
     public Trigger swerveTrigger() {
         return ps4Controller1.L1();
     }
@@ -118,8 +123,13 @@ public class PS4ControllerSingle implements TeleOpController {
     }
 
     @Override
-    public Trigger getPivotTrigger() {
-        return ps4Controller1.cross();
+    public Trigger getPivotTriggerUp() {
+        return ps4Controller1.L1();
+    }
+
+    @Override
+    public Trigger getPivotTriggerDown() {
+        return ps4Controller1.R1();
     }
 
     @Override
@@ -159,5 +169,10 @@ public class PS4ControllerSingle implements TeleOpController {
     public double getHookDownSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getHookDownSpeed'");
+    }
+
+    @Override
+    public Trigger moveWristTrigger() {
+        return ps4Controller1.circle();
     }
 }

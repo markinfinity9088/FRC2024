@@ -20,6 +20,8 @@ public class ElbowSubsystem extends PositionableSubsystem {
     super.setMaxSpeed(Constants.IntakeConstants.ELBOW_MAX_SPEED);
     //super.setMinPoint(100);
     //super.setRange(140);
+    elbowf.burnFlash();
+    elbowb.burnFlash();
   }
 
   public static ElbowSubsystem getInstance() {

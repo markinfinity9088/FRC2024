@@ -22,6 +22,7 @@ public class IntakeSubSystem extends SubsystemBase {
     intake = new CANSparkMax(Constants.IntakeConstants.intakeCanId, MotorType.kBrushless);
     intake.setIdleMode(IdleMode.kBrake);
     intake.setSmartCurrentLimit(INTAKE_CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
+    intake.burnFlash();
   }
 
   public static IntakeSubSystem getInstance() {

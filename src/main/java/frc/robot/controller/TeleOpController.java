@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public interface TeleOpController {
     //Bindings for button toggle
     Trigger intakeTrigger(); // Release take ring from floor
+    Trigger intakeTriggerDrive();
     Trigger releaseToAMPTrigger(); // Release ring to AMP
     Trigger getShootTrigger(); // Shoot the ring out
 
@@ -17,7 +18,8 @@ public interface TeleOpController {
     Trigger getElbowTrigger();
     Trigger getWristTrigger();
     Trigger getElevatorTrigger();
-    Trigger getPivotTrigger();
+    Trigger getPivotTriggerUp();
+    Trigger getPivotTriggerDown();
 
     // Bindings for Axis value
     double getIntakeSpeed();
@@ -37,4 +39,7 @@ public interface TeleOpController {
     double getXSpeedSwerve();
     double getYSpeedSwerve();
     double getRotation();
+
+    //Preset Bindings
+    Trigger moveWristTrigger();
 }
