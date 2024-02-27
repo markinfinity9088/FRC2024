@@ -35,9 +35,11 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String PIDKP_KEY = name + "_KP";
     private final String PIDKI_KEY = name + "_KI";
     private final String PIDKD_KEY = name + "_KD";
-    private Double currentKP = 0.01;
-    private Double currentKI = 0.0001;
-    private Double currentKD = 0.0;
+
+    private Double currentKP = 0.001;
+    private Double currentKI = 0.0101;
+    private Double currentKD = 0.0001;
+
     private long minEncoder = 0;
     private long maxEncoder = 0;
     private Long range = null;
@@ -144,8 +146,12 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         return position;// + arEncoderDifference; // Convert to absolute
     }
 
-    // Input is absolute position to move to
     public void moveToPosition(long pos) {
+        moveToPosition(pos,  maxSpeed);
+    }
+
+    // Input is absolute position to move to
+    public void moveToPosition(long pos, double maxspeed) {
         long currentPos = getPosition(); // relativeToAbsolutePostition(rEncoder.getPosition());
         double speed;
         double asymSpeed;
@@ -160,6 +166,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
         // if (pos!=currentPos) //(speed!=0)
         System.out.println("Moving " + name +  " from:" + currentPos +" to:" + pos + ". Calculated PID speed:" + speed+"..asym:"+asymSpeed);
+
+        speed = MathUtil.clamp(speed, -maxspeed, maxSpeed);
 
         move(speed);
         showPositionOnDashboard();
@@ -228,7 +236,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     public void setPosition(double pos) {
-        System.out.println("Setting " + name + " position to " + pos);
+        //System.out.println("Setting " + name + " position to " + pos);
         if (rEncoder != null)
             rEncoder.setPosition(pos / encoderFactor);
     }
