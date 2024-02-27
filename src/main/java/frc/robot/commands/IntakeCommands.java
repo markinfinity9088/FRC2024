@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -38,7 +40,18 @@ public class IntakeCommands {
     //commandGroup.addCommands(new PositionSubsystemCommand(pivotShootPosition, PivotSubsystem.getInstance()));
     //commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake(1.0);}).withTimeout(1.0));
     //commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1.0));
-    return commandGroup;
+
+
+    ParallelCommandGroup parallelGroup = new ParallelCommandGroup();
+    parallelGroup.addCommands(commandGroup);
+    parallelGroup.addCommands( 
+      new WaitCommand(1).andThen(new InstantCommand(()->CommandInterruptor.getInstance().interruptSubsystem(WristSubsystem.getInstance().getName())))
+      //new InstantCommand(()->CommandInterruptor.getInstance().interruptSubsystem(WristSubsystem.getInstance().getName()))
+    );
+    
+    
+    
+    return parallelGroup;
   }
 
   public static Command sampleWristCommand() {

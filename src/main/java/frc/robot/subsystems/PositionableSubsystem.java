@@ -236,7 +236,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     public void setPosition(double pos) {
-        System.out.println("Setting " + name + " position to " + pos);
+        //System.out.println("Setting " + name + " position to " + pos);
         if (rEncoder != null)
             rEncoder.setPosition(pos / encoderFactor);
     }
