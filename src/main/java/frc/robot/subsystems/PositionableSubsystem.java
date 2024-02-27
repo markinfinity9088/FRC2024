@@ -22,8 +22,8 @@ import frc.robot.utils.PID.AsymmetricTrapezoidProfile.Constraints;
 import frc.robot.utils.PID.AsymmetricTrapezoidProfile.State;
 
 public abstract class PositionableSubsystem extends SubsystemBase {
-    private double currentSpeed;
-    private double maxSpeed = 0;
+    private double currentSpeed = 0;
+    private double maxSpeed = 1.0;
     private long arEncoderDifference = 0;
     private AbsoluteEncoder aEncoder;
     private PIDController pid;
@@ -36,8 +36,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String PIDKI_KEY = name + "_KI";
     private final String PIDKD_KEY = name + "_KD";
 
-    private Double currentKP = 0.001;
-    private Double currentKI = 0.0101;
+    private Double currentKP = 0.01;
+    private Double currentKI = 0.001;
     private Double currentKD = 0.0001;
 
     private long minEncoder = 0;
@@ -57,7 +57,8 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public abstract void stop();
 
     public void periodic() {
-        logInfo();
+        if (currentSpeed!=0)
+            logInfo();
         //updatePIDValues();
     }
 
@@ -155,19 +156,20 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         long currentPos = getPosition(); // relativeToAbsolutePostition(rEncoder.getPosition());
         double speed;
         double asymSpeed;
-        if (currentDestPos==null || currentDestPos!=pos) {
+        //if (currentDestPos==null || currentDestPos!=pos) 
+        {
             currentDestPos = pos;
             speed = pid.calculate(currentPos, pos);
             asymSpeed = asmpid.calculate(currentPos, new State(pos, currentSpeed));
-        } else {
+        } /*else {
             speed = pid.calculate(currentPos);
             asymSpeed = currentSpeed+asmpid.calculate(currentPos);
-        }
+        }*/
 
         // if (pos!=currentPos) //(speed!=0)
         System.out.println("Moving " + name +  " from:" + currentPos +" to:" + pos + ". Calculated PID speed:" + speed+"..asym:"+asymSpeed);
-
-        speed = MathUtil.clamp(speed, -maxspeed, maxSpeed);
+        if (maxSpeed != 0)
+            speed = MathUtil.clamp(speed, -maxspeed, maxSpeed);
 
         move(speed);
         showPositionOnDashboard();
@@ -201,16 +203,20 @@ public abstract class PositionableSubsystem extends SubsystemBase {
             }
         }
         if (speed != 0) {
-            double maxSpeedChange = 0.01;
+            double speedChange =  speed - currentSpeed;
+            double timeToPIDSpeedOnAcc = 2; // in seconds
+            double timeToPIDSpeedOnDec = 0.1; // in seconds
+            boolean accelerating = ((currentSpeed>=0 && speedChange>0) ||(currentSpeed<=0 && speedChange<0));
+            double periodsToPIDspeed = accelerating ? timeToPIDSpeedOnAcc*1000/20 : timeToPIDSpeedOnDec*1000/20;
+            
+            if (Math.abs(speedChange)>0.02)
+                speedChange = (speedChange>0?0.02:-0.02)+speedChange / periodsToPIDspeed;
+            speed = currentSpeed + speedChange;
+            
+            System.out.println("Limiting max speed change for " + name + ". Acc:"+accelerating+", change:"+speedChange+"..New speed:" + speed);
+            
             if (maxSpeed != 0)
                 speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
-            if (speed!=0 && Math.abs(currentSpeed - speed) > maxSpeedChange) {
-                if (currentSpeed > speed)
-                    speed = currentSpeed - maxSpeedChange;
-                else
-                    speed = currentSpeed + maxSpeedChange;
-            }
-            System.out.println("Limiting max speed change for " + name + ". New speed:" + speed);
         }
         currentSpeed = speed;
     }
@@ -244,7 +250,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
         double gravity = -1;
         if (getCurrentSpeed() != 0)
-            setPosition(getPosition() + encoderReversed * getCurrentSpeed() * 10);
+            setPosition(getPosition() + encoderReversed * getCurrentSpeed() * 100);
         else if (getPosition() * encoderReversed > 0)
             setPosition(getPosition() + encoderReversed * gravity);
         showPositionOnDashboard();
