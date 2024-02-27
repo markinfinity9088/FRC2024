@@ -12,6 +12,7 @@ import frc.robot.subsystems.PositionableSubsystem;
 public class HoldSubsystemInPositionCommand extends Command {
   private long position; // Encoder value for subsystem to be positioned
   private PositionableSubsystem subsystem;
+  boolean holdAtCurrentPosition = true;
 
   /**
    * Creates a new command to be in poistion
@@ -24,9 +25,17 @@ public class HoldSubsystemInPositionCommand extends Command {
     addRequirements(subsystem);
   }
 
+  public HoldSubsystemInPositionCommand(SubsystemBase subsystem, long holdposition) {
+    this(subsystem);
+    this.position = holdposition;
+    holdAtCurrentPosition = false;
+  }
+
   @Override
   public void initialize() {
-    position = ((PositionableSubsystem)subsystem).getPosition();
+    if (holdAtCurrentPosition ) {
+          position = ((PositionableSubsystem)subsystem).getPosition();
+    }
     System.out.println("Hold Position "+subsystem.getName()+" command initialized with pos:"+position);
   }
 

@@ -16,6 +16,8 @@ public class IntakeCommands {
   final static long wristIntakePosition = 20;
   final static long elbowIntakePosition = 100;
   final static long elevatorIntakePosition = 50;
+
+  final static long wristHandoffPosition = 240;
   
   final static long pivotShootPosition = 30;
 
@@ -29,8 +31,9 @@ public class IntakeCommands {
   public static Command sampleAutonCommand() {
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
+    commandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance(), wristHandoffPosition));
     //commandGroup.addCommands(new PositionSubsystemCommand(wristIntakePosition, WristSubsystem.getInstance()));
-    commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
+    //commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(pivotShootPosition, PivotSubsystem.getInstance()));
     //commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake(1.0);}).withTimeout(1.0));
