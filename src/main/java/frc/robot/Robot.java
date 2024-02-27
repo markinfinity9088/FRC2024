@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.Date;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -40,6 +41,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
     CameraServer.startAutomaticCapture();
+    // Starts recording to data log
+    DataLogManager.start();
     m_robot.init();
     SmartDashboard.putBoolean("Reset", false);
   }
