@@ -55,6 +55,8 @@ public class HoldSubsystemInPositionCommand extends Command {
   public boolean isFinished() {
     boolean finished = false;
     finished = CommandInterruptor.getInstance().checkIsInterruptedAndReset(subsystem.getName());
+    if (finished)
+      System.out.println("Finished "+getName());
     return finished; //subsystem.isAtPosition(position);
   }
 
