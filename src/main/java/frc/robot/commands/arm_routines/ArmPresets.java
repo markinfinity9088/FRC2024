@@ -10,8 +10,22 @@ public class ArmPresets {
     public static final ArmRoutine PickupRing = createPickupRingPreset();
     public static final ArmRoutine AmpDropOff = createAmpDropOffPreset();
 
+    public static final ArmRoutine TestRoutine = createTestingPreset();
 
 
+
+    private static ArmRoutine createTestingPreset() {
+         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+            new ArmPositioningInfo(null, Long.valueOf(3200), null),
+           // new ArmPositioningInfo(null, null, null)
+        };
+
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, Long.valueOf(4100), null);
+
+        ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
+
+        return routine;
+    }
 
 
     //Change values in below routines to fine tune behaviors of presets

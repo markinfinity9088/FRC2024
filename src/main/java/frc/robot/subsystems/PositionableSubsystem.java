@@ -36,9 +36,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String PIDKI_KEY = name + "_KI";
     private final String PIDKD_KEY = name + "_KD";
 
-    private Double currentKP = 0.01;
-    private Double currentKI = 0.001;
-    private Double currentKD = 0.0001;
+    private Double currentKP = 0.0005;
+    private Double currentKI = 0.00;
+    private Double currentKD = 0.000;
 
     private long minEncoder = 0;
     private long maxEncoder = 0;
@@ -221,10 +221,10 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         currentSpeed = speed;
     }
 
-    public boolean isAtPosition(long pos) {
+    public boolean isAtPosition(long pos, Long tolerance) {
         long delta = getPosition() - relativeToAbsolutePostition(pos);
         System.out.println("isAtPosition delta: " + delta);
-        return Math.abs(delta) <= 5;
+        return Math.abs(delta) <= tolerance;
     }
 
     private double getAbsPostion() {

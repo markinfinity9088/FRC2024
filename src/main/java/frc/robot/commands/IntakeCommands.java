@@ -34,7 +34,7 @@ public class IntakeCommands {
 
   public static Command sampleAutonCommand() {
 
-    Command commandGroup = ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing);
+    Command commandGroup = ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.TestRoutine);
 
    // SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 

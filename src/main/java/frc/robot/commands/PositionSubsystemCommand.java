@@ -12,6 +12,7 @@ import frc.robot.subsystems.PositionableSubsystem;
 public class PositionSubsystemCommand extends Command {
   private long position; // Encoder value for subsystem to be positioned
   private PositionableSubsystem subsystem;
+  private long tolerance = 5;
 
   /**
    * Creates a new command to be in poistion
@@ -22,7 +23,13 @@ public class PositionSubsystemCommand extends Command {
     this.position = position;
     this.subsystem = (PositionableSubsystem) subsystem;
     SendableRegistry.setName(this, getName());
+    
     addRequirements(subsystem);
+  }
+
+  public PositionSubsystemCommand(long position, SubsystemBase subsystem, Long tolerance) {
+    this(position, subsystem);
+    this.tolerance = tolerance;
   }
 
   @Override
@@ -43,7 +50,7 @@ public class PositionSubsystemCommand extends Command {
 
   @Override
   public boolean isFinished() {
-    return subsystem.isAtPosition(position);
+    return subsystem.isAtPosition(position, tolerance);
   }
 
   @Override

@@ -6,12 +6,20 @@ public class ArmPositioningInfo {
     Long m_elbowPosition;
     Long m_wristPosition;
     Long m_elevatorPosition;
+    long tolerance = 30;
 
     public ArmPositioningInfo(Long elbowPosition, Long wristPosition, Long elevatorPosition) {
         m_elbowPosition = elbowPosition;
         m_wristPosition = wristPosition;
         m_elevatorPosition = elevatorPosition;
+
     }
+
+    public ArmPositioningInfo(Long elbowPosition, Long wristPosition, Long elevatorPosition, long tolerance) {
+        this(elbowPosition,  wristPosition, elevatorPosition );
+        this.tolerance = tolerance;
+    }
+
 
     public Long getElbowPosition() {
         return m_elbowPosition;
@@ -23,6 +31,10 @@ public class ArmPositioningInfo {
 
     public Long getElevatorPosition() {
         return m_elevatorPosition;
+    }
+
+    public long getTolerance() {
+        return tolerance;
     }
 
 }
