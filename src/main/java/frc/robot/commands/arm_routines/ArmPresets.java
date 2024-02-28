@@ -5,6 +5,7 @@ import frc.robot.commands.arm_routines.logic.ArmRoutine;
 
 //Place to keep all your preset routine positions
 public class ArmPresets {
+
     public static final ArmRoutine Handoff = createHandoffPreset();
     public static final ArmRoutine Stow = createStowPreset();
     public static final ArmRoutine PickupRing = createPickupRingPreset();
@@ -33,11 +34,10 @@ public class ArmPresets {
 
     private static  ArmRoutine createHandoffPreset() {
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           // new ArmPositioningInfo(null, null, null),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(4250), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -61,11 +61,11 @@ public class ArmPresets {
 
     private static ArmRoutine createPickupRingPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           // new ArmPositioningInfo(Long.valueOf(50), null, null),
+           new ArmPositioningInfo(null, Long.valueOf(3600), null),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(100), Long.valueOf(250), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-400), Long.valueOf(4126), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -75,11 +75,11 @@ public class ArmPresets {
 
     private static ArmRoutine createStowPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           // new ArmPositioningInfo(null, null, null),
+             new ArmPositioningInfo(Long.valueOf(-100), null, null),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-5), Long.valueOf(2950), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 

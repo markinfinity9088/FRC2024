@@ -9,6 +9,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.commands.arm_routines.ArmPresets;
+import frc.robot.commands.arm_routines.logic.ArmRoutine;
 import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
@@ -187,7 +188,11 @@ public class CommandBot {
     }
 
     //preset triggers
-    teleOpController.pickupPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.TestRoutine));
+    teleOpController.pickupPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing));
+    teleOpController.stowPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow));
+    teleOpController.ampPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff));
+    teleOpController.handoffPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    
   }
 
   /**
