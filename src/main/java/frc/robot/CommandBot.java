@@ -162,14 +162,18 @@ public class CommandBot {
       teleOpController.holdWristInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
     }
 
+
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
-        if (dualController)
+        teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+        teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
+        /*if (dualController)
         elevator.setDefaultCommand(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
       else {
         teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
         teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
-      }
+      }*/
+
     }
 
     ClimbSubsystem hook = ClimbSubsystem.getInstance();

@@ -205,4 +205,10 @@ public class PS4ControllerSingle implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'ampPresetTrigger'");
     }
+
+    @Override
+    public Trigger presetPrimaryTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'presetPrimaryTrigger'");
+    }
 }

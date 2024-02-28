@@ -206,6 +206,12 @@ public class MyXboxController implements TeleOpController{
     public Trigger ampPresetTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'ampPresetTrigger'");
+    }
+
+    @Override
+    public Trigger presetPrimaryTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'presetPrimaryTrigger'");
     } 
 }
 
