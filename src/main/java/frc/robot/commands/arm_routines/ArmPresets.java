@@ -17,10 +17,10 @@ public class ArmPresets {
     private static ArmRoutine createTestingPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
             new ArmPositioningInfo(null, Long.valueOf(3200), null),
-           // new ArmPositioningInfo(null, null, null)
+            new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, Long.valueOf(4100), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-200), Long.valueOf(4100), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 

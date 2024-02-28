@@ -42,4 +42,13 @@ public interface TeleOpController {
 
     //Preset Bindings
     Trigger moveWristTrigger();
+
+    //Cancel all commands trigger
+    Trigger cancelAllCommandsTrigger();
+
+    //Preset Triggers
+    Trigger pickupPresetTrigger();
+    Trigger stowPresetTrigger();
+    Trigger handoffPresetTrigger();
+    Trigger ampPresetTrigger();
 }

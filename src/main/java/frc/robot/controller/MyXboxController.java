@@ -177,6 +177,36 @@ public class MyXboxController implements TeleOpController{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'moveWristTrigger'");
     }
+
+    @Override
+    public Trigger cancelAllCommandsTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'moveWristTrigger'");
+    }
+
+    @Override
+    public Trigger pickupPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'pickupPresetTrigger'");
+    }
+
+    @Override
+    public Trigger stowPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'stowPresetTrigger'");
+    }
+
+    @Override
+    public Trigger handoffPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handoffPresetTrigger'");
+    }
+
+    @Override
+    public Trigger ampPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ampPresetTrigger'");
+    } 
 }
 
 

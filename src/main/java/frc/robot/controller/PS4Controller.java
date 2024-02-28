@@ -187,4 +187,33 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller1.circle();
     }
 
+    @Override
+    public Trigger cancelAllCommandsTrigger() {
+        return ps4Controller2.touchpad();
+        
+    }
+
+    @Override
+    public Trigger pickupPresetTrigger() {
+        return ps4Controller2.cross();
+    }
+
+    @Override
+    public Trigger stowPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'stowPresetTrigger'");
+    }
+
+    @Override
+    public Trigger handoffPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handoffPresetTrigger'");
+    }
+
+    @Override
+    public Trigger ampPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ampPresetTrigger'");
+    }
+
 }
