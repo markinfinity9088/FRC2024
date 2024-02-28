@@ -15,6 +15,7 @@ public class ElevatorSubsystem extends PositionableSubsystem {
     elevator.setIdleMode(IdleMode.kBrake);
     elevator.setSmartCurrentLimit(Constants.ElevatorConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
     super.init(elevator);
+    super.setRange(0);
     super.setMaxSpeed(Constants.ElevatorConstants.MAX_SPEED);
     elevator.burnFlash();
   }
