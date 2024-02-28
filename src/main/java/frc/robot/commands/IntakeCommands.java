@@ -19,7 +19,7 @@ public class IntakeCommands {
   final static long elbowIntakePosition = 100;
   final static long elevatorIntakePosition = 50;
 
-  final static long wristHandoffPosition = 240;
+  final static long wristHandoffPosition = 150;
   
   final static long pivotShootPosition = 30;
 
