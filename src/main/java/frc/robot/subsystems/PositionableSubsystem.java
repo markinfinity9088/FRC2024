@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.RuntimeConfig;
 import frc.robot.utils.PID.AsymmetricProfiledPIDController;
+import frc.robot.utils.PID.PIDValue;
+import frc.robot.utils.PID.PIDValues;
 import frc.robot.utils.PID.AsymmetricTrapezoidProfile.Constraints;
 import frc.robot.utils.PID.AsymmetricTrapezoidProfile.State;
 
@@ -36,9 +38,13 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String PIDKI_KEY = name + "_KI";
     private final String PIDKD_KEY = name + "_KD";
 
-    private Double currentKP = 0.0005;
+    /*private Double currentKP = 0.0005;
     private Double currentKI = 0.00;
-    private Double currentKD = 0.000;
+    private Double currentKD = 0.000;*/
+
+    private Double currentKP = PIDValues.getPID(name).kP;
+    private Double currentKI = PIDValues.getPID(name).kI;
+    private Double currentKD = PIDValues.getPID(name).kD;
 
     private long minEncoder = 0;
     private long maxEncoder = 0;
