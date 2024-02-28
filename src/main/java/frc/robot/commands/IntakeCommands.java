@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.arm_routines.ArmPresets;
+import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
@@ -19,7 +21,7 @@ public class IntakeCommands {
   final static long elbowIntakePosition = 100;
   final static long elevatorIntakePosition = 50;
 
-  final static long wristHandoffPosition = 240;
+  final static long wristHandoffPosition = 3500;
   
   final static long pivotShootPosition = 30;
 
@@ -31,9 +33,13 @@ public class IntakeCommands {
 
 
   public static Command sampleAutonCommand() {
-    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
-    commandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance(), wristHandoffPosition));
+    Command commandGroup = ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing);
+
+   // SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+
+    //commandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance(), wristHandoffPosition));
+    //commandGroup.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance(), -270));
     //commandGroup.addCommands(new PositionSubsystemCommand(wristIntakePosition, WristSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(elbowIntakePosition, ElbowSubsystem.getInstance()));
     //commandGroup.addCommands(new PositionSubsystemCommand(elevatorIntakePosition, ElevatorSubsystem.getInstance()));
@@ -42,16 +48,16 @@ public class IntakeCommands {
     //commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1.0));
 
 
-    ParallelCommandGroup parallelGroup = new ParallelCommandGroup();
-    parallelGroup.addCommands(commandGroup);
-    parallelGroup.addCommands( 
-      new WaitCommand(1).andThen(new InstantCommand(()->CommandInterruptor.getInstance().interruptSubsystem(WristSubsystem.getInstance().getName())))
-      //new InstantCommand(()->CommandInterruptor.getInstance().interruptSubsystem(WristSubsystem.getInstance().getName()))
-    );
+
+    // ParallelCommandGroup parallelGroup = new ParallelCommandGroup();
+    // parallelGroup.addCommands(commandGroup);
+    // parallelGroup.addCommands( 
+    //   new WaitCommand(1).andThen(new InstantCommand(()->CommandInterruptor.getInstance().interruptSubsystem(WristSubsystem.getInstance().getName())))
+    // );
     
     
     
-    return parallelGroup;
+    return commandGroup;
   }
 
   public static Command sampleWristCommand() {
