@@ -42,4 +42,14 @@ public interface TeleOpController {
 
     //Preset Bindings
     Trigger moveWristTrigger();
+
+    //Cancel all commands trigger
+    Trigger cancelAllCommandsTrigger();
+
+    //Preset Triggers
+    Trigger presetPrimaryTrigger(); // This button can be used as master trigger for preset while other buttons are to choose trigger
+    Trigger pickupPresetTrigger();
+    Trigger stowPresetTrigger();
+    Trigger handoffPresetTrigger();
+    Trigger ampPresetTrigger();
 }

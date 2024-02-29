@@ -8,6 +8,9 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.PositionSubsystemCommand;
+import frc.robot.commands.arm_routines.ArmPresets;
+import frc.robot.commands.arm_routines.logic.ArmRoutine;
+import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -27,6 +30,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import java.util.Date;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -72,6 +76,9 @@ public class CommandBot {
       teleOpController = MyXboxController.getInstance();
       dualController = true;
     }
+
+    //used to override and cancel active commands manually
+    teleOpController.cancelAllCommandsTrigger().whileTrue(Commands.run(()->{CommandScheduler.getInstance().cancelAll();}));
 
     System.out.println("Configring Bindings with driveType:" + DriveConstants.driveType);
     if (DriveConstants.driveType.startsWith("DIFF")) {
@@ -156,14 +163,18 @@ public class CommandBot {
       teleOpController.holdWristInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
     }
 
+
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     if (elevator != null) {
-        if (dualController)
+        teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
+        teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
+        /*if (dualController)
         elevator.setDefaultCommand(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
       else {
         teleOpController.getElevatorTrigger().whileTrue(elevator.moveCommand(() -> teleOpController.getElevatorSpeed()));
         teleOpController.getElevatorTrigger().onFalse(Commands.runOnce(() -> {elevator.stop();}));
-      }
+      }*/
+
     }
 
     ClimbSubsystem hook = ClimbSubsystem.getInstance();
@@ -175,6 +186,13 @@ public class CommandBot {
       teleOpController.getHookDownTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
       }
     }
+
+    //preset triggers
+    teleOpController.pickupPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing));
+    teleOpController.stowPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow));
+    teleOpController.ampPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff));
+    teleOpController.handoffPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    
   }
 
   /**

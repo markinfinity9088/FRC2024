@@ -66,7 +66,8 @@ public class ArmRoutineCommandFactory {
 
         if (positionInfo.getElbowPosition() != null) {
             long positionValue = positionInfo.getElbowPosition();
-            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, ElbowSubsystem.getInstance()) : 
+            long tolerance = positionInfo.getTolerance();
+            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, ElbowSubsystem.getInstance(), tolerance) : 
                                         new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance(), positionValue);
             parallelGroup.addCommands(command);
             added = true;
@@ -74,8 +75,9 @@ public class ArmRoutineCommandFactory {
 
         if (positionInfo.getWristPosition() != null) {
             long positionValue = positionInfo.getWristPosition();
+            long tolerance = positionInfo.getTolerance();
 
-            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, WristSubsystem.getInstance()) : 
+            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, WristSubsystem.getInstance(), tolerance) : 
                                         new HoldSubsystemInPositionCommand(WristSubsystem.getInstance(), positionValue);
             parallelGroup.addCommands(command);
             added = true;
@@ -83,7 +85,9 @@ public class ArmRoutineCommandFactory {
 
         if (positionInfo.getElevatorPosition() != null) {
             long positionValue = positionInfo.getElevatorPosition();
-            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, ElevatorSubsystem.getInstance()) : 
+            long tolerance = positionInfo.getTolerance();
+
+            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, ElevatorSubsystem.getInstance(), tolerance) : 
                                         new HoldSubsystemInPositionCommand(ElevatorSubsystem.getInstance(), positionValue);
             parallelGroup.addCommands(command);
             added = true;

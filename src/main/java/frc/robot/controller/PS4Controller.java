@@ -26,7 +26,8 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger releaseToAMPTrigger() {
-        return ps4Controller2.R1();
+        //activate this only when preset trigger is not pressed and R1 is pressed
+        return presetPrimaryTrigger().negate().and(ps4Controller2.R1()) ;
     }
     
     @Override
@@ -36,7 +37,8 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger intakeTrigger() {
-        return ps4Controller2.L1();
+        //L1 is pressed and the preset trigger is not pressed
+        return presetPrimaryTrigger().negate().and( ps4Controller2.L1());
     }
 
     @Override
@@ -148,7 +150,9 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getElevatorTrigger() {
-        return ps4Controller2.triangle();
+        //return ps4Controller2.triangle();
+        //hacky way not to set elevator speed from R2 buttons when we are trying to activate presets as preset overrides R2
+        return presetPrimaryTrigger().negate();
     }
 
     @Override
@@ -186,5 +190,40 @@ public class PS4Controller implements TeleOpController {
     public Trigger moveWristTrigger() {
         return ps4Controller1.circle();
     }
+
+    @Override
+    public Trigger cancelAllCommandsTrigger() {
+        return ps4Controller2.touchpad();
+        
+    }
+
+
+    ///Presets
+     @Override
+    public Trigger presetPrimaryTrigger() {
+         return ps4Controller2.cross();
+    }
+
+    @Override
+    public Trigger pickupPresetTrigger() {
+        return presetPrimaryTrigger().and(ps4Controller2.L1());
+    }
+
+    @Override
+    public Trigger stowPresetTrigger() {
+        return presetPrimaryTrigger().and(ps4Controller2.L2());
+    }
+
+    @Override
+    public Trigger handoffPresetTrigger() {
+        return presetPrimaryTrigger().and(ps4Controller2.R1());
+    }
+
+    @Override
+    public Trigger ampPresetTrigger() {
+        return presetPrimaryTrigger().and(ps4Controller2.R2());
+    }
+
+   
 
 }
