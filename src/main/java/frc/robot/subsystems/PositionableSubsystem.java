@@ -34,9 +34,11 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String ABS_KEY = name + "_ABS";
     private final String REL_KEY = name + "_REL";
     private final String SPEED_KEY = name + " SPEED";
-    private final String PIDKP_KEY = name + "_KP";
-    private final String PIDKI_KEY = name + "_KI";
-    private final String PIDKD_KEY = name + "_KD";
+    private final static String PIDKP_KEY = "_KP";
+    private final static String PIDKI_KEY = "_KI";
+    private final static String PIDKD_KEY = "_KD";
+    private final String RANGE_KEY = name+"_RANGE";
+    private final String MINEN_KEY = name+"_MINEN";
 
     /*private Double currentKP = 0.0005;
     private Double currentKI = 0.00;
@@ -48,7 +50,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     private long minEncoder = 0;
     private long maxEncoder = 0;
-    private Long range = null;
+    private long range = 0;
     private int encoderReversed = 1; // 1 if +speed increases encoder, -1 if +speed decreases encoder
     private int encoderFactor = 1000;
     private boolean hasAbsEncoder = false;
@@ -65,7 +67,14 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public void periodic() {
         //if (currentSpeed!=0)
             logInfo();
-        //updatePIDValues();
+        updatePIDValues();
+    }
+
+    private void updateRange() {
+        long r = (long) SmartDashboard.getNumber(RANGE_KEY, range);
+        if (r!=range) range = r;
+        long m = (long) SmartDashboard.getNumber(MINEN_KEY, minEncoder);
+        if (m!=minEncoder) setMinPoint(m);
     }
 
     public void reset() {
@@ -90,7 +99,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         System.out.println("PID values set to:"+pid.getP() + "  " + pid.getI() + "  " + pid.getD());
     }
 
-    private void updatePIDValues() {
+    public void updatePIDValues() {
         double kPVal = SmartDashboard.getNumber(PIDKP_KEY, 0);
         double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
         double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
@@ -162,6 +171,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         long currentPos = getPosition(); // relativeToAbsolutePostition(rEncoder.getPosition());
         double speed;
         double asymSpeed;
+
         //if (currentDestPos==null || currentDestPos!=pos) 
         {
             currentDestPos = pos;
@@ -187,19 +197,22 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     void setMinPoint(long minEncoder) {
         this.minEncoder = minEncoder;
-        if (range != null)
+        if (range > 0)
             maxEncoder = minEncoder + range;
     }
 
     void setRange(long range) {
         this.range = range;
         maxEncoder = minEncoder + range;
+        SmartDashboard.putNumber(RANGE_KEY, range);
+        SmartDashboard.putNumber(MINEN_KEY, minEncoder);
     }
 
     protected void setCurrentSpeed(double speed) {
         long currentPosition = getPosition();
+        updateRange();
         long delta;
-        if (range != null) {
+        if (range > 0) {
             if ((delta = (currentPosition - maxEncoder)) >= -10 && (speed * encoderReversed > 0)) {
                 System.out.println("Limiting + speed with delta:" + delta);
                 speed = delta >= 0 ? 0 : speed * (-delta / 10.0);

@@ -20,7 +20,7 @@ public class WristSubsystem extends PositionableSubsystem {
     super.setMaxSpeed(Constants.IntakeConstants.MAX_SPEED);
     super.hasAbsEncoder(true);
     //super.setMinPoint(100);
-    //super.setRange(140);
+    super.setRange(0);
   }
 
   public static WristSubsystem getInstance() {

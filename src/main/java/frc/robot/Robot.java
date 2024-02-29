@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.controller.PositionController;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -48,6 +49,7 @@ public class Robot extends LoggedRobot {
     // Starts recording to data log
     DataLogManager.start();
     m_robot.init();
+    PositionController.getInstance().refresh();
     SmartDashboard.putBoolean("Reset", false);
   }
 
@@ -124,6 +126,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
     m_robot.periodic();
+    PositionController.getInstance().refresh();
     WristSubsystem.getInstance().periodic();
     ElbowSubsystem.getInstance().periodic();
     ElevatorSubsystem.getInstance().periodic();
