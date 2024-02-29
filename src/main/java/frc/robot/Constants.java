@@ -170,7 +170,7 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static final int CURRENT_LIMIT_A = 30;
-    public static final double MAX_SPEED = 0.8;
+    public static final double MAX_SPEED = 0.5;
     public static final int elbowFrontCanId = 18;
     public static final int elbowBackCanId = 19;
     public static final int elevatorCanId = 20;

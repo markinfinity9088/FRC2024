@@ -6,7 +6,7 @@ public class ArmPositioningInfo {
     Long m_elbowPosition;
     Long m_wristPosition;
     Long m_elevatorPosition;
-    long tolerance = 50;
+    long tolerance = 30;
 
     public ArmPositioningInfo(Long elbowPosition, Long wristPosition, Long elevatorPosition) {
         m_elbowPosition = elbowPosition;

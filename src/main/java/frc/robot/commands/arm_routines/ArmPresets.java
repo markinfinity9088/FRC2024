@@ -44,14 +44,15 @@ public class ArmPresets {
         return routine;
     }
 
-
+    //wrist, elbow, elevator
     private static ArmRoutine createAmpDropOffPreset() {
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           // new ArmPositioningInfo(null, null, null),
-           // new ArmPositioningInfo(null, null, null)
+           new ArmPositioningInfo(null, Long.valueOf(3286), null),
+           new ArmPositioningInfo(Long.valueOf(-167), null, null),
+           new ArmPositioningInfo(null, null, Long.valueOf(2200))
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-167), Long.valueOf(3286), Long.valueOf(2200));
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -61,11 +62,11 @@ public class ArmPresets {
 
     private static ArmRoutine createPickupRingPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           new ArmPositioningInfo(null, Long.valueOf(3600), null),
+           new ArmPositioningInfo(null, Long.valueOf(3800), null,50),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-400), Long.valueOf(4126), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(4250), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -79,7 +80,7 @@ public class ArmPresets {
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-5), Long.valueOf(2950), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(2950), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
