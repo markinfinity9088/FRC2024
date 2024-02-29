@@ -13,12 +13,13 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.RuntimeConfig;
 import frc.robot.utils.PID.AsymmetricProfiledPIDController;
-import frc.robot.utils.PID.PIDValue;
 import frc.robot.utils.PID.PIDValues;
 import frc.robot.utils.PID.AsymmetricTrapezoidProfile.Constraints;
 import frc.robot.utils.PID.AsymmetricTrapezoidProfile.State;
@@ -34,9 +35,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     private final String ABS_KEY = name + "_ABS";
     private final String REL_KEY = name + "_REL";
     private final String SPEED_KEY = name + " SPEED";
-    private final static String PIDKP_KEY = "_KP";
-    private final static String PIDKI_KEY = "_KI";
-    private final static String PIDKD_KEY = "_KD";
+    private final String PIDKP_KEY = name+"_KP";
+    private final String PIDKI_KEY = name+"_KI";
+    private final String PIDKD_KEY = name+"_KD";
     private final String RANGE_KEY = name+"_RANGE";
     private final String MINEN_KEY = name+"_MINEN";
 
@@ -67,7 +68,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public void periodic() {
         //if (currentSpeed!=0)
             logInfo();
-        updatePIDValues();
+        //updatePIDValues();
     }
 
     private void updateRange() {
@@ -137,9 +138,10 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     protected void init(CANSparkMax motorController) {
-        SmartDashboard.putNumber(PIDKP_KEY, currentKP);
-        SmartDashboard.putNumber(PIDKI_KEY, currentKI);
-        SmartDashboard.putNumber(PIDKD_KEY, currentKD);
+        ShuffleboardTab pidTab = Shuffleboard.getTab("PID");
+        pidTab.add(PIDKP_KEY, currentKP);
+        pidTab.add(PIDKI_KEY, currentKI);
+        pidTab.add(PIDKD_KEY, currentKD);
 
         rEncoder = motorController.getEncoder();
         aEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
