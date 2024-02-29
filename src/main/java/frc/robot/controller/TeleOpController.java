@@ -47,6 +47,7 @@ public interface TeleOpController {
     Trigger cancelAllCommandsTrigger();
 
     //Preset Triggers
+    Trigger resetLastKnownPresetNameTrigger();
     Trigger presetPrimaryTrigger(); // This button can be used as master trigger for preset while other buttons are to choose trigger
     Trigger pickupPresetTrigger();
     Trigger stowPresetTrigger();

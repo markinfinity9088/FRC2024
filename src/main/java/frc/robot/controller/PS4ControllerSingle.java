@@ -211,4 +211,10 @@ public class PS4ControllerSingle implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'presetPrimaryTrigger'");
     }
+
+    @Override
+    public Trigger resetLastKnownPresetNameTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'resetLastKnownPresetNameTrigger'");
+    }
 }
