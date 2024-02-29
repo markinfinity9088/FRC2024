@@ -47,12 +47,12 @@ public class ArmPresets {
     //wrist, elbow, elevator
     private static ArmRoutine createAmpDropOffPreset() {
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           new ArmPositioningInfo(null, Long.valueOf(3286), null),
-           new ArmPositioningInfo(Long.valueOf(-167), null, null),
-           new ArmPositioningInfo(null, null, Long.valueOf(2200))
+           new ArmPositioningInfo(null, Long.valueOf(3180), null),
+           new ArmPositioningInfo(Long.valueOf(-70), null, null),
+           new ArmPositioningInfo(null, null, Long.valueOf(21000))
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-167), Long.valueOf(3286), Long.valueOf(2200));
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-167), Long.valueOf(3150), Long.valueOf(21000));
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -76,6 +76,7 @@ public class ArmPresets {
 
     private static ArmRoutine createStowPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+            // new ArmPositioningInfo(null, null, Long.valueOf(1000)),
              new ArmPositioningInfo(Long.valueOf(-100), null, null),
            // new ArmPositioningInfo(null, null, null)
         };

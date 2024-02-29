@@ -150,9 +150,9 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getElevatorTrigger() {
-        //return ps4Controller2.triangle();
+        return ps4Controller2.triangle();
         //hacky way not to set elevator speed from R2 buttons when we are trying to activate presets as preset overrides R2
-        return presetPrimaryTrigger().negate();
+        //return presetPrimaryTrigger().negate();
     }
 
     @Override
