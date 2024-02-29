@@ -13,6 +13,9 @@ public class ArmPresets {
 
     public static final ArmRoutine TestRoutine = createTestingPreset();
 
+    public static final ArmRoutine PivotShootTilt = createPivotPreset();
+
+
 
 
     private static ArmRoutine createTestingPreset() {
@@ -44,14 +47,15 @@ public class ArmPresets {
         return routine;
     }
 
-
+    //wrist, elbow, elevator
     private static ArmRoutine createAmpDropOffPreset() {
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           // new ArmPositioningInfo(null, null, null),
-           // new ArmPositioningInfo(null, null, null)
+           new ArmPositioningInfo(null, Long.valueOf(3180), null),
+           new ArmPositioningInfo(Long.valueOf(-70), null, null),
+           new ArmPositioningInfo(null, null, Long.valueOf(21000))
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-167), Long.valueOf(3150), Long.valueOf(21000));
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -61,11 +65,11 @@ public class ArmPresets {
 
     private static ArmRoutine createPickupRingPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           new ArmPositioningInfo(null, Long.valueOf(3600), null),
+           new ArmPositioningInfo(null, Long.valueOf(3800), null,50),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-400), Long.valueOf(4126), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(4250), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -75,11 +79,28 @@ public class ArmPresets {
 
     private static ArmRoutine createStowPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+            // new ArmPositioningInfo(null, null, Long.valueOf(1000)),
              new ArmPositioningInfo(Long.valueOf(-100), null, null),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-5), Long.valueOf(2950), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(2950), null);
+
+        ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
+
+        return routine;
+    }
+
+
+    
+
+    private static  ArmRoutine createPivotPreset() {
+        ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+           // new ArmPositioningInfo(null, null, null)
+        };
+
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        finalPosition.setPivotPosition(Long.valueOf(45)); //TODO set correct value later
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 

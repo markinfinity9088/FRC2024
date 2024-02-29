@@ -9,6 +9,7 @@ import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
 /*
@@ -89,6 +90,16 @@ public class ArmRoutineCommandFactory {
 
             Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, ElevatorSubsystem.getInstance(), tolerance) : 
                                         new HoldSubsystemInPositionCommand(ElevatorSubsystem.getInstance(), positionValue);
+            parallelGroup.addCommands(command);
+            added = true;
+        }
+
+        if (positionInfo.getPivotPosition() != null) {
+            long positionValue = positionInfo.getPivotPosition();
+            long tolerance = positionInfo.getTolerance();
+
+            Command command = (actionType==LocalActionTypes.UseMove)? new PositionSubsystemCommand(positionValue, PivotSubsystem.getInstance(), tolerance) : 
+                                        new HoldSubsystemInPositionCommand(PivotSubsystem.getInstance(), positionValue);
             parallelGroup.addCommands(command);
             added = true;
         }

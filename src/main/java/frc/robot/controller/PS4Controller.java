@@ -150,9 +150,9 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getElevatorTrigger() {
-        //return ps4Controller2.triangle();
+        return ps4Controller2.triangle();
         //hacky way not to set elevator speed from R2 buttons when we are trying to activate presets as preset overrides R2
-        return presetPrimaryTrigger().negate();
+        //return presetPrimaryTrigger().negate();
     }
 
     @Override
@@ -172,12 +172,14 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger holdWristInPositionTrigger() {
-        return ps4Controller2.square();
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
     }
 
     @Override
     public Trigger holdElbowInPositionTrigger() {
-        return ps4Controller2.circle();
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
     }
 
     @Override
@@ -222,6 +224,11 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger ampPresetTrigger() {
         return presetPrimaryTrigger().and(ps4Controller2.R2());
+    }
+
+    @Override
+    public Trigger resetLastKnownPresetNameTrigger() {
+        return ps4Controller2.circle();
     }
 
    
