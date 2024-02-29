@@ -24,6 +24,7 @@ import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.GlobalState;
+import frc.robot.vision.limelight.LimeLightFacade;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -48,9 +49,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class CommandBot {
   Subsystem drive;
+  LimeLightFacade m_limelight;
 
   public void init() {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
+    m_limelight = new LimeLightFacade();
   }
 
   /**
@@ -212,5 +215,6 @@ public class CommandBot {
   void periodic() {
     drive.periodic();
     GyroSubsystem.getInstance().periodic();
+    m_limelight.updateDashboard();
   }
 }

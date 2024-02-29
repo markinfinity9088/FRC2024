@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
-public class LimelightFacade  {
+public class LimeLightFacade  {
 
-	private String limelightName = "limelight-back";
+	private String limelightName = "limelight";
 	private double kCameraHeight = 9.14;
 	private double kMountingAngle = 35.0;
 	private double GoalHeight = 24.5; //inches, deg
 
-	public LimelightFacade() {}
+	public LimeLightFacade() {}
 
 	public double getDistanceToGoalInches() {
 		return (GoalHeight - kCameraHeight) / Math.tan(Units.degreesToRadians(kMountingAngle + getYAngleOffsetDegrees()));
@@ -77,6 +77,10 @@ public class LimelightFacade  {
 	}
 
 	public void updateDashboard() {
-		SmartDashboard.putNumber("ll distance to goal", getDistanceToGoalMeters());
+		double distance = -9999;
+		if (isTargetVisible()) {
+			distance = getDistanceToGoalMeters();
+		}
+		SmartDashboard.putNumber("ll distance to goal", distance);
 	}
 }
