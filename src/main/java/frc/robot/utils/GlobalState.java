@@ -11,6 +11,8 @@ public class GlobalState {
 
     private String previousPresetUsed = "";
 
+    private AllianceSideEnum allianceside;
+
     private GlobalState() {
 
     }
@@ -64,6 +66,14 @@ public class GlobalState {
         }
 
         return true;
+    }
+
+    void setAllianceSide(AllianceSideEnum side) {
+        allianceside = side;
+    }
+
+    AllianceSideEnum getAllianceSide() {
+        return allianceside;
     }
 
 }

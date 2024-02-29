@@ -13,6 +13,9 @@ public class ArmPresets {
 
     public static final ArmRoutine TestRoutine = createTestingPreset();
 
+    public static final ArmRoutine PivotShootTilt = createPivotPreset();
+
+
 
 
     private static ArmRoutine createTestingPreset() {
@@ -82,6 +85,22 @@ public class ArmPresets {
         };
 
         ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(2950), null);
+
+        ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
+
+        return routine;
+    }
+
+
+    
+
+    private static  ArmRoutine createPivotPreset() {
+        ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+           // new ArmPositioningInfo(null, null, null)
+        };
+
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        finalPosition.setPivotPosition(Long.valueOf(45)); //TODO set correct value later
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
