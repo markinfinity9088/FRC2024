@@ -150,7 +150,8 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getElevatorTrigger() {
-        return ps4Controller2.triangle();
+        return new Trigger(() -> (getElevatorSpeed()!=0));
+        // return ps4Controller2.triangle();
         //hacky way not to set elevator speed from R2 buttons when we are trying to activate presets as preset overrides R2
         //return presetPrimaryTrigger().negate();
     }
@@ -208,22 +209,26 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger pickupPresetTrigger() {
-        return presetPrimaryTrigger().and(ps4Controller2.L1());
+        // return presetPrimaryTrigger().and(ps4Controller2.L1());
+        return ps4Controller2.cross();
     }
 
     @Override
     public Trigger stowPresetTrigger() {
-        return presetPrimaryTrigger().and(ps4Controller2.L2());
+        // return presetPrimaryTrigger().and(ps4Controller2.L2());
+        return ps4Controller2.square();
     }
 
     @Override
     public Trigger handoffPresetTrigger() {
-        return presetPrimaryTrigger().and(ps4Controller2.R1());
+        // return presetPrimaryTrigger().and(ps4Controller2.R1());
+        return ps4Controller2.circle();
     }
 
     @Override
     public Trigger ampPresetTrigger() {
-        return presetPrimaryTrigger().and(ps4Controller2.R2());
+        // return presetPrimaryTrigger().and(ps4Controller2.R2());
+        return ps4Controller2.triangle();
     }
 
     @Override

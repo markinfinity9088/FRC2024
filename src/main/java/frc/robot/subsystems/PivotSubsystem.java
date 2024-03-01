@@ -15,6 +15,7 @@ public class PivotSubsystem extends PositionableSubsystem {
     pivot.setSmartCurrentLimit(Constants.IntakeConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
 
     super.init(pivot);
+    super.hasAbsEncoder(true);
     super.setMaxSpeed(0.7);
     //super.setMinPoint(100);
     //super.setRange(140);  

@@ -17,7 +17,7 @@ import frc.robot.subsystems.WristSubsystem;
 //TODO implement state machine here to execute handoff routine, turn on shooter, once shooter reach some velocity then turn on intake(exit), stop shooter and intake
 //Later we can modify to use command hierarchy instead of state machine , for now I need control 
 
-public class HandoffAndShoot extends Command {
+public class HandoffAndShootCommand extends Command {
     enum HandoffAndShootState {
         Initial,
         DoingHandoff,
@@ -44,7 +44,7 @@ public class HandoffAndShoot extends Command {
 
     private HashMap<String, Command> currentCommands = null;
 
-    HandoffAndShoot() {
+    HandoffAndShootCommand() {
         currentState = HandoffAndShootState.Initial;
         addRequirements(ShooterSubsystem.getInstance(), WristSubsystem.getInstance(), 
                 ElbowSubsystem.getInstance(), ElevatorSubsystem.getInstance(), PivotSubsystem.getInstance(),
