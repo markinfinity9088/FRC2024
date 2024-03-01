@@ -40,6 +40,7 @@ public class ArmRoutineCommandFactory {
     public Command executeArmRoutine(ArmRoutine routine) {
 
         SequentialCommandGroup commandSequence = new SequentialCommandGroup();
+
         
         //Iterate over initial sequence of positions and add to sequential group of move commands
         //This is helpful if we want to add some sequence instead of moving all pieces of arm together, like move wrist a bit first before we start moving arm .
