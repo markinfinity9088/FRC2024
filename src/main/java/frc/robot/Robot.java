@@ -17,6 +17,7 @@ import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.RuntimeConfig;
 
@@ -34,6 +35,7 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private final CommandBot m_robot = new CommandBot();
+  private final SwerveDriveSubsystem swerve = SwerveDriveSubsystem.getInstance(); 
 
   Robot() {
     super(0.02);
@@ -116,6 +118,7 @@ public class Robot extends LoggedRobot {
     // this line or comment it out.
     // Configure default commands and condition bindings on robot startup
     m_robot.configureBindings();
+    swerve.setMaxSpeeds(1.0, 1.0);
     GyroSubsystem.getInstance().init();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

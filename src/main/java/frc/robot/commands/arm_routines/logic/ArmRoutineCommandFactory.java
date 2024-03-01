@@ -3,6 +3,7 @@ package frc.robot.commands.arm_routines.logic;
 import java.util.HashMap;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
@@ -10,6 +11,7 @@ import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
 /*
@@ -104,6 +106,11 @@ public class ArmRoutineCommandFactory {
                                         new HoldSubsystemInPositionCommand(PivotSubsystem.getInstance(), positionValue);
             parallelGroup.addCommands(command);
             added = true;
+        }
+
+        if (positionInfo.getShouldStartShooterOn()) {
+            Command command = new InstantCommand((()->{ShooterSubsystem.getInstance().startShooterWheels(1);}));
+            parallelGroup.addCommands(command);
         }
         
         if (!added) {

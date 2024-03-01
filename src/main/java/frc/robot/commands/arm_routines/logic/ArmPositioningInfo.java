@@ -8,12 +8,14 @@ public class ArmPositioningInfo {
     Long m_elevatorPosition;
     long tolerance = 30;
     Long m_pivotPosition;
+    boolean m_shouldStartShooter;
 
     public ArmPositioningInfo(Long elbowPosition, Long wristPosition, Long elevatorPosition) {
         m_elbowPosition = elbowPosition;
         m_wristPosition = wristPosition;
         m_elevatorPosition = elevatorPosition;
         m_pivotPosition = null;
+        m_shouldStartShooter = false;
 
     }
 
@@ -52,4 +54,11 @@ public class ArmPositioningInfo {
         this.tolerance = tolerance;
     }
 
+    public void setShooterOn() {
+        m_shouldStartShooter = true;
+    }
+
+    public boolean getShouldStartShooterOn() {
+        return m_shouldStartShooter;
+    }
 }

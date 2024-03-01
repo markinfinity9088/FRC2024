@@ -16,9 +16,9 @@ public class PivotSubsystem extends PositionableSubsystem {
 
     super.init(pivot);
     super.hasAbsEncoder(true);
-    super.setMaxSpeed(0.7);
-    //super.setMinPoint(100);
-    //super.setRange(140);  
+    super.setMaxSpeed(1);
+    super.setMinPoint(0);
+    super.setRange(255);  
   }
 
   public static PivotSubsystem getInstance() {

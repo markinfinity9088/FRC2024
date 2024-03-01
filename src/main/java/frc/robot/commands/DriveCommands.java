@@ -11,11 +11,15 @@ public class DriveCommands {
         System.out.println("getSwerveAutonomousCommand called");
         //return null;
         SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
-        s_drive.setMaxSpeeds(0.5, 0.5);
+        s_drive.setMaxSpeeds(0.1, 0.5);
 
         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
-        
+        //move forward 1 meter
+        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 1,0, 0, true, new Pose2d(), 0.05));
+
+
+        /*
         //Z shape
         //move left
         commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, -1, 0, true, new Pose2d(), 0.05));
@@ -32,7 +36,7 @@ public class DriveCommands {
         commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 1, -1, 0, true, new Pose2d(), 0.05));
         //move left
         commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, 1, 0, true, new Pose2d(), 0.05));
-
+        */
 
         return commandGroup;
     }

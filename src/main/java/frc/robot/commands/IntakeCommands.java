@@ -14,6 +14,7 @@ import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
+import frc.robot.commands.SwerveSampleMoveCommand;
 
 /** Returns a command that grabs the item */
 public class IntakeCommands {
@@ -35,8 +36,7 @@ public class IntakeCommands {
   public static Command sampleAutonCommand() {
 
     Command commandGroup = ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.TestRoutine);
-
-   // SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    // SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
     //commandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance(), wristHandoffPosition));
     //commandGroup.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance(), -270));

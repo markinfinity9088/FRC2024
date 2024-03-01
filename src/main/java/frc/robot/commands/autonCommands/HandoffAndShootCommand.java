@@ -32,9 +32,6 @@ public class HandoffAndShootCommand extends Command {
 
     private static final long MAX_SHOOTER_TIMER = 5;
 
-    private static final long PIVOT_POSITION_FOR_SHOOT = 430; //todo
-
-    private static final long WRIST_HANDOFF_POSITION = 4250; 
 
     private long commandStartTime=0;
     private long startTimeOfCurrentState=0;
@@ -129,11 +126,11 @@ public class HandoffAndShootCommand extends Command {
     }
 
     private boolean isShooterAtCorrectTilt() {
-        return (PivotSubsystem.getInstance().isAtPosition(PIVOT_POSITION_FOR_SHOOT, Long.valueOf(5)));
+        return (PivotSubsystem.getInstance().isAtPosition(ArmPresets.PIVOT_SHOOT_POINT, ArmPresets.PIVOT_TOLERANCE));
     }
 
     private boolean isAtHandoffPosition() {
-        return WristSubsystem.getInstance().isAtPosition(WRIST_HANDOFF_POSITION, Long.valueOf(30));
+        return WristSubsystem.getInstance().isAtPosition(ArmPresets.WRIST_HANDOFF_POSITION, Long.valueOf(30));
     }
 
     private long getTimeElapsedInCurrentState() {
