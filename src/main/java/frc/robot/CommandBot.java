@@ -155,7 +155,7 @@ public class CommandBot {
         // teleOpController.getWristTrigger().whileFalse(new HoldSubsystemInPositionCommand(wrist));
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
         teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
-        teleOpController.moveWristTrigger().whileTrue(new PositionSubsystemCommand(80, wrist));
+        // teleOpController.moveWristTrigger().whileTrue(new PositionSubsystemCommand(80, wrist));
       }
       else {
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
@@ -193,11 +193,12 @@ public class CommandBot {
     }
 
     //preset triggers
-    teleOpController.resetLastKnownPresetNameTrigger().onTrue(Commands.runOnce(()->{GlobalState.getInstance().setPreviousPresetRun("");}));
-    teleOpController.pickupPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing));
-    teleOpController.stowPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow));
-    teleOpController.ampPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff));
-    teleOpController.handoffPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    // teleOpController.resetLastKnownPresetNameTrigger().onTrue(Commands.runOnce(()->{GlobalState.getInstance().setPreviousPresetRun("");}));
+    teleOpController.pickupPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing)); //cross
+    teleOpController.stowPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow)); //square
+    teleOpController.ampPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff)); //triangle
+    teleOpController.handoffPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff)); //circle
+    
     
   }
 

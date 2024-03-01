@@ -58,6 +58,8 @@ public class ArmRoutineCommandFactory {
         return commandSequence;
     }
 
+    
+
 
     //creates parallel set of commands that executes move or hold action on the arm components (wrist, elbow, elevator)
     //actiontype tells whether to use move or hold
