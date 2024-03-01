@@ -31,6 +31,27 @@ public class IntakeCommands {
   final static long elevatorAMPPosition = 10;
   final static long pulleyAMPPosition = 10;
 
+  public static Command sampleAutonCommand2() {
+    ParallelCommandGroup pcommandGroup1 = new ParallelCommandGroup();
+
+    pcommandGroup1.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    pcommandGroup1.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotShootTilt));
+    pcommandGroup1.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}));
+
+    ParallelCommandGroup pcommandGroup2 = new ParallelCommandGroup();
+
+    pcommandGroup2.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(2.0));
+    pcommandGroup2.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().releaseToShooter();}).withTimeout(1.0));
+
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    commandGroup.addCommands(pcommandGroup1.withTimeout(3));
+    commandGroup.addCommands(pcommandGroup2);
+
+    return commandGroup;
+  }
+
+
+
 
   public static Command sampleAutonCommand() {
 
