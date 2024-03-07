@@ -13,6 +13,8 @@ public class GlobalState {
 
     private AllianceSideEnum allianceside;
 
+    private Double maxSwerveSpeed = 1.0;
+
     private GlobalState() {
 
     }
@@ -74,6 +76,18 @@ public class GlobalState {
 
     AllianceSideEnum getAllianceSide() {
         return allianceside;
+    }
+
+    public void toggleMaxSpeed() {
+        if (maxSwerveSpeed > 0.4) {
+            maxSwerveSpeed = 0.4;
+        } else {
+            maxSwerveSpeed = 1.0;
+        }
+    }
+
+    public Double getMaxSpeed() {
+        return maxSwerveSpeed;
     }
 
 }

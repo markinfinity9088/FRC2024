@@ -100,12 +100,15 @@ public class CommandBot {
       if (dualController)
         s_drive.setDefaultCommand(s_drive.driveCommand(
           () -> teleOpController.getYSpeedSwerve(), () -> teleOpController.getXSpeedSwerve(),
-          () -> teleOpController.getRotation(), true, true));
+          () -> teleOpController.getRotation(), true, false));
      /*  else
         teleOpController.moveTrigger().whileTrue(s_drive.driveCommand(
           () -> -teleOpController.getXSpeedSwerve(), () -> -teleOpController.getYSpeedSwerve(),
           () -> -teleOpController.getRotation(), true, true));
         */
+
+        teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {s_drive.zeroHeading();}));
+        
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
@@ -198,7 +201,18 @@ public class CommandBot {
     teleOpController.stowPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow)); //square
     teleOpController.ampPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff)); //triangle
     teleOpController.handoffPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff)); //circle
+
+    // teleOpController.getPivotTriggerDown().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotDropTilt));
+    // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotShootTilt));
     
+
+    //speed control toggle between 1.0 or 0.4, see GlobalState for speedsb
+    teleOpController.slowMaxSpeedTrigger().onTrue(Commands.runOnce(() -> {
+          GlobalState.getInstance().toggleMaxSpeed();
+          Double maxspeed = GlobalState.getInstance().getMaxSpeed();
+          System.out.println("Max speed set to "+maxspeed);
+          SwerveDriveSubsystem.getInstance().setMaxSpeeds(maxspeed, maxspeed);
+      }));
     
   }
 
