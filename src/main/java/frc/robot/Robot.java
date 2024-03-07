@@ -57,6 +57,7 @@ public class Robot extends LoggedRobot {
     PositionController.getInstance().refresh();
     SmartDashboard.putBoolean("Reset", false);
     m_robot.configureBindings();
+    GyroSubsystem.getInstance().init();
   }
 
   /**
@@ -95,7 +96,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     // Configure default commands and condition bindings on robot startup
-    GyroSubsystem.getInstance().init();
+    
 
     m_autonomousCommand = m_robot.getAutonomousCommand(new Date());
 
@@ -164,6 +165,8 @@ public class Robot extends LoggedRobot {
   public void simulationInit() {
     System.out.println("Simulation Mode Init");
     RuntimeConfig.is_simulator_mode = true;
+
+    
   }
 
   @Override

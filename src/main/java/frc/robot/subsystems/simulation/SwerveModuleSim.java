@@ -14,11 +14,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMMotorController;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.simulation.PWMSim;
+import frc.robot.subsystems.SparkMaxWrapper;
 import edu.wpi.first.wpilibj.simulation.CallbackStore;
 
 public class SwerveModuleSim {
-    private final PWMSim m_drivePWMSim;
-    private final PWMSim m_turnPWMSim;
+    private final SparkMaxWrapper m_driveMotor;
+    private final SparkMaxWrapper m_turnMotor;
 
     private final EncoderSim m_driveEncoderSim;
     private final EncoderSim m_turnEncoderSim;
@@ -60,7 +61,7 @@ public class SwerveModuleSim {
     //alpha = 1.5 => between "pink" and random-walk "brownian"
     private final PinkNoise pinkNoise = new PinkNoise(1.5, 3);
 
-    public SwerveModuleSim(PWMMotorController driveMotor, PWMMotorController turnMotor, Encoder driveEncoder, 
+    public SwerveModuleSim(SparkMaxWrapper driveMotor, SparkMaxWrapper turnMotor, Encoder driveEncoder, 
                 Encoder turnEncoder, double drive_ks, double drive_kv, double turn_ks, double turn_kv, String networkTableName)
     {
         m_table = m_netInst.getTable(networkTableName);
@@ -77,19 +78,19 @@ public class SwerveModuleSim {
         m_turnPInPubRad = m_table.getDoubleTopic("turnInputRad").publish();
 
        
-        //create simulator for motors and encoders
-        m_drivePWMSim = new PWMSim(driveMotor);
-        m_turnPWMSim = new PWMSim(turnMotor);
+        m_driveMotor = driveMotor;
+        m_turnMotor = turnMotor;
+
+        m_driveEncoder = driveEncoder;
+        m_turnEncoder = turnEncoder;
 
         m_driveEncoderSim = new EncoderSim(driveEncoder);
         m_turnEncoderSim = new EncoderSim(turnEncoder);
 
         //publish sim values to publishers of network tables
-        pubSim(m_drivePWMSim, m_drivePWMPub1_1);
-        pubSim(m_turnPWMSim, m_turnPWMPub1_1);
+        //pubSim(m_driveMotor, m_drivePWMPub1_1);
+        //pubSim(m_turnMotor, m_turnPWMPub1_1);
 
-        m_driveEncoder = driveEncoder;
-        m_turnEncoder = turnEncoder;
 
         m_driveKS = drive_ks;
         m_driveKV = drive_kv;
@@ -97,9 +98,11 @@ public class SwerveModuleSim {
         m_turnKV = turn_kv;
     }
 
-    public void pubSim(PWMSim sim, DoublePublisher pub) {
+    /*
+    public void pubSim(SparkMaxWrapper sim, DoublePublisher pub) {
         m_cbs.add(sim.registerSpeedCallback((name, value)->pub.set(value.getDouble()), true));
     }
+    */
 
     /*
      * Simulate module drive/steer velocity using heuristics
@@ -126,8 +129,8 @@ public class SwerveModuleSim {
 
     public void simulationPeriodic(double dtS) {
         //derive velocity from motor output
-        double driveVM_s = simulateVelocity(m_drivePWMSim.getSpeed(), m_driveKS, m_driveKV);
-        double turnVRad_s = simulateVelocity(m_turnPWMSim.getSpeed(), m_turnKS, m_turnKV);
+        double driveVM_s = simulateVelocity(m_driveMotor.get(), m_driveKS, m_driveKV);
+        double turnVRad_s = simulateVelocity(m_turnMotor.get(), m_turnKS, m_turnKV);
 
         //publish derived velocities
         m_driveVPubM_s.set(driveVM_s);
