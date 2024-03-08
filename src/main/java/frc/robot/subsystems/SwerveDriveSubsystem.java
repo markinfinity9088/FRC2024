@@ -305,12 +305,12 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
 
   @Override
   public void simulationPeriodic() {
-   /*
+   
     m_frontLeft.simulationPeriodic();
     m_frontRight.simulationPeriodic();
     m_rearLeft.simulationPeriodic();
     m_rearRight.simulationPeriodic();
-    */
+    
   }
 
 }

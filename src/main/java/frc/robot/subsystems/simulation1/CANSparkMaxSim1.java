@@ -227,54 +227,60 @@ public class CANSparkMaxSim1 {
 
     // Calcuate the applied output
     double appliedOutput = 0.0;
-    switch (m_controlMode.get()) {
+    if (m_setpoint != null) {
+      switch (m_controlMode.get()) {
         // Duty Cycle
-      case 0:
-        appliedOutput = m_setpoint.get();
-        break;
+        case 0:
+          appliedOutput = m_setpoint.get();
+          break;
 
         // Velocity
-      case 1:
-        appliedOutput = runPID(m_setpoint.get(), internalVelocity, m_pidSlot.get(), dt);
-        break;
+        case 1:
+          appliedOutput = runPID(m_setpoint.get(), internalVelocity, m_pidSlot.get(), dt);
+          break;
 
         // Voltage
-      case 2:
-        appliedOutput = m_setpoint.get() / vbus;
-        break;
+        case 2:
+          appliedOutput = m_setpoint.get() / vbus;
+          break;
 
         // Position
-      case 3:
-        appliedOutput = runPID(m_setpoint.get(), m_position.get(), m_pidSlot.get(), dt);
-        break;
+        case 3:
+          appliedOutput = runPID(m_setpoint.get(), m_position.get(), m_pidSlot.get(), dt);
+          break;
 
         // Smart Motion
-      case 4:
-        // TODO... This control mechansim is not documented
-        break;
+        case 4:
+          // TODO... This control mechansim is not documented
+          break;
 
         // Current
-      case 5:
-        appliedOutput = runPID(m_setpoint.get(), m_motorCurrent.get(), m_pidSlot.get(), dt);
-        break;
+        case 5:
+          appliedOutput = runPID(m_setpoint.get(), m_motorCurrent.get(), m_pidSlot.get(), dt);
+          break;
 
         // Smart Velocity
-      case 6:
-        // TODO... This control mechansim is not documented
-        break;
+        case 6:
+          // TODO... This control mechansim is not documented
+          break;
 
-      default:
-        Logger.tag("CANSparkMaxSim").error("Invalid control mode: {}", m_controlMode.get());
+        default:
+          Logger.tag("CANSparkMaxSim").error("Invalid control mode: {}", m_controlMode.get());
+      }
     }
+    
 
     // ArbFF
-    if (m_arbFFUnits.get() == 0) {
-      // Voltage
-      appliedOutput += m_arbFF.get() / vbus;
-    } else {
-      // Duty Cycle
-      appliedOutput += m_arbFF.get();
+    if (m_arbFF != null) {
+       if ( m_arbFFUnits==null || m_arbFFUnits.get() == 0) {
+          // Voltage
+          appliedOutput += m_arbFF.get() / vbus;
+        } else {
+          // Duty Cycle
+          appliedOutput += m_arbFF.get();
+        }
     }
+   
 
     // Limit to [-1, 1] or limit switch value
     double maxOutput = runLimitLogic(true) ? 0 : 1;
