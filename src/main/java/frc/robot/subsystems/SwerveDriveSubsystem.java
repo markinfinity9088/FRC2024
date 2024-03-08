@@ -11,12 +11,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SwerveDriveSubsystem extends SubsystemBase {
+public class SwerveDriveSubsystem extends SubsystemBase  {
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
@@ -66,6 +67,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   static SwerveDriveSubsystem self = null;
 
+  private final Field2d m_field = new Field2d();
+
   private SwerveDriveSubsystem() {
     System.out.println("Swerve Drive Subsystem Created");
   }
@@ -92,6 +95,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+    m_field.setRobotPose(m_odometry.getPoseMeters());
+  }
+
+  public Field2d getField() {
+    return m_field;
   }
 
   /**
@@ -293,6 +301,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   // Return heading in Rotation2d format
   public Rotation2d getRotation2d(){
     return Rotation2d.fromDegrees(getHeading());
+  }
+
+  @Override
+  public void simulationPeriodic() {
+   /*
+    m_frontLeft.simulationPeriodic();
+    m_frontRight.simulationPeriodic();
+    m_rearLeft.simulationPeriodic();
+    m_rearRight.simulationPeriodic();
+    */
   }
 
 }
