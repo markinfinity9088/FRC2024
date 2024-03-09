@@ -79,7 +79,7 @@ public class ArmPresets {
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(4250), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-405), Long.valueOf(4250), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 

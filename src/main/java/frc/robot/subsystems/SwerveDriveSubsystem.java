@@ -158,9 +158,12 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
     double xSpeedCommanded;
     double ySpeedCommanded;
+    
+    /*
     if (xSpeed!=0 || ySpeed!=0 || rot!=0)
       System.out.println("SDrive..xspeed:"+xSpeed+", yspeed:"+ySpeed+", rot:"+rot+ "gyro rot2d="+Rotation2d.fromDegrees(m_gyro.getAngle()));
-      
+    */
+
     if (rateLimit) {
       // Convert XY to polar for rate limiting
       double inputTranslationDir = Math.atan2(ySpeed, xSpeed);

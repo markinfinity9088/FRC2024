@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
@@ -12,13 +13,21 @@ public class DriveCommands {
     public static Command getSimpleSwerveCommand() {
         System.out.println("getSwerveAutonomousCommand called");
         //return null;
-        SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
+        
+       SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
+       
         s_drive.setMaxSpeeds(.2, 0.5);
         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
-        commandGroup.addCommands(new PathTestAuto(AutoConstants.traj1).getCommand());
+        
+        //commandGroup.addCommands(new PathTestAuto(AutoConstants.traj1).getCommand());
 
-        //commandGroup.addCommands(SampleTrajectoryCommand.MakeTrajectory());
+        //left
+        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.inchesToMeters(30), 0, Units.degreesToRadians(62)+s_drive.getHeading(), true, new Pose2d(), 0.1));
+        // commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, 0, Units.degreesToRadians(62)+s_drive.getHeading(), true, new Pose2d(), 0.1));
+        //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, Units.inchesToMeters(81), 0, true, new Pose2d(), 0.1));
+        
+        commandGroup.addCommands(SampleTrajectoryCommand.MakeTrajectory());
         //left, 2 rings
         // commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 1,1, 0, true, new Pose2d(), 0.1));
         // commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 1, -1, 0, true, new Pose2d(), 0.1));
