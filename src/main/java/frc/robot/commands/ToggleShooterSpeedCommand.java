@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -33,6 +34,7 @@ public class ToggleShooterSpeedCommand extends Command {
     } else {
       goalVelocity = velocity;
     }
+    SmartDashboard.putNumber("GoalVelo", goalVelocity);
     
   }
 
@@ -54,7 +56,7 @@ public class ToggleShooterSpeedCommand extends Command {
   @Override
   public boolean isFinished() {
     double difference = shooter.getShooterVelocity() - goalVelocity;
-    if(difference < 0.005){
+    if(Math.abs(difference) < 0.000005){
       return true;
     }
     return false;
