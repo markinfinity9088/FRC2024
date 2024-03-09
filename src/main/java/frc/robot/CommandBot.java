@@ -107,7 +107,11 @@ public class CommandBot {
           () -> -teleOpController.getRotation(), true, true));
         */
 
-        teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {s_drive.zeroHeading();}));
+        teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
+          SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
+
+          s_drive.zeroHeading();
+        }));
         
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();

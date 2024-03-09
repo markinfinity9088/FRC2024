@@ -5,19 +5,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.commands.testingcommand.PathTestAuto;
 
 public class DriveCommands {
     public static Command getSimpleSwerveCommand() {
         System.out.println("getSwerveAutonomousCommand called");
         //return null;
         SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
-        s_drive.setMaxSpeeds(0.2, 0.2);
-
+        s_drive.setMaxSpeeds(.2, 0.5);
         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
+        commandGroup.addCommands(new PathTestAuto(AutoConstants.traj1).getCommand());
+
+        //commandGroup.addCommands(SampleTrajectoryCommand.MakeTrajectory());
         //left, 2 rings
-        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, -2.5,0, 0, true, new Pose2d(), 0.05));
-        //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, 0, 3.66, true, new Pose2d(), 0.05));
+        // commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 1,1, 0, true, new Pose2d(), 0.1));
+        // commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 1, -1, 0, true, new Pose2d(), 0.1));
 
 
         /*
