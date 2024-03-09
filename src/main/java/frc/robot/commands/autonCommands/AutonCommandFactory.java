@@ -7,6 +7,8 @@ import frc.robot.commands.intake_commands.IntakeRingCommand;
 import frc.robot.commands.intake_commands.ReleaseRingCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.utils.AllianceSideEnum;
+import frc.robot.vision.limelight.AlignToTarget;
+import frc.robot.vision.limelight.LimelightsContainer;
 
 public class AutonCommandFactory {
     public static Command getCommandForBasicMove(AllianceSideEnum allianceSide) {
@@ -41,5 +43,9 @@ public class AutonCommandFactory {
 
     public static Command runReleaseUntilRingNotDetected() {
         return new ReleaseRingCommand(true);
+    }
+
+    public static Command goToVisionTarget() {
+        return new AlignToTarget(LimelightsContainer.getInstance().getLimeLight("limelight"));
     }
 }

@@ -25,6 +25,7 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.GlobalState;
 import frc.robot.vision.limelight.LimeLightFacade;
+import frc.robot.vision.limelight.LimelightsContainer;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -54,6 +55,7 @@ public class CommandBot {
   public void init() {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
     m_limelight = new LimeLightFacade();
+    LimelightsContainer.getInstance().addLimeLight("limelight", m_limelight);
   }
 
   /**
