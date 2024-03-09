@@ -8,6 +8,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.PositionSubsystemCommand;
+import frc.robot.commands.ToggleShooterSpeedCommand;
 import frc.robot.commands.arm_routines.ArmPresets;
 import frc.robot.commands.arm_routines.logic.ArmRoutine;
 import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
@@ -131,8 +132,7 @@ public class CommandBot {
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
       if (shooter!=null) {
-        teleOpController.getShootTrigger().whileTrue(Commands.run(() -> {shooter.startShooterWheels(1);}));
-        teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {intake.stop(); shooter.stopShooterWheels();}));
+        teleOpController.getShootTrigger().onTrue(new ToggleShooterSpeedCommand(1));
       }
     }
 
