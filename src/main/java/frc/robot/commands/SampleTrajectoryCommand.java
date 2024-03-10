@@ -25,18 +25,23 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class SampleTrajectoryCommand {
 
-    static SwerveDriveSubsystem m_robotDrive = SwerveDriveSubsystem.getInstance();
+    static final PIDController vXController = new PIDController(1, 0.006, 0.008);
+    static final PIDController vYController = new PIDController(1, 0.006, 0.008);
+    static final PIDController vThetaController =  new PIDController(1, 0.004, 0.008);
 
-    public static Command MakeTrajectory(){
-        
-        // Create config for trajectory
-        TrajectoryConfig config =
+    static final ProfiledPIDController thetaController = new ProfiledPIDController(
+                1, 0.004, 0.002, AutoConstants.kThetaControllerConstraints);
+
+    static final TrajectoryConfig config =
             new TrajectoryConfig(
                     AutoConstants.kMaxSpeedMetersPerSecond,
                     AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                 // Add kinematics to ensure max speed is actually obeyed
                 .setKinematics(DriveConstants.kDriveKinematics);
-                // Apply the voltage constraint
+
+    static SwerveDriveSubsystem m_robotDrive = SwerveDriveSubsystem.getInstance();
+
+    public static Command MakeTrajectory(){
 
         // An example trajectory to follow. All units in meters.
         Trajectory exampleTrajectory =
@@ -47,13 +52,12 @@ public class SampleTrajectoryCommand {
                 // List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
                 List.of(),
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(Units.inchesToMeters(30), 0, new Rotation2d(Units.radiansToDegrees(62))),
+                //new Pose2d(Units.inchesToMeters(30), 0, new Rotation2d(Units.radiansToDegrees(62))),
+                new Pose2d(1, 0, new Rotation2d(Units.radiansToDegrees(62))),
                 // Pass config
                 config);
 
-        var thetaController =
-            new ProfiledPIDController(
-                AutoConstants.kPThetaController, 0.004, 0.02, AutoConstants.kThetaControllerConstraints);
+        
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         SwerveControllerCommand swerveControllerCommand =
@@ -63,8 +67,8 @@ public class SampleTrajectoryCommand {
                 DriveConstants.kDriveKinematics,
 
                 // Position controllers
-                new PIDController(AutoConstants.kPXController, 0, 0),
-                new PIDController(AutoConstants.kPYController, 0, 0),
+                vXController,
+                vYController,
                 thetaController,
                 m_robotDrive::setModuleStates,
                 m_robotDrive);

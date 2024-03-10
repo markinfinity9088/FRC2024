@@ -16,15 +16,18 @@ public class DriveCommands {
         
        SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
        
-        s_drive.setMaxSpeeds(.2, 0.5);
+        s_drive.setMaxSpeeds(0.8, 0.8);
         SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
         
         //commandGroup.addCommands(new PathTestAuto(AutoConstants.traj1).getCommand());
 
+        //kp
+        //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0.7, 0, 0, true, new Pose2d(), 0.1));
+
         //left
-        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.inchesToMeters(30), 0, 0, true, new Pose2d(), 0.1));
-        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.degreesToRadians(62), true, new Pose2d(), 2));
+        //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.inchesToMeters(30), 0, 0, true, new Pose2d(), 0.1));
+        //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.degreesToRadians(62), true, new Pose2d(), 0.5));
         //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, Units.inchesToMeters(81), 0, true, new Pose2d(), 0.1));
         
         commandGroup.addCommands(SampleTrajectoryCommand.MakeTrajectory());
