@@ -111,9 +111,9 @@ public class CommandBot {
         */
 
         teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
+          s_drive.zeroGyro();
+          System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
           SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
-
-          s_drive.zeroHeading();
         }));
         
     }   

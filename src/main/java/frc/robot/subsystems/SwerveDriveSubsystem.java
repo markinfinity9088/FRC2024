@@ -273,7 +273,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   }
 
   /** Zeroes the heading of the robot. */
-  public void zeroHeading() {
+  public void zeroGyro() {
     m_gyro.reset();
   }
 
@@ -283,7 +283,8 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees();
+    //return Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees();
+    return getPose().getRotation().getDegrees();
   }
 
   public double getHeadingRadians() {
