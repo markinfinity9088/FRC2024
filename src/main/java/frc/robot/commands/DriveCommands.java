@@ -23,8 +23,8 @@ public class DriveCommands {
         //commandGroup.addCommands(new PathTestAuto(AutoConstants.traj1).getCommand());
 
         //left
-        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.inchesToMeters(30), 0, Units.degreesToRadians(62)+s_drive.getHeading(), true, new Pose2d(), 0.1));
-        // commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, 0, Units.degreesToRadians(62)+s_drive.getHeading(), true, new Pose2d(), 0.1));
+        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.inchesToMeters(30), 0, 0, true, new Pose2d(), 0.1));
+        commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, Units.degreesToRadians(62), true, new Pose2d(), 2));
         //commandGroup.addCommands(new SwerveSampleMoveCommand(s_drive, 0, Units.inchesToMeters(81), 0, true, new Pose2d(), 0.1));
         
         commandGroup.addCommands(SampleTrajectoryCommand.MakeTrajectory());

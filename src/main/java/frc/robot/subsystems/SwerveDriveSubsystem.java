@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -324,6 +325,14 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     
   }
 
+  public void displayPosition() {
+    Pose2d pose = getPose();
+
+    SmartDashboard.putNumber("RobotPoseX",pose.getX());
+    SmartDashboard.putNumber("RobotPoseY",pose.getX());
+    SmartDashboard.putNumber("RobotPoseHeading",pose.getRotation().getDegrees());
+
+  }
   
 
 }

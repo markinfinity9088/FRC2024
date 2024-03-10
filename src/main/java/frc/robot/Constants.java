@@ -229,4 +229,10 @@ public final class Constants {
     public static final PIDConstants kThetaControllerConstants = 
       new PIDConstants(AutoConstantsPathPlanner.kThetaControllerP, 0.0, AutoConstantsPathPlanner.kThetaControllerD);
   }
+
+
+  public static final class GeneralConstants {
+    public static final boolean   kInVerboseMode = true; //set to false during competition
+
+  }
 }
