@@ -117,12 +117,13 @@ private boolean finished;
     //vYController = new PIDController(6, 0.006, 0.008);
 
     //change value of kp to control max speed
-    vXController = new PIDController(maxdrivespeed, 0.006, 0.008);
-    vYController = new PIDController(maxdrivespeed, 0.006, 0.008);
+    vXController = new PIDController(1, 0.006, 0.008);
+    vYController = new PIDController(1, 0.006, 0.008);
 
 
     //thetaController = new PIDController(0.1, 0.004, 0.02);
-    thetaController = new PIDController(0.1, 0.004, 0.02);
+    //thetaController = new PIDController(0.6, 0.004, 0.001);
+    thetaController = new PIDController(1, 0.004, 0.008);
 
     thetaController.enableContinuousInput(0, 360);
 
@@ -226,6 +227,7 @@ private boolean finished;
       // Move swerve modules
       swerveSubsystem.setModuleStates(moduleStates);
       */
+      
       swerveSubsystem.drive(vX, vY, turningSpeed, true, true);
 
   }
