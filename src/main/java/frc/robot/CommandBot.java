@@ -24,12 +24,16 @@ import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.GlobalState;
-import frc.robot.vision.limelight.LimeLightFacade;
+import frc.robot.vision.limelight.LimelightFacade;
+import frc.robot.vision.limelight.LimelightFacade;
 import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 import java.util.Date;
+
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -49,11 +53,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class CommandBot {
   Subsystem drive;
-  LimeLightFacade m_limelight;
+  LimelightFacade m_limelight;
 
   public void init() {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
-    m_limelight = new LimeLightFacade();
+    m_limelight = new LimelightFacade();
   }
 
   /**
@@ -210,7 +214,8 @@ public class CommandBot {
    */
 
   public Command getAutonomousCommand(Date autoStartTime) {
-    return AutonController.getAutonCommand();
+    // return AutonController.getAutonCommand();
+    return new PathPlannerAuto("New Auto");
   }
 
   void periodic() {
