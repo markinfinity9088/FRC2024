@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants.AutoConstants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -134,7 +135,7 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 1;
+    public static final double kTurningP = 1; //1
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
@@ -195,14 +196,16 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxSpeedMetersPerSecond = 1;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 1;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPXController = 1;
-    public static final double kPYController = 1;
-    public static final double kPThetaController = 1;
+    public static final double kPXController = 3;
+    public static final double kPYController = 3;
+    public static final double kPThetaController = .1;
+
+    public static final String traj1 = "";
 
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
@@ -222,5 +225,25 @@ public final class Constants {
     public static final int kDriverControllerPort0 = 0;
     public static final int kDriverControllerPort1 = 1;  
     public static final double kDriveDeadband = 0.05;
+  }
+
+  public static final class AutoConstantsPathPlanner {
+    //x, y controller
+    public static final double kTranslationControllerP = 3.0;
+    public static final double kTranslationControllerD = 0.05;
+    public static final PIDConstants kTranslationControllerConstants = 
+      new PIDConstants(AutoConstantsPathPlanner.kTranslationControllerP, 0.0, AutoConstantsPathPlanner.kTranslationControllerD);
+
+    //theta controller
+    public static final double kThetaControllerP = 1.5;
+    public static final double kThetaControllerD = 0.05;
+    public static final PIDConstants kThetaControllerConstants = 
+      new PIDConstants(AutoConstantsPathPlanner.kThetaControllerP, 0.0, AutoConstantsPathPlanner.kThetaControllerD);
+  }
+
+
+  public static final class GeneralConstants {
+    public static final boolean   kInVerboseMode = true; //set to false during competition
+
   }
 }

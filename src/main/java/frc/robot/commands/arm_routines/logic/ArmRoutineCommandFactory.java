@@ -3,6 +3,7 @@ package frc.robot.commands.arm_routines.logic;
 import java.util.HashMap;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
@@ -10,6 +11,7 @@ import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
 /*
@@ -38,6 +40,7 @@ public class ArmRoutineCommandFactory {
     public Command executeArmRoutine(ArmRoutine routine) {
 
         SequentialCommandGroup commandSequence = new SequentialCommandGroup();
+
         
         //Iterate over initial sequence of positions and add to sequential group of move commands
         //This is helpful if we want to add some sequence instead of moving all pieces of arm together, like move wrist a bit first before we start moving arm .
@@ -104,6 +107,11 @@ public class ArmRoutineCommandFactory {
                                         new HoldSubsystemInPositionCommand(PivotSubsystem.getInstance(), positionValue);
             parallelGroup.addCommands(command);
             added = true;
+        }
+
+        if (positionInfo.getShouldStartShooterOn()) {
+            Command command = new InstantCommand((()->{ShooterSubsystem.getInstance().startShooterWheels(1);}));
+            parallelGroup.addCommands(command);
         }
         
         if (!added) {

@@ -63,6 +63,11 @@ public class MyXboxController implements TeleOpController{
     }
 
     @Override
+    public Trigger getResetTrigger() {
+        throw new UnsupportedOperationException("Unimplemented method 'getIntakeSpeed'");
+    }
+
+    @Override
     public double getPivotSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPivotspeed'");
@@ -218,6 +223,12 @@ public class MyXboxController implements TeleOpController{
     public Trigger resetLastKnownPresetNameTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resetLastKnownPresetNameTrigger'");
+    }
+
+    @Override
+    public Trigger slowMaxSpeedTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'slowMaxSpeedTrigger'");
     } 
 }
 

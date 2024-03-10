@@ -16,6 +16,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.ModuleConstants;
+import frc.robot.subsystems.simulation1.SwerveModuleSimFacade;
 
 public class MAXSwerveModule {
   private final CANSparkMax m_drivingSparkMax;
@@ -29,6 +30,8 @@ public class MAXSwerveModule {
 
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+
+  private SwerveModuleSimFacade m_simDrive ;
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
@@ -108,6 +111,8 @@ public class MAXSwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
     m_drivingEncoder.setPosition(0);
+
+    m_simDrive = new SwerveModuleSimFacade(m_turningSparkMax, m_drivingSparkMax);
   }
 
   /**
@@ -161,4 +166,11 @@ public class MAXSwerveModule {
   public void resetEncoders() {
     m_drivingEncoder.setPosition(0);
   }
+
+  public void simulationPeriodic() {
+    if (m_simDrive != null) {
+      m_simDrive.simulationPeriodic();
+    }
+  }
+
 }
