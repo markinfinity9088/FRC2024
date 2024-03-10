@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 
-public class LimelightFacade  {
+public class LimeLightFacade  {
 
 	private String limelightName = "limelight";
 	private double kCameraHeight = 9.14;
 	private double kMountingAngle = 35.0;
 	private double GoalHeight = 24.5; //inches, deg
 
-	public LimelightFacade() {}
+	public LimeLightFacade() {}
 
 	public LimeLightFacade(String name) {
 		limelightName = name;

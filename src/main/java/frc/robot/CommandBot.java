@@ -54,7 +54,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class CommandBot {
   Subsystem drive;
-  LimelightFacade m_limelight;
+  LimeLightFacade m_limelight;
 
   public void init() {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
