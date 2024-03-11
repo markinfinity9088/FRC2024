@@ -46,6 +46,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private double m_currentTranslationDir = 0.0;
   private double m_currentTranslationMag = 0.0;
 
+
+  double xSpeedDelivered = 0, ySpeedDelivered = 0, rotDelivered=0;
+
   private SlewRateLimiter m_magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate);
   private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
@@ -79,6 +82,22 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public void setMaxSpeeds(Double drivespeed, Double angularspeed) {
     maximum_drive_speed = drivespeed;
     maximum_rotation_speed = angularspeed;
+  }
+
+  public void simulationInit() {
+    m_frontLeft.initSimulatonMode();
+    m_frontRight.initSimulatonMode();
+    m_rearLeft.initSimulatonMode();
+    m_rearRight.initSimulatonMode();
+  }
+
+  public void simulationPeriodic() {
+    if (xSpeedDelivered!=0 || ySpeedDelivered!=0 || rotDelivered!=0) {
+        m_frontLeft.simulationPeriodic();
+        m_frontRight.simulationPeriodic();
+        m_rearLeft.simulationPeriodic();
+        m_rearRight.simulationPeriodic();
+    }
   }
 
   @Override
@@ -200,9 +219,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     // Convert the commanded speeds into the correct units for the drivetrain
-    double xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
-    double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
-    double rotDelivered = m_currentRotation *  DriveConstants.kMaxAngularSpeed * maximum_rotation_speed;
+    xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
+    ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed;
+    rotDelivered = m_currentRotation *  DriveConstants.kMaxAngularSpeed * maximum_rotation_speed;
 
 
   double xEncoderDelta = xSpeedDelivered;

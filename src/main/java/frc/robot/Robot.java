@@ -17,6 +17,7 @@ import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.RuntimeConfig;
 
@@ -150,6 +151,7 @@ public class Robot extends LoggedRobot {
   public void simulationInit() {
     System.out.println("Simulation Mode Init");
     RuntimeConfig.is_simulator_mode = true;
+    SwerveDriveSubsystem.getInstance().simulationInit();
   }
 
   @Override
@@ -160,6 +162,7 @@ public class Robot extends LoggedRobot {
     ElevatorSubsystem.getInstance().simulationPeriodic();
     PivotSubsystem.getInstance().simulationPeriodic();
     ClimbSubsystem.getInstance().simulationPeriodic();
+    SwerveDriveSubsystem.getInstance().simulationPeriodic();
   }
 
 }
