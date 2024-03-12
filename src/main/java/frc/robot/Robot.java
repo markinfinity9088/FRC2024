@@ -168,6 +168,7 @@ public class Robot extends LoggedRobot {
   public void simulationInit() {
     System.out.println("Simulation Mode Init");
     RuntimeConfig.is_simulator_mode = true;
+    SwerveDriveSubsystem.getInstance().simulationInit();
   }
 
   @Override
@@ -178,6 +179,7 @@ public class Robot extends LoggedRobot {
     ElevatorSubsystem.getInstance().simulationPeriodic();
     PivotSubsystem.getInstance().simulationPeriodic();
     ClimbSubsystem.getInstance().simulationPeriodic();
+    SwerveDriveSubsystem.getInstance().simulationPeriodic();
   }
 
 }
