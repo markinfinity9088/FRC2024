@@ -11,7 +11,7 @@ public class PS4Controller implements TeleOpController {
     private CommandPS4Controller ps4Controller1;
     private CommandPS4Controller ps4Controller2;
     static private PS4Controller self;
-    final double maxSpeed = 0.8;
+    final double maxSpeed = 1;
 
     private PS4Controller() {
         ps4Controller1 = new CommandPS4Controller(Constants.OIConstants.kDriverControllerPort0);
@@ -72,18 +72,23 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
+    public Trigger getResetTrigger() {
+        return ps4Controller1.square();
+    }
+
+    @Override
     public Trigger getHookUpTrigger() {
         return ps4Controller1.L2();
     }
 
     @Override
     public double getHookUpSpeed() {
-        return ps4Controller1.getL2Axis();
+        return (ps4Controller1.getL2Axis() + 1) / 2;
     }
 
     @Override
     public double getHookDownSpeed() {
-        return ps4Controller1.getR2Axis();
+        return -(ps4Controller1.getR2Axis() + 1) / 2;
     }
     
 
@@ -158,12 +163,12 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getPivotTriggerUp() {
-        return ps4Controller1.triangle();
+        return ps4Controller1.triangle().or(ps4Controller2.povUp());
     }
 
     @Override
     public Trigger getPivotTriggerDown() {
-        return ps4Controller1.cross();
+        return ps4Controller1.cross().or(ps4Controller2.povDown());
     }
 
     @Override
@@ -236,6 +241,23 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller2.circle();
     }
 
+    @Override
+    public Trigger slowMaxSpeedTrigger() {
+        return ps4Controller1.circle();
+    }
+
+    // @Override
+    // public Trigger pivotPresetUpTrigger(){
+    //     return ps4Controller1.povUp();
+    // }
+
+    // public Trigger pivotPresetDownTrigger(){
+    //     return ps4Controller1.povUp();
+    // }
+
+
+    //
+    
    
 
 }

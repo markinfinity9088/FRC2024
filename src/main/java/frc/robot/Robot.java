@@ -8,15 +8,19 @@ import java.util.Date;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.IntakeCommands;
 import frc.robot.controller.PositionController;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
+import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.RuntimeConfig;
@@ -35,6 +39,7 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private final CommandBot m_robot = new CommandBot();
+  private final SwerveDriveSubsystem swerve = SwerveDriveSubsystem.getInstance(); 
 
   Robot() {
     super(0.02);
@@ -52,6 +57,7 @@ public class Robot extends LoggedRobot {
     m_robot.init();
     PositionController.getInstance().refresh();
     SmartDashboard.putBoolean("Reset", false);
+    m_robot.configureBindings();
   }
 
   /**
@@ -78,6 +84,9 @@ public class Robot extends LoggedRobot {
       ClimbSubsystem.getInstance().reset();
       SmartDashboard.putBoolean("Reset", false); 
     }
+
+    Field2d field = SwerveDriveSubsystem.getInstance().getField();
+    SmartDashboard.putData("Fieldk", field);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -111,13 +120,21 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
+    CommandScheduler.getInstance().cancelAll();
+    IntakeSubSystem.getInstance().stop();
+    ShooterSubsystem.getInstance().stopShooterWheels();
+    PivotSubsystem.getInstance().stop();
+    ElbowSubsystem.getInstance().stop();
+    WristSubsystem.getInstance().stop();
+    SwerveDriveSubsystem.getInstance().stopModules();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
     // Configure default commands and condition bindings on robot startup
     m_robot.configureBindings();
-    GyroSubsystem.getInstance().init();
+    swerve.setMaxSpeeds(1.0, 1.0);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

@@ -17,7 +17,11 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.ModuleConstants;
+
 import frc.robot.utils.RuntimeConfig;
+
+import frc.robot.subsystems.simulation1.SwerveModuleSimFacade;
+
 
 public class MAXSwerveModule {
   private final CANSparkMax m_drivingSparkMax;
@@ -31,7 +35,13 @@ public class MAXSwerveModule {
 
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+
   private SwerveModuleState m_optimizedState  = new SwerveModuleState(0.0, new Rotation2d());
+
+
+  private SwerveModuleSimFacade m_simDrive ;
+
+
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
    * encoder, and PID controller. This configuration is specific to the REV
@@ -109,6 +119,8 @@ public class MAXSwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(getTurningEncoderPosition());
     m_drivingEncoder.setPosition(0);
+
+    m_simDrive = new SwerveModuleSimFacade(m_turningSparkMax, m_drivingSparkMax);
   }
 
   public void initSimulatonMode() {
@@ -176,10 +188,16 @@ public class MAXSwerveModule {
   }
 
   public void simulationPeriodic() {
+
     System.out.println("Updating pos with speedMetersPerSecond:"+m_optimizedState.speedMetersPerSecond+", angle:"+m_optimizedState.angle.getRadians());
     if (m_optimizedState.speedMetersPerSecond!=0)
       m_drivingEncoder.setPosition(m_drivingEncoder.getPosition()+m_optimizedState.speedMetersPerSecond);
     if (m_optimizedState.angle.getRadians()!=getPosition().angle.getRadians())
       ((RelativeEncoder)m_turningEncoder).setPosition(m_optimizedState.angle.getRadians());
+
+    if (m_simDrive != null) {
+      m_simDrive.simulationPeriodic();
+    }
   }
+
 }

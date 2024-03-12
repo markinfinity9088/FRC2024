@@ -13,7 +13,15 @@ public class ArmPresets {
 
     public static final ArmRoutine TestRoutine = createTestingPreset();
 
-    public static final ArmRoutine PivotShootTilt = createPivotPreset();
+    public static final ArmRoutine PivotShootTilt = createPivotUpPreset();
+    public static final ArmRoutine PivotDropTilt = createPivotLowPreset();
+
+    public static final long PIVOT_MAX_TILT = 155;
+    public static final long PIVOT_SHOOT_POINT = 155;
+    public static final long PIVOT_TOLERANCE = 5;
+    public static final long PIVOT_MIN_POINT = 2;
+
+    public static final long WRIST_HANDOFF_POSITION = 4250;
 
 
 
@@ -36,11 +44,13 @@ public class ArmPresets {
     //// creations of routines 
 
     private static  ArmRoutine createHandoffPreset() {
+        System.out.println("Handoff preset created "+WRIST_HANDOFF_POSITION);
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(4250), null);
+       // ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(4250), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(WRIST_HANDOFF_POSITION), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -69,7 +79,7 @@ public class ArmPresets {
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(4250), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-405), Long.valueOf(4250), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -94,13 +104,31 @@ public class ArmPresets {
 
     
 
-    private static  ArmRoutine createPivotPreset() {
+    private static  ArmRoutine createPivotUpPreset() {
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
            // new ArmPositioningInfo(null, null, null)
         };
 
         ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
-        finalPosition.setPivotPosition(Long.valueOf(45)); //TODO set correct value later
+        finalPosition.setPivotPosition(Long.valueOf(PIVOT_SHOOT_POINT)); //TODO set correct value later
+        //finalPosition.setShooterOn();
+
+        ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
+
+        return routine;
+    }
+
+    private static  ArmRoutine createPivotLowPreset() {
+        ArmPositioningInfo lowMovePosition = new ArmPositioningInfo(null, null, null);
+        lowMovePosition.setPivotPosition(Long.valueOf(PIVOT_MIN_POINT)); //TODO set correct value later
+
+
+        ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+           lowMovePosition
+        };
+
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        //finalPosition.setPivotPosition(PIVOT_MIN_POINT); //TODO set correct value later
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 

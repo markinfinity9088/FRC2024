@@ -22,6 +22,11 @@ public class PS4ControllerSingle implements TeleOpController {
     }
 
     @Override
+    public Trigger getResetTrigger() {
+        return ps4Controller1.square();
+    }
+
+    @Override
     public Trigger releaseToAMPTrigger() {
         return ps4Controller1.R1();
     }
@@ -216,5 +221,11 @@ public class PS4ControllerSingle implements TeleOpController {
     public Trigger resetLastKnownPresetNameTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resetLastKnownPresetNameTrigger'");
+    }
+
+    @Override
+    public Trigger slowMaxSpeedTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'slowMaxSpeedTrigger'");
     }
 }

@@ -28,13 +28,10 @@ public class HandoffAndShootCommand extends Command {
 
     //Some of these values are duplicated in Presets, need to fix duplicates later
     //Adjust values later
-    private static final long MAX_HANDOFF_WAIT_TIME = 10;
+    private static final long MAX_HANDOFF_WAIT_TIME = 10000;
 
-    private static final long MAX_SHOOTER_TIMER = 5;
+    private static final long MAX_SHOOTER_TIMER = 5000;
 
-    private static final long PIVOT_POSITION_FOR_SHOOT = 430; //todo
-
-    private static final long WRIST_HANDOFF_POSITION = 4250; 
 
     private long commandStartTime=0;
     private long startTimeOfCurrentState=0;
@@ -44,7 +41,7 @@ public class HandoffAndShootCommand extends Command {
 
     private HashMap<String, Command> currentCommands = null;
 
-    HandoffAndShootCommand() {
+    public HandoffAndShootCommand() {
         currentState = HandoffAndShootState.Initial;
         addRequirements(ShooterSubsystem.getInstance(), WristSubsystem.getInstance(), 
                 ElbowSubsystem.getInstance(), ElevatorSubsystem.getInstance(), PivotSubsystem.getInstance(),
@@ -56,6 +53,7 @@ public class HandoffAndShootCommand extends Command {
         commandStartTime = 0;
         startTimeOfCurrentState = 0;
         currentCommands = new HashMap<>();
+        switchState(HandoffAndShootState.Initial);
     }
 
     //In future, we can get rid of state machine and use command composition
@@ -113,6 +111,7 @@ public class HandoffAndShootCommand extends Command {
     private void switchState(HandoffAndShootState newState) {
         currentState = newState;
         startTimeOfCurrentState = System.currentTimeMillis();
+        System.out.println("Current shoot state = "+ currentState);
     }
 
     private void startShootingAction() {
@@ -129,11 +128,11 @@ public class HandoffAndShootCommand extends Command {
     }
 
     private boolean isShooterAtCorrectTilt() {
-        return (PivotSubsystem.getInstance().isAtPosition(PIVOT_POSITION_FOR_SHOOT, Long.valueOf(5)));
+        return (PivotSubsystem.getInstance().isAtPosition(Long.valueOf(ArmPresets.PIVOT_SHOOT_POINT) , ArmPresets.PIVOT_TOLERANCE));
     }
 
     private boolean isAtHandoffPosition() {
-        return WristSubsystem.getInstance().isAtPosition(WRIST_HANDOFF_POSITION, Long.valueOf(30));
+        return WristSubsystem.getInstance().isAtPosition(Long.valueOf(ArmPresets.WRIST_HANDOFF_POSITION) , Long.valueOf(30));
     }
 
     private long getTimeElapsedInCurrentState() {

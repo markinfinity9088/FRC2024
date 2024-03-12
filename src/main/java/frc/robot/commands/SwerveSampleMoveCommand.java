@@ -10,6 +10,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -40,6 +42,9 @@ private boolean finished;
 
 
   private Pose2d resetPose;
+
+  private double m_headingAtStart;
+
 
   // Command constructor
   // x/y setpoint is in meters, forward is +ve for x and left is +ve for y
@@ -98,10 +103,12 @@ private boolean finished;
     vYController = new PIDController(maxdrivespeed, 0.006, 0.008);
 
 
+    //thetaController = new PIDController(0.1, 0.004, 0.02);
     thetaController = new PIDController(0.1, 0.004, 0.02);
+
     thetaController.enableContinuousInput(0, 360);
 
-  
+    m_headingAtStart = swerveSubsystem.getHeading();
   }
 
   boolean didReachXYSetPoint() {
@@ -117,6 +124,34 @@ private boolean finished;
         return true;
       }
     return false;
+  }
+
+  double getAngleDiffFromStart1() {
+    double currentPoseT = swerveSubsystem.getHeading();
+    double headingDifference = Math.abs(currentPoseT - m_headingAtStart);
+    double tsetpointdegrees = Units.radiansToDegrees(tSetpoint);
+    
+    return Math.abs(headingDifference-tsetpointdegrees);
+  }
+
+  double getAngleDiffFromStart() {
+    double currentPoseT = swerveSubsystem.getHeading();
+    double tsetpointdegrees = Units.radiansToDegrees(tSetpoint);
+    double headingDifference = Math.abs(currentPoseT - tsetpointdegrees);
+
+    
+    return headingDifference;
+  }
+
+  boolean didReachThetaSetpoint(){
+    double deltaAngle = getAngleDiffFromStart();
+    SmartDashboard.putNumber("AngleDiff", deltaAngle);
+
+    if (Math.abs(deltaAngle) <= 5) {
+      return true;
+    }
+    return false;
+
   }
 
   @Override
@@ -135,9 +170,9 @@ private boolean finished;
 
       if(yflag && xflag){ finished = true;}*/
 
-      if (didReachXYSetPoint()) {
+      /*if (didReachXYSetPoint() && didReachThetaSetpoint()) {
         finished = true;
-      }
+      }*/
 
       double turningSpeed;
 
@@ -180,9 +215,17 @@ private boolean finished;
 
   // Stop all module motor movement when command ends
   @Override
-  public void end(boolean interrupted){swerveSubsystem.stopModules();}
+  public void end(boolean interrupted){
+    System.out.println("End SwerveSampleMoveCommand called");
+    swerveSubsystem.stopModules();
+  }
 
   @Override
-  public boolean isFinished(){return finished;}
+  public boolean isFinished(){
+    if (didReachXYSetPoint() && didReachThetaSetpoint()) {
+        finished = true;
+      }
+    return finished;
+  }
   
 }
