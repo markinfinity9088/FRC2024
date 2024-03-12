@@ -390,15 +390,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   public void driveRobotRelative(ChassisSpeeds speeds){
     this.drive(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, speeds.omegaRadiansPerSecond, false, false);
   }
-  @Override
-  public void simulationPeriodic() {
-   
-    m_frontLeft.simulationPeriodic();
-    m_frontRight.simulationPeriodic();
-    m_rearLeft.simulationPeriodic();
-    m_rearRight.simulationPeriodic();
-    
-  }
+  
 
   public void displayPosition() {
     Pose2d pose = getPose();
