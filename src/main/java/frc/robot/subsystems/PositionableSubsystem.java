@@ -270,8 +270,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public void simulationPeriodic() {
         double gravity = -1;
-        if (getCurrentSpeed() != 0)
-            setPosition(getPosition() + encoderReversed * getCurrentSpeed() * 100);
+        double curSpeed = getCurrentSpeed();
+        if (curSpeed != 0)
+            setPosition(getPosition() + encoderReversed * (curSpeed>0?Math.ceil(curSpeed * 100) : Math.floor(curSpeed*100)));
         else if (getPosition() * encoderReversed > 0)
             setPosition(getPosition() + encoderReversed * gravity);
         showPositionOnDashboard();
