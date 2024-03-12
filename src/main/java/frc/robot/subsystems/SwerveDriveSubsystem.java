@@ -332,16 +332,6 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  @Override
-  public void simulationPeriodic() {
-   
-    m_frontLeft.simulationPeriodic();
-    m_frontRight.simulationPeriodic();
-    m_rearLeft.simulationPeriodic();
-    m_rearRight.simulationPeriodic();
-    
-  }
-
   
 
 }
