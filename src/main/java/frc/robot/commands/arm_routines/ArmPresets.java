@@ -79,7 +79,7 @@ public class ArmPresets {
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-405), Long.valueOf(4250), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(4250), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -111,6 +111,20 @@ public class ArmPresets {
 
         ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
         finalPosition.setPivotPosition(Long.valueOf(PIVOT_SHOOT_POINT)); //TODO set correct value later
+        //finalPosition.setShooterOn();
+
+        ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
+
+        return routine;
+    }
+
+    public static  ArmRoutine createPivotPreset(int position) {
+        ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+           // new ArmPositioningInfo(null, null, null)
+        };
+
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        finalPosition.setPivotPosition(Long.valueOf(position)); //TODO set correct value later
         //finalPosition.setShooterOn();
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);

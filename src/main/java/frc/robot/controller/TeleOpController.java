@@ -20,6 +20,7 @@ public interface TeleOpController {
     Trigger getElevatorTrigger();
     Trigger getPivotTriggerUp();
     Trigger getPivotTriggerDown();
+    Trigger getPivotPresetTrigger();
 
     // Bindings for Axis value
     double getIntakeSpeed();

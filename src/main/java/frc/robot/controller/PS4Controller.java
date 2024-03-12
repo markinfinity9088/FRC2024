@@ -77,6 +77,11 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
+    public Trigger getPivotPresetTrigger() {
+        return ps4Controller1.circle();
+    }
+
+    @Override
     public Trigger getHookUpTrigger() {
         return ps4Controller1.L2();
     }

@@ -42,8 +42,26 @@ private boolean finished;
 
 
   private Pose2d resetPose;
+  private boolean m_rotateOnly;
 
-  private double m_headingAtStart;
+  private double m_degreeTolerance=3;
+
+    // tSetpoint is in radians and posive for counter clockwise
+    //call this constructor for rotate only
+  public SwerveSampleMoveCommand(SwerveDriveSubsystem swerveSubsystem,
+      double tSetpoint, boolean reset, Pose2d resetPose,
+      double degreeTolerance) 
+  {
+    this(swerveSubsystem, swerveSubsystem.getPose().getX(), swerveSubsystem.getPose().getY(), tSetpoint, reset,
+        resetPose, 0.3);
+    if (reset) {
+      this.xSetpoint = this.ySetpoint = 0;
+    }
+    m_rotateOnly = true;
+
+    m_degreeTolerance = degreeTolerance;
+
+  }
 
 
   // Command constructor
@@ -55,7 +73,7 @@ private boolean finished;
          double xSetpoint, double ySetpoint, double tSetpoint, boolean reset, Pose2d resetPose,
          double tolerance)
   {
-
+     m_rotateOnly = false;
      this.reset = reset;
      this.resetPose = resetPose;
 
@@ -99,16 +117,16 @@ private boolean finished;
     //vYController = new PIDController(6, 0.006, 0.008);
 
     //change value of kp to control max speed
-    vXController = new PIDController(maxdrivespeed, 0.006, 0.008);
-    vYController = new PIDController(maxdrivespeed, 0.006, 0.008);
+    vXController = new PIDController(1, 0.006, 0.008);
+    vYController = new PIDController(1, 0.006, 0.008);
 
 
     //thetaController = new PIDController(0.1, 0.004, 0.02);
-    thetaController = new PIDController(0.1, 0.004, 0.02);
+    //thetaController = new PIDController(0.6, 0.004, 0.001);
+    thetaController = new PIDController(1, 0.004, 0.008);
 
     thetaController.enableContinuousInput(0, 360);
 
-    m_headingAtStart = swerveSubsystem.getHeading();
   }
 
   boolean didReachXYSetPoint() {
@@ -126,15 +144,8 @@ private boolean finished;
     return false;
   }
 
-  double getAngleDiffFromStart1() {
-    double currentPoseT = swerveSubsystem.getHeading();
-    double headingDifference = Math.abs(currentPoseT - m_headingAtStart);
-    double tsetpointdegrees = Units.radiansToDegrees(tSetpoint);
-    
-    return Math.abs(headingDifference-tsetpointdegrees);
-  }
 
-  double getAngleDiffFromStart() {
+  double getAngleDifference() {
     double currentPoseT = swerveSubsystem.getHeading();
     double tsetpointdegrees = Units.radiansToDegrees(tSetpoint);
     double headingDifference = Math.abs(currentPoseT - tsetpointdegrees);
@@ -144,10 +155,10 @@ private boolean finished;
   }
 
   boolean didReachThetaSetpoint(){
-    double deltaAngle = getAngleDiffFromStart();
+    double deltaAngle = getAngleDifference();
     SmartDashboard.putNumber("AngleDiff", deltaAngle);
 
-    if (Math.abs(deltaAngle) <= 5) {
+    if (Math.abs(deltaAngle) <= m_degreeTolerance) {
       return true;
     }
     return false;
@@ -176,7 +187,7 @@ private boolean finished;
 
       double turningSpeed;
 
-      turningSpeed = -thetaController.calculate(swerveSubsystem.getHeading(), tSetpoint);
+      turningSpeed = -thetaController.calculate(Units.degreesToRadians(swerveSubsystem.getHeading()), tSetpoint);
 
       turningSpeed = (turningSpeed > maxturnspeed)?maxturnspeed:turningSpeed;
 
@@ -193,8 +204,15 @@ private boolean finished;
       vX = vXController.calculate(swerveSubsystem.getPose().getX(), xSetpoint); // X-Axis PID
       vY = vYController.calculate(swerveSubsystem.getPose().getY(), ySetpoint); // Y-Axis PID
 
+      //KP hack reset vX , vY to zero for rotate only
+      if (m_rotateOnly) {
+        vX = 0;
+        vY = 0;
+      }
+
       SmartDashboard.putNumber("vX", vX);
       SmartDashboard.putNumber("vY", vY);
+      SmartDashboard.putNumber("vTurn", turningSpeed);
 
       // Create chassis speeds  
       /* 
@@ -209,6 +227,7 @@ private boolean finished;
       // Move swerve modules
       swerveSubsystem.setModuleStates(moduleStates);
       */
+      
       swerveSubsystem.drive(vX, vY, turningSpeed, true, true);
 
   }

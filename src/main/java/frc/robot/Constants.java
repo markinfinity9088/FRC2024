@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 //import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -54,6 +56,7 @@ public final class Constants {
     // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(20.0);
     // Distance between front and back wheels on robot
+    public static final double kTrackRadius = Math.sqrt(Math.pow(kTrackWidth, 2) + Math.pow(kWheelBase, 2));
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
@@ -207,6 +210,14 @@ public final class Constants {
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+    public static final HolonomicPathFollowerConfig holConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                                                                  new PIDConstants(2.5,0.1,.08), // Translation PID constants
+                                                                  new PIDConstants(3,0.25,0.06), // Rotation PID constants
+                                                                  DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
+                                                                  DriveConstants.kTrackRadius, // Drive base radius in meters. Distance from robot center to furthest module.
+                                                                  new ReplanningConfig() // Default path replanning config. See the API for the options here
+                                                                );
   }
 
   public static final class OIConstants {
@@ -228,5 +239,11 @@ public final class Constants {
     public static final double kThetaControllerD = 0.05;
     public static final PIDConstants kThetaControllerConstants = 
       new PIDConstants(AutoConstantsPathPlanner.kThetaControllerP, 0.0, AutoConstantsPathPlanner.kThetaControllerD);
+  }
+
+
+  public static final class GeneralConstants {
+    public static final boolean   kInVerboseMode = true; //set to false during competition
+    public static final boolean kCorrectSwerveDrift=true; //kp we will use drift correction logic if this flag is on
   }
 }

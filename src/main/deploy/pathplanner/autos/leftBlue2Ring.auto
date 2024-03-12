@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6825775190011933,
+      "y": 6.630585568863446
+    },
+    "rotation": 60.255118703057825
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "handoffAndShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "moveToRingLeftBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pickupWithSensor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pickupRingLeftBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "handoffAndShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

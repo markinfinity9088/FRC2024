@@ -228,4 +228,10 @@ public class PS4ControllerSingle implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'slowMaxSpeedTrigger'");
     }
+
+    @Override
+    public Trigger getPivotPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPivotPresetTrigger'");
+    }
 }

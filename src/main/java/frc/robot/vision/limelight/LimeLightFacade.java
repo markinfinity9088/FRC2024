@@ -1,27 +1,30 @@
 package frc.robot.vision.limelight;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
+public class LimeLightFacade {
 
-public class LimeLightFacade  {
-
+	// different from pipeline
 	private String limelightName = "limelight";
 	private double kCameraHeight = 9.14;
 	private double kMountingAngle = 35.0;
-	private double GoalHeight = 24.5; //inches, deg
+	private double GoalHeight = 24.5; // inches, deg
 
-	public LimeLightFacade() {}
+	public LimeLightFacade() {
+	}
 
 	public LimeLightFacade(String name) {
 		limelightName = name;
 	}
 
 	public double getDistanceToGoalInches() {
-		return (GoalHeight - kCameraHeight) / Math.tan(Units.degreesToRadians(kMountingAngle + getYAngleOffsetDegrees()));
+		return (GoalHeight - kCameraHeight)
+				/ Math.tan(Units.degreesToRadians(kMountingAngle + getYAngleOffsetDegrees()));
 	}
 
 	public void setGoalHeight(double GoalHeight) {
@@ -41,7 +44,7 @@ public class LimeLightFacade  {
 	}
 
 	public double getXAngleOffsetDegrees() {
-		return -1 * LimelightHelpers.getTX(limelightName); //must be negative
+		return -1 * LimelightHelpers.getTX(limelightName); // must be negative
 	}
 
 	public double getXOffsetRadians() {
@@ -53,11 +56,13 @@ public class LimeLightFacade  {
 	}
 
 	public void setLED(boolean lightOn) {
-        if (lightOn) LimelightHelpers.setLEDMode_ForceOn(limelightName); // LED force on
-        else LimelightHelpers.setLEDMode_ForceOff(limelightName); // LED force off
-    }
+		if (lightOn)
+			LimelightHelpers.setLEDMode_ForceOn(limelightName); // LED force on
+		else
+			LimelightHelpers.setLEDMode_ForceOff(limelightName); // LED force off
+	}
 
-	//Back Limelight
+	// Back Limelight
 	public void setRetroPipeline() {
 		setGoalHeight(LimelightConstants.kMiddleRetroTapeHeight);
 		LimelightHelpers.setPipelineIndex(limelightName, 0);
@@ -79,11 +84,23 @@ public class LimeLightFacade  {
 		return LimelightHelpers.getBotPose2d(limelightName);
 	}
 
+	public Pose3d getRSpace3d() {
+		return LimelightHelpers.getTargetPose3d_RobotSpace(limelightName);
+	}
+
 	public void updateDashboard() {
 		double distance = -9999;
 		if (isTargetVisible()) {
 			distance = getDistanceToGoalMeters();
 		}
+		Pose3d r_Pose3d = getRSpace3d();
 		SmartDashboard.putNumber("ll distance to goal", distance);
+		SmartDashboard.putNumber("tz", r_Pose3d.getZ());
+
+		Pose2d botpose = getBotPose2d();
+		SmartDashboard.putBoolean("CameraTargetIsDetected", isTargetVisible());
+		SmartDashboard.putNumber("CameraBasedPoseX", botpose.getX());
+		SmartDashboard.putNumber("CameraBasedPoseY", botpose.getY());
+		SmartDashboard.putNumber("CameraBaseBotHeading", botpose.getRotation().getDegrees());
 	}
 }
