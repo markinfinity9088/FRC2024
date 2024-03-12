@@ -212,8 +212,8 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
     public static final HolonomicPathFollowerConfig holConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                                                  new PIDConstants(2, 0.0, 0.0), // Translation PID constants
-                                                                  new PIDConstants(.5, 0.0, 0.0), // Rotation PID constants
+                                                                  new PIDConstants(2.5,0.1,.08), // Translation PID constants
+                                                                  new PIDConstants(3,0.25,0.06), // Rotation PID constants
                                                                   DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
                                                                   DriveConstants.kTrackRadius, // Drive base radius in meters. Distance from robot center to furthest module.
                                                                   new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -244,6 +244,6 @@ public final class Constants {
 
   public static final class GeneralConstants {
     public static final boolean   kInVerboseMode = true; //set to false during competition
-
+    public static final boolean kCorrectSwerveDrift=true; //kp we will use drift correction logic if this flag is on
   }
 }

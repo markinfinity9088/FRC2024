@@ -34,6 +34,37 @@ public class IntakeCommands {
   final static long elevatorAMPPosition = 10;
   final static long pulleyAMPPosition = 10;
 
+  public static Command moveToIntakePos(){
+    return ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing);
+  }
+
+  public static Command handoffAndShootCommand() {
+    //Handoff
+    ParallelCommandGroup pcommandGroup1 = new ParallelCommandGroup();
+
+    pcommandGroup1.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    // pcommandGroup1.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotShootTilt));
+    pcommandGroup1.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}));
+
+    //shoot
+    ParallelCommandGroup pcommandGroup2 = new ParallelCommandGroup();
+
+    //pcommandGroup2.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    pcommandGroup2.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+    pcommandGroup2.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+    pcommandGroup2.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1));
+    pcommandGroup2.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().releaseToShooter();}).withTimeout(0.5));
+
+
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    commandGroup.addCommands(pcommandGroup1.withTimeout(2));
+    commandGroup.addCommands(pcommandGroup2.withTimeout(1));
+    commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
+    commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));
+
+    return commandGroup;
+  }
+
   public static Command rightAutonOneRingRed() {
     SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
     s_drive.setMaxSpeeds(0.5, 0.2);

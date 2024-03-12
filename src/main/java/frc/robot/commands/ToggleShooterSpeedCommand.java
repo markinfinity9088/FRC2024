@@ -5,60 +5,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-
-
-
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
 
-public class ToggleShooterSpeedCommand extends Command {
-  private ShooterSubsystem shooter;
-  private double velocity; 
-  public double goalVelocity;
-
+public class ToggleShooterSpeedCommand extends InstantCommand {
+  private ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+  private double velocity;
 
   /** Creates a new ToggleShooterCommadns. */
-  public ToggleShooterSpeedCommand(double velocity) {
-    this.velocity = velocity;
-    shooter = ShooterSubsystem.getInstance();
+  public ToggleShooterSpeedCommand() {
+    this.velocity = 1;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(shooter.getShooterVelocity() > 0){
-      goalVelocity = 0;
+    if(shooter.getShooterVelocity() < -0.1){
+      shooter.stopShooterWheels();
+      SmartDashboard.putNumber("GoalVelo", shooter.getShooterVelocity());
+      SmartDashboard.putString("herro","shabangalang");
     } else {
-      goalVelocity = velocity;
+      shooter.startShooterWheels(velocity);
+      SmartDashboard.putNumber("GoalVelo", shooter.getShooterVelocity());
+      SmartDashboard.putString("herro","bigabagabom");
     }
-    SmartDashboard.putNumber("GoalVelo", goalVelocity);
     
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
- 
-    shooter.startShooterWheels(goalVelocity);
-  
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    shooter.stopShooterWheels();
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    double difference = shooter.getShooterVelocity() - goalVelocity;
-    if(Math.abs(difference) < 0.000005){
-      return true;
-    }
-    return false;
-  }
 }

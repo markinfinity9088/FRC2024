@@ -118,6 +118,20 @@ public class ArmPresets {
         return routine;
     }
 
+    public static  ArmRoutine createPivotPreset(int position) {
+        ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
+           // new ArmPositioningInfo(null, null, null)
+        };
+
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(null, null, null);
+        finalPosition.setPivotPosition(Long.valueOf(position)); //TODO set correct value later
+        //finalPosition.setShooterOn();
+
+        ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
+
+        return routine;
+    }
+
     private static  ArmRoutine createPivotLowPreset() {
         ArmPositioningInfo lowMovePosition = new ArmPositioningInfo(null, null, null);
         lowMovePosition.setPivotPosition(Long.valueOf(PIVOT_MIN_POINT)); //TODO set correct value later

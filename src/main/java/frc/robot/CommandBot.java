@@ -7,11 +7,16 @@ package frc.robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
+import frc.robot.commands.IntakeCommands;
+import frc.robot.commands.MovePivotToPosition;
 import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.commands.ToggleShooterSpeedCommand;
 import frc.robot.commands.arm_routines.ArmPresets;
 import frc.robot.commands.arm_routines.logic.ArmRoutine;
 import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
+import frc.robot.commands.autonCommands.HandoffAndShootCommand;
+import frc.robot.commands.intake_commands.DetectRing;
+import frc.robot.commands.intake_commands.IntakeRingCommand;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -33,6 +38,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 import java.util.Date;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -43,7 +49,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
+/**s
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in
@@ -60,6 +66,11 @@ public class CommandBot {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
     m_limelight = new LimeLightFacade();
     LimelightsContainer.getInstance().addLimeLight("limelight", m_limelight);
+
+    NamedCommands.registerCommand("pickupWithSensor", new IntakeRingCommand(true));
+    NamedCommands.registerCommand("handoffAndShoot", IntakeCommands.handoffAndShootCommand());
+    NamedCommands.registerCommand("moveToPickup", IntakeCommands.moveToIntakePos());
+    NamedCommands.registerCommand("detectRing", new DetectRing());
   }
 
   /**
@@ -126,8 +137,7 @@ public class CommandBot {
 
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
-      teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      teleOpController.intakeTrigger().onTrue(new IntakeRingCommand(true));
       teleOpController.intakeTriggerDrive().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
       teleOpController.intakeTriggerDrive().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
@@ -135,15 +145,18 @@ public class CommandBot {
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
       if (shooter!=null) {
-        teleOpController.getShootTrigger().onTrue(new ToggleShooterSpeedCommand(1));
+        teleOpController.getShootTrigger().onTrue(new ToggleShooterSpeedCommand());
       }
     }
 
     if (pivot!=null) {
-      teleOpController.getPivotTriggerDown().whileTrue(pivot.moveDown());
-      teleOpController.getPivotTriggerUp().whileTrue(pivot.moveUp());
+      teleOpController.getPivotTriggerDown().whileTrue(Commands.run(() -> {pivot.move(.6);}));
+      teleOpController.getPivotTriggerUp().whileTrue(Commands.run(() -> {pivot.move(-.6);}));
       teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();}));
       teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();}));
+      teleOpController.getPivotPresetTrigger().onTrue(new MovePivotToPosition(30));
+      // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.createPivotPreset(100)));
+
     }
 
     ElbowSubsystem elbow = ElbowSubsystem.getInstance();

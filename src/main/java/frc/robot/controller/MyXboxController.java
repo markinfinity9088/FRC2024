@@ -229,6 +229,12 @@ public class MyXboxController implements TeleOpController{
     public Trigger slowMaxSpeedTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'slowMaxSpeedTrigger'");
+    }
+
+    @Override
+    public Trigger getPivotPresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPivotPresetTrigger'");
     } 
 }
 

@@ -11,7 +11,4 @@ public final class LimelightConstants {
         new Rotation3d(0.0, 35.0, 0.0));//degrees
 
     public static final double kMiddleRetroTapeHeight = 24.5; // inches
-    public static final double kCubeLowHeight = -18; // inches
-    public static final double kCubeMiddleHeight = 5.5; // inches
-    public static final double kCubeHighHeight = 17; // inches
   } 

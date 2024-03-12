@@ -133,6 +133,10 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         this.maxSpeed = maxSpeed;
     }
 
+    public double getMaxSpeed() {
+        return this.maxSpeed;
+    }
+
     public void setEncoderReversed() {
         encoderReversed = -1;
     }

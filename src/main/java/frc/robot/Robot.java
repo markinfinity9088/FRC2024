@@ -25,6 +25,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.utils.RuntimeConfig;
+import frc.robot.vision.limelight.LimeLightFacade;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
@@ -153,6 +154,7 @@ public class Robot extends LoggedRobot {
     ElevatorSubsystem.getInstance().periodic();
     PivotSubsystem.getInstance().periodic();
     ClimbSubsystem.getInstance().periodic();
+    ShooterSubsystem.getInstance().periodic();
   }
 
   @Override

@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import org.opencv.core.Mat;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -19,6 +21,7 @@ import frc.robot.Constants.AutoConstants;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -59,6 +62,9 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
 
   private double maximum_drive_speed = DriveConstants.kMaxDriveSubsystemSpeed; //0-1
   private double maximum_rotation_speed = DriveConstants.kMaxDriveSubsystemTurnSpeed;
+
+  //KP hacky way to correct swerve drift with field relative + swerve hardware issue
+  private Rotation2d m_lastRecordGyroBeforeRotation;
 
   private SwerveDriveSubsystem(){
     System.out.println("Swerve Drive Subsystem Created");
@@ -155,6 +161,8 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
             m_rearRight.getPosition()
         },
         pose);
+
+      m_lastRecordGyroBeforeRotation = null;
   }
 
   public Command driveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier rot, boolean fieldRelative, boolean rateLimit) {
@@ -185,11 +193,12 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
     double xSpeedCommanded;
     double ySpeedCommanded;
+    // ySpeed = 0;
     
-    /*
+    
     if (xSpeed!=0 || ySpeed!=0 || rot!=0)
-      System.out.println("SDrive..xspeed:"+xSpeed+", yspeed:"+ySpeed+", rot:"+rot+ "gyro rot2d="+Rotation2d.fromDegrees(m_gyro.getAngle()));
-    */
+      System.out.println("SDrive.."+fieldRelative+" xspeed:"+xSpeed+", yspeed:"+ySpeed+", rot:"+rot+ "gyro rot2d="+Rotation2d.fromDegrees(m_gyro.getAngle()));
+    
 
     if (rateLimit) {
       // Convert XY to polar for rate limiting
@@ -248,11 +257,27 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   double xEncoderDelta = xSpeedDelivered;
   double YEncoderDelta = ySpeedDelivered;
 
+  //kp fix some swerve drift due to swerve wheel problems, once hardware is fixed, we may removee this
+  Rotation2d targetRotation2d = m_gyro.getRotation2d();
+
+  if (GeneralConstants.kCorrectSwerveDrift) {
+    if (Math.abs(rotDelivered) <= 0.0001) {
+      if (m_lastRecordGyroBeforeRotation == null) {
+        m_lastRecordGyroBeforeRotation = targetRotation2d; //record once after turn
+      } else {
+        targetRotation2d = m_lastRecordGyroBeforeRotation; //maintain gyro to last recorded state so swerve will correct back if drifted
+      }
+      rotDelivered = 0.0;
+    } else {
+      m_lastRecordGyroBeforeRotation = null; //reset
+    }
+  } 
+  
 
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, m_gyro.getRotation2d())
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, targetRotation2d)
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed);
@@ -360,7 +385,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     Pose2d pose = getPose();
 
     SmartDashboard.putNumber("RobotPoseX",pose.getX());
-    SmartDashboard.putNumber("RobotPoseY",pose.getX());
+    SmartDashboard.putNumber("RobotPoseY",pose.getY());
     SmartDashboard.putNumber("RobotPoseHeading",pose.getRotation().getDegrees());
 
   }
