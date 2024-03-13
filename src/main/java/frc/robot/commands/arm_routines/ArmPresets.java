@@ -21,7 +21,7 @@ public class ArmPresets {
     public static final long PIVOT_TOLERANCE = 5;
     public static final long PIVOT_MIN_POINT = 2;
 
-    public static final long WRIST_HANDOFF_POSITION = 4250;
+    public static final long WRIST_HANDOFF_POSITION = 1570;
 
 
 
@@ -60,12 +60,12 @@ public class ArmPresets {
     //wrist, elbow, elevator
     private static ArmRoutine createAmpDropOffPreset() {
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           new ArmPositioningInfo(null, Long.valueOf(3180), null),
+           new ArmPositioningInfo(null, Long.valueOf(900), null),
            new ArmPositioningInfo(Long.valueOf(-70), null, null),
            new ArmPositioningInfo(null, null, Long.valueOf(21000))
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-167), Long.valueOf(3150), Long.valueOf(21000));
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-167), Long.valueOf(440), Long.valueOf(21000));
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -75,11 +75,11 @@ public class ArmPresets {
 
     private static ArmRoutine createPickupRingPreset() {
          ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
-           new ArmPositioningInfo(null, Long.valueOf(3800), null,50),
+           new ArmPositioningInfo(null, Long.valueOf(900), null,50),
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(4250), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-390), Long.valueOf(1530), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 
@@ -94,7 +94,7 @@ public class ArmPresets {
            // new ArmPositioningInfo(null, null, null)
         };
 
-        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(2950), null);
+        ArmPositioningInfo finalPosition = new ArmPositioningInfo(Long.valueOf(-15), Long.valueOf(343), null);
 
         ArmRoutine routine = new ArmRoutine(initialSequentialPositions, finalPosition);
 

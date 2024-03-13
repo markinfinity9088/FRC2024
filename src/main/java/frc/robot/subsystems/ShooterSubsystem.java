@@ -57,6 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void periodic(){
         SmartDashboard.putNumber("shooter velo", getShooterVelocity());
+        super.periodic();
     }
 
     public double getShooterVelocity() {

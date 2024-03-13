@@ -29,8 +29,9 @@ public class WristSubsystem extends PositionableSubsystem {
 
 
   public void move(double speed) {
-    setCurrentSpeed(speed);
-    wrist.set(getCurrentSpeed());
+    // setCurrentSpeed(speed);
+    // wrist.set(getCurrentSpeed());
+    wrist.set(speed);
   }
 
   public void stop() {

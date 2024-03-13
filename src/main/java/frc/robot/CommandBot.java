@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AutoAimPivot;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.IntakeCommands;
 import frc.robot.commands.MovePivotToPosition;
@@ -137,7 +138,9 @@ public class CommandBot {
 
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      teleOpController.intakeTrigger().onTrue(new IntakeRingCommand(true));
+      // teleOpController.intakeTrigger().onTrue(new IntakeRingCommand(true));
+      teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {intake.doIntake(1);}));
+      teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       teleOpController.intakeTriggerDrive().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
       teleOpController.intakeTriggerDrive().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
@@ -145,7 +148,9 @@ public class CommandBot {
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
       if (shooter!=null) {
-        teleOpController.getShootTrigger().onTrue(new ToggleShooterSpeedCommand());
+        // teleOpController.getShootTrigger().onTrue(new ToggleShooterSpeedCommand());
+        teleOpController.getShootTrigger().whileTrue(Commands.runOnce(() ->{ shooter.startShooterWheels(1);}));
+        teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {shooter.stopShooterWheels();}));
       }
     }
 
@@ -154,7 +159,8 @@ public class CommandBot {
       teleOpController.getPivotTriggerUp().whileTrue(Commands.run(() -> {pivot.move(-.6);}));
       teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();}));
       teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();}));
-      teleOpController.getPivotPresetTrigger().onTrue(new MovePivotToPosition(30));
+      //teleOpController.getPivotPresetTrigger().onTrue(new MovePivotToPosition(30));
+      teleOpController.getPivotPresetTrigger().onTrue(new AutoAimPivot());
       // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.createPivotPreset(100)));
 
     }

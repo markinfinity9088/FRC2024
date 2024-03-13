@@ -151,7 +151,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int elbowCanId = 13;
-    public static final int CURRENT_LIMIT_A = 30;
+    public static final int CURRENT_LIMIT_A = 42220;
     public static final double MAX_SPEED = 1.0;
     public static final double ELBOW_MAX_SPEED = 0.5;
     public static final int intakeCanId = 17;
@@ -212,8 +212,8 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
     public static final HolonomicPathFollowerConfig holConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                                                  new PIDConstants(2.5,0.1,.08), // Translation PID constants
-                                                                  new PIDConstants(3,0.25,0.06), // Rotation PID constants
+                                                                  new PIDConstants(2.5,0,0.05), // Translation PID constants
+                                                                  new PIDConstants(1,0.0,0), // Rotation PID constants
                                                                   DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
                                                                   DriveConstants.kTrackRadius, // Drive base radius in meters. Distance from robot center to furthest module.
                                                                   new ReplanningConfig() // Default path replanning config. See the API for the options here

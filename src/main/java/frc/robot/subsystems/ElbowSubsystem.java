@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class ElbowSubsystem extends PositionableSubsystem {
@@ -29,8 +31,11 @@ public class ElbowSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    setCurrentSpeed(speed);
-    elbowf.set(getCurrentSpeed());
+    // setCurrentSpeed(speed);
+    System.out.println("Elbow speed = "+getCurrentSpeed()+" original speed = "+speed);
+    SmartDashboard.putNumber("ElbowSpeed", speed);
+    // elbowf.set(getCurrentSpeed());
+    elbowf.set(speed);
   }
 
   public void stop() {

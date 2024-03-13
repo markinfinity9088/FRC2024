@@ -4,32 +4,34 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.utils.PivotComputation;
+import frc.robot.vision.limelight.LimeLightFacade;
 
-//moves pivot to particular angle in degrees
-public class MovePivotToPosition extends Command {
+public class AutoAimPivot extends Command {
+
+  LimeLightFacade limelight = new LimeLightFacade();
   PivotSubsystem pivot = PivotSubsystem.getInstance();
-  private double angle;
-  /** Creates a new MovePivotToPosition. */
-  //position is in degrees
-  public MovePivotToPosition(double angle) {
+  private int angle = 0;
+
+  /** Creates a new AutoAimPivot. */
+  public AutoAimPivot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.angle = MathUtil.clamp(angle,pivot.getMinAngle(),pivot.getMaxAngle());
-    System.out.println("passed angle = "+angle+" clamped angle = "+this.angle);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    angle = (int) new PivotComputation().getPivotAngle(limelight.getDistanceToGoalMeters());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double encoderpos = pivot.getEncoderWithAngle(angle);
-    // System.out.println("Move to postion called "+this.angle);
-    pivot.moveToPosition((long)encoderpos);
+    SmartDashboard.putNumber("newPivotAngle", this.angle);
+    pivot.moveToPosition((int) pivot.getEncoderWithAngle(angle));
   }
 
   // Called once the command ends or is interrupted.

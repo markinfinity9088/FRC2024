@@ -39,7 +39,7 @@ public class PivotSubsystem extends PositionableSubsystem {
   };
   private static final int MotorDirectionForUP = -1;
 
-  private PivotSubsystem() {
+  public PivotSubsystem() {
     pivot = new CANSparkMax(Constants.ShooterConstants.shooterPivotCanId, MotorType.kBrushless);
     pivotEncoder = pivot.getAbsoluteEncoder();
     pivotEncoder.setPositionConversionFactor(1000);
@@ -169,7 +169,8 @@ public class PivotSubsystem extends PositionableSubsystem {
   }
  
   public void periodic(){
-    SmartDashboard.putNumber("PivotEncoder", pivotEncoder.getPosition());
+    //SmartDashboard.putNumber("PivotEncoder", pivotEncoder.getPosition());
     restrictSpeed(pivot.get());
+    super.periodic();
   }
 }

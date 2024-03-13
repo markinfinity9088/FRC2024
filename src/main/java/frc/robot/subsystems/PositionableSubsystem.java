@@ -66,9 +66,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public abstract void stop();
 
     public void periodic() {
-        //if (currentSpeed!=0)
-            logInfo();
-        //updatePIDValues();
+       showPositionOnDashboard();
     }
 
     private void updateRange() {

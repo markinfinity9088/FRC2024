@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.0,
-      "y": 0.0
+      "x": 15.858878622179498,
+      "y": 6.628333484912334
     },
-    "rotation": 0
+    "rotation": -57.80426606528665
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Turntest"
+            "pathName": "Example Path"
           }
         }
       ]

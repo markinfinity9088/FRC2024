@@ -12,33 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "handoffAndShoot"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "moveToRingLeftBlue"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "pickupWithSensor"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "pickupRingLeftBlue"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "handoffAndShoot"
           }
         }
       ]
