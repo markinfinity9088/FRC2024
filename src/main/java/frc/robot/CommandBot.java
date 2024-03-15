@@ -202,7 +202,7 @@ public class CommandBot {
       }
     }
 
-    teleOpController.executeAmpDriveAndPositionPreset().onTrue(AutonCommandFactory.getAmpAlignAndSetArmCommand());
+    //teleOpController.executeAmpDriveAndPositionPreset().onTrue(AutonCommandFactory.getAmpAlignAndSetArmCommand());
 
     /*if (dualController) {
       teleOpController.holdElbowInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
@@ -245,12 +245,14 @@ public class CommandBot {
     
 
     //speed control toggle between 1.0 or 0.4, see GlobalState for speedsb
+    /* 
     teleOpController.slowMaxSpeedTrigger().onTrue(Commands.runOnce(() -> {
           GlobalState.getInstance().toggleMaxSpeed();
           Double maxspeed = GlobalState.getInstance().getMaxSpeed();
           System.out.println("Max speed set to "+maxspeed);
           SwerveDriveSubsystem.getInstance().setMaxSpeeds(maxspeed, maxspeed);
       }));
+    */
     
   }
 
