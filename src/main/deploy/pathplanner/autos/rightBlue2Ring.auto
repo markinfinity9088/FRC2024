@@ -26,12 +26,6 @@
                 "data": {
                   "pathName": "RIGHT BLUE move1"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoAim"
-                }
               }
             ]
           }
@@ -95,19 +89,19 @@
         {
           "type": "named",
           "data": {
-            "name": "autoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "handoffAndShoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RIGHT BLUE m+pu2"
+            "pathName": "RIGHT BLUE m+pu4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pickupWithSensor"
           }
         }
       ]

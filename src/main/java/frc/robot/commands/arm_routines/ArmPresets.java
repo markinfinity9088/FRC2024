@@ -21,7 +21,7 @@ public class ArmPresets {
     public static final long PIVOT_TOLERANCE = 5;
     public static final long PIVOT_MIN_POINT = 2;
 
-    public static final long WRIST_HANDOFF_POSITION = 1850;
+    public static final long WRIST_HANDOFF_POSITION = 1690;
 
 
 
@@ -40,7 +40,7 @@ public class ArmPresets {
     }
 
 
-    //Change values in below routines to fine tune behaviors of presets
+    //Chrmnge values in below routines to fine tune behaviors of presets
     //// creations of routines 
 
     private static  ArmRoutine createHandoffPreset() {

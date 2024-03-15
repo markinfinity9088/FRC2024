@@ -122,6 +122,8 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   public void setMaxSpeeds(Double drivespeed, Double angularspeed) {
     maximum_drive_speed = drivespeed;
     maximum_rotation_speed = angularspeed;
+
+    SmartDashboard.putString("Swerve MaxSpeeds ", ""+drivespeed+" "+angularspeed);
   }
 
   @Override

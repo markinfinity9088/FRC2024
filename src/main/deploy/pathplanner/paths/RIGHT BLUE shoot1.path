@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.439944195700967,
-        "y": 4.215352211018259
+        "x": 2.0639495125144114,
+        "y": 3.709970496864071
       },
       "isLocked": false,
       "linkedName": "RIGHT BLUE pickup1 END"
     },
     {
       "anchor": {
-        "x": 1.8863445419198543,
-        "y": 4.528926750161193
+        "x": 0.761513061487663,
+        "y": 4.519059807350385
       },
       "prevControl": {
-        "x": 2.002842851839552,
-        "y": 4.390789550809871
+        "x": 0.878011371407361,
+        "y": 4.3809226079990635
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -29.579231036055102,
+    "rotation": -58.392497753751115,
     "rotateFast": false
   },
   "reversed": false,

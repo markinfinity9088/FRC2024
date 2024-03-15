@@ -77,6 +77,8 @@ public class CommandBot {
     NamedCommands.registerCommand("autoAim", new AutoAimPivot());
     NamedCommands.registerCommand("stow", IntakeCommands.moveToStowPos());
     NamedCommands.registerCommand("pickupSequence", IntakeCommands.pickupSequence());
+    NamedCommands.registerCommand("handoff", IntakeCommands.moveToHandoffPos());
+    NamedCommands.registerCommand("shoot", IntakeCommands.shootRing());
 
   }
 
@@ -257,7 +259,7 @@ public class CommandBot {
   }
 
   /**
-   * Use this to define the command that runs during autonomous.
+   * Use this to define the command that runs during autonomous.A
    *
    * <p>
    * Scheduled during {@link Robot#autonomousInit()}.
@@ -265,9 +267,17 @@ public class CommandBot {
 
   public Command getAutonomousCommand(Date autoStartTime) {
     // return AutonController.getAutonCommand();
-    return new PathPlannerAuto("Copy of leftBlue3Ring");
-    //return IntakeCommands.rightAutonOneRingRed();
-  }
+        // return IntakeCommands.rightAutonOneRingRed();
+
+    return new PathPlannerAuto("midBlue4Ring");
+    // return new PathPlannerAuto("rightBlue2FarRing");
+    // return new PathPlannerAuto("leftBlue3Ring");
+    // return new PathPlannerAuto("midBlue2Ring");
+    // return new PathPlannerAuto("leftBlue2Ring");
+
+    // return new PathPlannerAuto("rightBlue2Ring");
+
+    }
 
   void periodic() {
     drive.periodic();

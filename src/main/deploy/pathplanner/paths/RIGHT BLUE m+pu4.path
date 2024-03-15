@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.7911138899200892,
-        "y": 3.8678415818370113
+        "x": 1.6100701432172113,
+        "y": 2.002989390594167
       },
       "isLocked": false,
       "linkedName": "RIGHT BLUE shoot1 END"
     },
     {
       "anchor": {
-        "x": 2.7349016236494026,
-        "y": 3.206756413512827
+        "x": 7.905179656513161,
+        "y": 2.4272679314589416
       },
       "prevControl": {
-        "x": 1.9356792559738978,
-        "y": 3.5224985834587055
+        "x": 5.78378695218929,
+        "y": 0.7104198823782276
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "pickupSequence"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 2.0,
@@ -45,7 +63,7 @@
   "reversed": false,
   "folder": "rightblue",
   "previewStartingState": {
-    "rotation": -38.990994042505434,
+    "rotation": -63.43494882292206,
     "velocity": 0
   },
   "useDefaultConstraints": true

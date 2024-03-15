@@ -40,19 +40,64 @@ public class IntakeCommands {
   public static Command pickupSequence(){
     ParallelDeadlineGroup group1 = new ParallelDeadlineGroup(new DetectRing());
     group1.addCommands(moveToIntakePos());
-    SequentialCommandGroup group2 = new SequentialCommandGroup();
-    group2.addCommands(new WaitCommand(1.5));
-    group2.addCommands(new IntakeRingCommand(true));
-    group1.addCommands(group2);
+    // SequentialCommandGroup group2 = new SequentialCommandGroup();
+    // group2.addCommands(new WaitCommand(1.5));
+    group1.addCommands(new IntakeRingCommand(true));
     return group1;
   }
 
-  public static Command moveToStowPos(){
-    return ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow);
+  public static Command moveToHandoffPos(){
+    ParallelCommandGroup pcommandGroup = new ParallelCommandGroup();
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    commandGroup.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    commandGroup.addCommands(pcommandGroup);
+
+    return commandGroup;
   }
 
+  public static Command shootRing(){
+    ParallelCommandGroup pcommandGroup1 = new ParallelCommandGroup();
+    pcommandGroup1.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}));
+
+    ParallelCommandGroup pcommandGroup2 = new ParallelCommandGroup();
+    pcommandGroup2.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+    pcommandGroup2.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+    pcommandGroup2.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1));
+    pcommandGroup2.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().releaseToShooter();}).withTimeout(0.5));
+
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    commandGroup.addCommands(pcommandGroup1.withTimeout(.5));
+    commandGroup.addCommands(pcommandGroup2.withTimeout(1));
+    commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
+    commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));
+
+    return commandGroup;
+  }
+
+  public static Command moveToStowPos(){
+    ParallelCommandGroup pcommandGroup = new ParallelCommandGroup();
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    commandGroup.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow));
+    commandGroup.addCommands(pcommandGroup);
+
+    return commandGroup;  }
+
   public static Command moveToIntakePos(){
-    return ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing);
+    ParallelCommandGroup pcommandGroup = new ParallelCommandGroup();
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+
+    SequentialCommandGroup commandGroup = new SequentialCommandGroup();
+    commandGroup.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing));
+    commandGroup.addCommands(pcommandGroup);
+
+    return commandGroup;  
   }
 
   public static Command handoffAndShootCommand() {
@@ -74,7 +119,7 @@ public class IntakeCommands {
 
 
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
-    commandGroup.addCommands(pcommandGroup1.withTimeout(.5));
+    commandGroup.addCommands(pcommandGroup1.withTimeout(1));
     commandGroup.addCommands(pcommandGroup2.withTimeout(1));
     commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
     commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));
