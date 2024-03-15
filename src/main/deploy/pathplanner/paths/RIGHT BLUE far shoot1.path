@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 0.7516461186768542,
-        "y": 4.489458978917958
+        "x": 0.6347911126635363,
+        "y": 4.707756291404166
       },
       "prevControl": {
-        "x": 0.9509836993996369,
-        "y": 4.063660281386183
+        "x": 0.834128693386319,
+        "y": 4.2819575938723915
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RIGHT BLUE start"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
