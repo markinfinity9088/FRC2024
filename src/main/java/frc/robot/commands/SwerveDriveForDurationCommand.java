@@ -35,7 +35,7 @@ public class SwerveDriveForDurationCommand extends Command {
 
   @Override
   public void execute() {
-    System.out.println("Executing "+getName());
+    //System.out.println("Executing "+getName());
     SwerveDriveSubsystem.getInstance().drive(xspeed, yspeed, rotation,true, true);
   }
 

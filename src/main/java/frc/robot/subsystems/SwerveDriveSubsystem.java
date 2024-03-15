@@ -307,7 +307,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     
     */
    
-    System.out.println("Swerve speeds = fr="+ m_frontLeft.getState().speedMetersPerSecond+" fl="+m_frontRight.getState().speedMetersPerSecond);
+    //System.out.println("Swerve speeds = fr="+ m_frontLeft.getState().speedMetersPerSecond+" fl="+m_frontRight.getState().speedMetersPerSecond);
 
     /*
      * diagnosticsTab.addDouble("frontLeft", () -> m_frontLeft.getState().speedMetersPerSecond);
