@@ -54,10 +54,13 @@ public interface TeleOpController {
     Trigger stowPresetTrigger();
     Trigger handoffPresetTrigger();
     Trigger ampPresetTrigger();
+    Trigger getTestTrigger();
 
    Trigger getResetTrigger();
 
 
     //speed toggle
     Trigger slowMaxSpeedTrigger();
+
+    public Trigger executeAmpDriveAndPositionPreset() ; //drive to amp and position arm
 }

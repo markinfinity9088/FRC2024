@@ -155,6 +155,7 @@ public class Robot extends LoggedRobot {
     PivotSubsystem.getInstance().periodic();
     ClimbSubsystem.getInstance().periodic();
     ShooterSubsystem.getInstance().periodic();
+    IntakeSubSystem.getInstance().periodic();
   }
 
   @Override

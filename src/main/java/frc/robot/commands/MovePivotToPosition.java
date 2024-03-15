@@ -41,6 +41,6 @@ public class MovePivotToPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(pivot.getPositionDegrees()-angle) <= 2);
+    return (Math.abs(pivot.getPositionDegrees()-angle) <= 1);
   }
 }

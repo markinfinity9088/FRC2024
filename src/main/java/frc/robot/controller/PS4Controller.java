@@ -48,7 +48,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger swerveTrigger() {
-        return ps4Controller1.L1();
+        return new Trigger(() -> (false)); //not used
     }
 
     @Override
@@ -201,7 +201,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger moveWristTrigger() {
-        return ps4Controller1.circle();
+        return new Trigger(()->(false)); //not used
     }
 
     @Override
@@ -248,7 +248,18 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger slowMaxSpeedTrigger() {
-        return ps4Controller1.circle();
+        //return ps4Controller1.circle();
+        return new Trigger(() -> (false)); //disabled for now
+    }
+
+    @Override
+    public Trigger executeAmpDriveAndPositionPreset() {
+        return ps4Controller1.touchpad();
+    }
+
+    @Override
+    public Trigger getTestTrigger(){
+        return ps4Controller1.povUp();
     }
 
     // @Override

@@ -4,8 +4,11 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.Constants.DriveConstants;
 import java.util.function.Supplier;
 
+import javax.swing.text.Utilities;
+
 import org.opencv.core.Mat;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -46,6 +49,8 @@ private boolean finished;
 
   private double m_degreeTolerance=3;
 
+  private boolean m_driveOnly = false;
+
     // tSetpoint is in radians and posive for counter clockwise
     //call this constructor for rotate only
   public SwerveSampleMoveCommand(SwerveDriveSubsystem swerveSubsystem,
@@ -60,6 +65,17 @@ private boolean finished;
     m_rotateOnly = true;
 
     m_degreeTolerance = degreeTolerance;
+
+  }
+
+  //drive only, no turning
+  public SwerveSampleMoveCommand(SwerveDriveSubsystem swerveSubsystem,
+      double xSetpoint, double ySetpoint, double tolerance) 
+  {
+    this(swerveSubsystem, xSetpoint, ySetpoint, 0, false,
+        null, tolerance);
+    m_driveOnly = true;
+
 
   }
 
@@ -155,7 +171,11 @@ private boolean finished;
   }
 
   boolean didReachThetaSetpoint(){
+    if (m_driveOnly) {
+      return true;
+    }
     double deltaAngle = getAngleDifference();
+    SmartDashboard.putNumber("TSetpoint", Units.radiansToDegrees(tSetpoint));
     SmartDashboard.putNumber("AngleDiff", deltaAngle);
 
     if (Math.abs(deltaAngle) <= m_degreeTolerance) {
@@ -209,6 +229,15 @@ private boolean finished;
         vX = 0;
         vY = 0;
       }
+
+      if (m_driveOnly) {
+        turningSpeed = 0;
+      }
+
+      
+      vX = MathUtil.clamp(vX, -maxdrivespeed, maxdrivespeed);
+      vY = MathUtil.clamp(vY, -maxdrivespeed, maxdrivespeed);
+      turningSpeed = MathUtil.clamp(turningSpeed, -maxturnspeed, maxturnspeed);
 
       SmartDashboard.putNumber("vX", vX);
       SmartDashboard.putNumber("vY", vY);

@@ -234,4 +234,16 @@ public class PS4ControllerSingle implements TeleOpController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPivotPresetTrigger'");
     }
+
+    @Override
+    public Trigger executeAmpDriveAndPositionPreset() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'executeAmpDriveAndPositionPreset'");
+    }
+
+    @Override
+    public Trigger getTestTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTestTrigger'");
+    }
 }

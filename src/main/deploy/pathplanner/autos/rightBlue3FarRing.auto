@@ -24,16 +24,28 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RIGHT BLUE move1"
+                  "pathName": "RIGHT BLUE far pu1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "autoAim"
+                  "name": "pickupSequence"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RIGHT BLUE far shoot1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "handoffAndShoot"
           }
         },
         {
@@ -43,38 +55,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RIGHT BLUE pickup1"
+                  "pathName": "RIGHT BLUE far pu2"
                 }
               },
               {
-                "type": "deadline",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "pickupWithSensor"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "detectRing"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.5
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "moveToPickup"
-                      }
-                    }
-                  ]
+                  "name": "pickupSequence"
                 }
               }
             ]
@@ -83,19 +70,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RIGHT BLUE shoot1"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoAim"
+            "pathName": "RIGHT BLUE far shoot2"
           }
         },
         {
@@ -107,12 +82,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RIGHT BLUE m+pu2"
+            "pathName": "RIGHT BLUE leave3"
           }
         }
       ]
     }
   },
-  "folder": "2 Ring!!",
+  "folder": "3 Ring!!!",
   "choreoAuto": false
 }

@@ -32,9 +32,9 @@ public class IntakeSubSystem extends SubsystemBase {
   boolean useDistanceForIntakeDetection = true;
 
   //Fine tune this
-  static final double kProximityForRingDetection = 500;
+  static final double kProximityForRingDetection = 175;
 
-  static final double intakeSpeed = 1.0;
+  static final double intakeSpeed = 0.75;
   static final double releaseToAMPSpeed = -0.8;
   static final double releaseToShooterSpeed = 1.0;
   static IntakeSubSystem self;

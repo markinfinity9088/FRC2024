@@ -3,12 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.arm_routines.ArmPresets;
 import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
+import frc.robot.commands.intake_commands.DetectRing;
+import frc.robot.commands.intake_commands.IntakeRingCommand;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubSystem;
@@ -34,6 +37,20 @@ public class IntakeCommands {
   final static long elevatorAMPPosition = 10;
   final static long pulleyAMPPosition = 10;
 
+  public static Command pickupSequence(){
+    ParallelDeadlineGroup group1 = new ParallelDeadlineGroup(new DetectRing());
+    group1.addCommands(moveToIntakePos());
+    SequentialCommandGroup group2 = new SequentialCommandGroup();
+    group2.addCommands(new WaitCommand(1.5));
+    group2.addCommands(new IntakeRingCommand(true));
+    group1.addCommands(group2);
+    return group1;
+  }
+
+  public static Command moveToStowPos(){
+    return ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow);
+  }
+
   public static Command moveToIntakePos(){
     return ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing);
   }
@@ -57,7 +74,7 @@ public class IntakeCommands {
 
 
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
-    commandGroup.addCommands(pcommandGroup1.withTimeout(2));
+    commandGroup.addCommands(pcommandGroup1.withTimeout(.5));
     commandGroup.addCommands(pcommandGroup2.withTimeout(1));
     commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
     commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));

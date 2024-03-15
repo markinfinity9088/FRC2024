@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.8863445419198543,
+        "y": 4.528926750161193
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.7349016236494026,
+        "y": 2.012856333404975
+      },
+      "isLocked": false,
+      "linkedName": "RIGHT BLUE shoot1 END"
+    },
+    {
+      "anchor": {
+        "x": 8.363943232879333,
+        "y": 0.7846260485673593
+      },
+      "prevControl": {
+        "x": 5.315057904339444,
+        "y": 1.4358442740807331
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RIGHT BLUE m+pu2 END"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "pickupSequence"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "rightblue",
+  "previewStartingState": {
+    "rotation": -38.990994042505434,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

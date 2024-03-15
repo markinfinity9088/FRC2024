@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 7.855844942459117,
+        "y": 5.7721615443230885
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9999999999999978,
-        "y": 0.0
+        "x": 5.458177839432603,
+        "y": 7.114065766593072
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LEFT BLUE m+pu3 END"
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 0.0
+        "x": 2.5670791427174855,
+        "y": 6.183321696172636
       },
       "prevControl": {
-        "x": 1.1333189719503385,
-        "y": 0.0
+        "x": 2.67569996678455,
+        "y": 6.265508684863524
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LEFT BLUE shoot1 END"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.44909602078144,
+    "rotation": 19.13,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "tests",
+  "folder": "leftblue",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

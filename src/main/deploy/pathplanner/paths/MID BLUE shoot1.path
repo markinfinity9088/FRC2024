@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6825775190011933,
-        "y": 6.630585568863446
+        "x": 2.922373537054768,
+        "y": 5.545221859674489
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.284461030460524,
-        "y": 7.035130224106603
+        "x": 2.7778742005415524,
+        "y": 5.539225686154654
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "MID BLUE pickup1 END"
     },
     {
       "anchor": {
-        "x": 2.1922197690549243,
-        "y": 7.025263281295794
+        "x": 1.2745940876497153,
+        "y": 5.545221859674489
       },
       "prevControl": {
         "x": 1.2745940876497153,
-        "y": 6.956194681620133
+        "y": 5.545221859674489
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ringposleftblue"
+      "linkedName": "MID BLUE start"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "leftblue",
+  "folder": "midblue",
   "previewStartingState": {
-    "rotation": 59.452428251092975,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2745940876497153,
-      "y": 5.545221859674489
+      "x": 0.761513061487663,
+      "y": 4.519059807350385
     },
-    "rotation": 0.0
+    "rotation": -59.481769321124766
   },
   "command": {
     "type": "sequential",
@@ -18,19 +18,13 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "MID BLUE move1"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "MID BLUE pickup1"
+                  "pathName": "RIGHT BLUE far pu1"
                 }
               },
               {
@@ -70,13 +64,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MID BLUE shoot1"
+            "pathName": "RIGHT BLUE far shoot1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "handoffAndShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RIGHT BLUE far pu2"
           }
         }
       ]

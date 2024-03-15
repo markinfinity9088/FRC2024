@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.858878622179498,
-      "y": 6.628333484912334
+      "x": 0.6825775190011933,
+      "y": 6.630585568863446
     },
-    "rotation": -57.80426606528665
+    "rotation": 64.10422245727361
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Example Path"
+            "pathName": "LEFT BLUE move1"
           }
         }
       ]

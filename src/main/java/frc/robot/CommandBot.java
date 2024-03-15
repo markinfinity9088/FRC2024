@@ -15,6 +15,7 @@ import frc.robot.commands.ToggleShooterSpeedCommand;
 import frc.robot.commands.arm_routines.ArmPresets;
 import frc.robot.commands.arm_routines.logic.ArmRoutine;
 import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
+import frc.robot.commands.autonCommands.AutonCommandFactory;
 import frc.robot.commands.autonCommands.HandoffAndShootCommand;
 import frc.robot.commands.intake_commands.DetectRing;
 import frc.robot.commands.intake_commands.IntakeRingCommand;
@@ -72,6 +73,11 @@ public class CommandBot {
     NamedCommands.registerCommand("handoffAndShoot", IntakeCommands.handoffAndShootCommand());
     NamedCommands.registerCommand("moveToPickup", IntakeCommands.moveToIntakePos());
     NamedCommands.registerCommand("detectRing", new DetectRing());
+    NamedCommands.registerCommand("intake", Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}));
+    NamedCommands.registerCommand("autoAim", new AutoAimPivot());
+    NamedCommands.registerCommand("stow", IntakeCommands.moveToStowPos());
+    NamedCommands.registerCommand("pickupSequence", IntakeCommands.pickupSequence());
+
   }
 
   /**
@@ -125,6 +131,8 @@ public class CommandBot {
           () -> -teleOpController.getRotation(), true, true));
         */
 
+        teleOpController.getTestTrigger().whileTrue(Commands.run(() -> {s_drive.drive(4, 0, 0, false, false);}));
+
         teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
           s_drive.zeroGyro();
           System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
@@ -138,9 +146,9 @@ public class CommandBot {
 
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
-      // teleOpController.intakeTrigger().onTrue(new IntakeRingCommand(true));
-      teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {intake.doIntake(1);}));
-      teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
+      teleOpController.intakeTrigger().onTrue(new IntakeRingCommand(true));
+      // teleOpController.intakeTrigger().whileTrue(Commands.run(() -> {intake.doIntake(1);}));
+      // teleOpController.intakeTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       teleOpController.intakeTriggerDrive().whileTrue(Commands.run(() -> {intake.doIntake(1.0);}));
       teleOpController.intakeTriggerDrive().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
@@ -193,6 +201,8 @@ public class CommandBot {
         teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
       }
     }
+
+    teleOpController.executeAmpDriveAndPositionPreset().onTrue(AutonCommandFactory.getAmpAlignAndSetArmCommand());
 
     /*if (dualController) {
       teleOpController.holdElbowInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
@@ -253,7 +263,8 @@ public class CommandBot {
 
   public Command getAutonomousCommand(Date autoStartTime) {
     // return AutonController.getAutonCommand();
-    return new PathPlannerAuto("New Auto");
+    return new PathPlannerAuto("Copy of leftBlue3Ring");
+    //return IntakeCommands.rightAutonOneRingRed();
   }
 
   void periodic() {

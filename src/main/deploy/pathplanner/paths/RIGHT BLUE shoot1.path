@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 2.649054998537956,
+        "y": 4.087081954477746
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9999999999999978,
-        "y": 0.0
+        "x": 2.439944195700967,
+        "y": 4.215352211018259
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RIGHT BLUE pickup1 END"
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 0.0
+        "x": 1.8863445419198543,
+        "y": 4.528926750161193
       },
       "prevControl": {
-        "x": 1.1333189719503385,
-        "y": 0.0
+        "x": 2.002842851839552,
+        "y": 4.390789550809871
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RIGHT BLUE shoot1 END"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.44909602078144,
+    "rotation": -29.579231036055102,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "tests",
+  "folder": "rightblue",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

@@ -32,6 +32,7 @@ public class MAXSwerveModule {
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
   private SwerveModuleSimFacade m_simDrive ;
+  private String name;
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
@@ -39,7 +40,8 @@ public class MAXSwerveModule {
    * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
    * Encoder.
    */
-  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
+  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, String name) {
+    this.name = name;
     m_drivingSparkMax = new CANSparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushless);
 
@@ -80,12 +82,32 @@ public class MAXSwerveModule {
     m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
     m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
+    m_drivingPIDController.setP(ModuleConstants.kDrivingPFr);
+    m_drivingPIDController.setI(ModuleConstants.kDrivingIFr);
+    m_drivingPIDController.setD(ModuleConstants.kDrivingDFr);
+    
+    m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
+
     // Set the PID gains for the driving motor. Note these are example gains, and you
     // may need to tune them for your own robot!
-    m_drivingPIDController.setP(ModuleConstants.kDrivingP);
-    m_drivingPIDController.setI(ModuleConstants.kDrivingI);
-    m_drivingPIDController.setD(ModuleConstants.kDrivingD);
-    m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
+    if (name.equals("frontRight")){
+      m_drivingPIDController.setP(ModuleConstants.kDrivingPFr);
+      m_drivingPIDController.setI(ModuleConstants.kDrivingIFr);
+      m_drivingPIDController.setD(ModuleConstants.kDrivingDFr);
+    } else if (name.equals("frontLeft")) {
+      m_drivingPIDController.setP(ModuleConstants.kDrivingPFl);
+      m_drivingPIDController.setI(ModuleConstants.kDrivingIFl);
+      m_drivingPIDController.setD(ModuleConstants.kDrivingDFl);
+    } else if (name.equals("rearLeft")) {
+      m_drivingPIDController.setP(ModuleConstants.kDrivingPBl);
+      m_drivingPIDController.setI(ModuleConstants.kDrivingIBl);
+      m_drivingPIDController.setD(ModuleConstants.kDrivingDBl);
+    } else if (name.equals("rearRight")) {
+      m_drivingPIDController.setP(ModuleConstants.kDrivingPBr);
+      m_drivingPIDController.setI(ModuleConstants.kDrivingIBr);
+      m_drivingPIDController.setD(ModuleConstants.kDrivingDBr);
+    }
+
     m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
         ModuleConstants.kDrivingMaxOutput);
 

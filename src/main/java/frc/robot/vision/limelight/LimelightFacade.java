@@ -36,7 +36,7 @@ public class LimeLightFacade {
 	}
 
 	public double getDistanceToGoalMeters() {
-		return Units.inchesToMeters(getDistanceToGoalInches());
+		return getRSpace3d().getZ();
 	}
 
 	public double getYAngleOffsetDegrees() {
@@ -86,6 +86,10 @@ public class LimeLightFacade {
 
 	public Pose3d getRSpace3d() {
 		return LimelightHelpers.getTargetPose3d_RobotSpace(limelightName);
+	}
+
+	public double getTX(){
+		return getRSpace3d().getX();
 	}
 
 	public void updateDashboard() {
