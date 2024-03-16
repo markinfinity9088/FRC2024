@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2554654495899562,
-        "y": 6.2770083885388885
+        "x": 1.7941639306959054,
+        "y": 6.113056676897948
       },
       "isLocked": false,
       "linkedName": "MID BLUE start"
@@ -20,8 +20,8 @@
         "y": 7.014791090923124
       },
       "prevControl": {
-        "x": 1.5670791427174855,
-        "y": 7.014791090923124
+        "x": 2.1806215367066955,
+        "y": 6.651755158003897
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
+    "maxVelocity": 1.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
