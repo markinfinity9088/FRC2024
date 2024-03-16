@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoAimPivot;
@@ -44,6 +45,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -64,10 +68,13 @@ public class CommandBot {
   Subsystem drive;
   LimeLightFacade m_limelight;
 
+  SendableChooser <PathCommandWithHoloConfig> m_autonChooser ;
+
   public void init() {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
     m_limelight = new LimeLightFacade();
     LimelightsContainer.getInstance().addLimeLight("limelight", m_limelight);
+    m_autonChooser = new SendableChooser<>();
 
     NamedCommands.registerCommand("pickupWithSensor", new IntakeRingCommand(true));
     NamedCommands.registerCommand("handoffAndShoot", IntakeCommands.handoffAndShootCommand());
@@ -80,6 +87,8 @@ public class CommandBot {
     NamedCommands.registerCommand("handoff", IntakeCommands.moveToHandoffPos());
     NamedCommands.registerCommand("shoot", IntakeCommands.shootRing());
 
+    SmartDashboard.putData(m_autonChooser);
+    initializeAutoCommandList();
   }
 
   /**
@@ -258,6 +267,33 @@ public class CommandBot {
     
   }
 
+  //add autonomous commands to chooser
+  public void initializeAutoCommandList() {
+    m_autonChooser.setDefaultOption("Default Auto", new PathCommandWithHoloConfig(new PathPlannerAuto("rightBlue2FarRing"), AutoConstants.farHolConfig));
+
+    m_autonChooser.setDefaultOption("rightBlue2FarRing", new PathCommandWithHoloConfig(new PathPlannerAuto("rightBlue2FarRing"), AutoConstants.farHolConfig));
+    m_autonChooser.setDefaultOption("rightBlue3FarRing", new PathCommandWithHoloConfig(new PathPlannerAuto("rightBlue3FarRing"), AutoConstants.farHolConfig));
+
+    m_autonChooser.setDefaultOption("leftBlue2Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("leftBlue2Ring"), AutoConstants.nearHolConfig));
+    m_autonChooser.setDefaultOption("leftBlue3Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("leftBlue3Ring"), AutoConstants.nearHolConfig));
+    //m_autonChooser.setDefaultOption("leftBlue4Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("leftBlue4Ring"), AutoConstants.nearHolConfig));
+    m_autonChooser.setDefaultOption("midBlue2Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("midBlue2Ring"), AutoConstants.nearHolConfig));
+    m_autonChooser.setDefaultOption("midBlue4Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("midBlue4Ring"), AutoConstants.nearHolConfig));
+    m_autonChooser.setDefaultOption("rightBlue2Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("rightBlue2Ring"), AutoConstants.nearHolConfig));
+    m_autonChooser.setDefaultOption("rightBlue3Ring", new PathCommandWithHoloConfig(new PathPlannerAuto("rightBlue3Ring"), AutoConstants.nearHolConfig));
+    
+  }
+
+  public Command getChosenAutonCommand() {
+    PathCommandWithHoloConfig selectedPathCommand = m_autonChooser.getSelected();
+    if (selectedPathCommand.getHoloConfig() != null) {
+      SwerveDriveSubsystem.getInstance().setHolonomicConfiguration(selectedPathCommand.getHoloConfig());
+    }
+
+    return selectedPathCommand.getCommand();
+
+  }
+
   /**
    * Use this to define the command that runs during autonomous.A
    *
@@ -266,18 +302,9 @@ public class CommandBot {
    */
 
   public Command getAutonomousCommand(Date autoStartTime) {
-    // return AutonController.getAutonCommand();
-        // return IntakeCommands.rightAutonOneRingRed();
-
-    // return new PathPlannerAuto("midBlue4Ring");
-    return new PathPlannerAuto("rightBlue2FarRing");
-    // return new PathPlannerAuto("leftBlue3Ring");
-    // return new PathPlannerAuto("midBlue2Ring");
-    // return new PathPlannerAuto("leftBlue2Ring");
-
-    // return new PathPlannerAuto("rightBlue2Ring");
-
-    }
+ 
+    return getChosenAutonCommand();
+  }
 
   void periodic() {
     drive.periodic();

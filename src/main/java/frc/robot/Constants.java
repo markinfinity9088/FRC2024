@@ -223,7 +223,7 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
-    public static final HolonomicPathFollowerConfig holConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+    public static final HolonomicPathFollowerConfig farHolConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                                                                   new PIDConstants(3.8,0.01,0.00), // Translation PID constant 4,.1,0
                                                                   new PIDConstants(2.35,0.01,0.0), // Rotation PID constants 2.35,.01,0
                                                                   // new PIDConstants(2.7,0.1,0.08), // Translation PID constant
@@ -232,6 +232,16 @@ public final class Constants {
                                                                   DriveConstants.kTrackRadius, // Drive base radius in meters. Distance from robot center to furthest module.
                                                                   new ReplanningConfig() // Default path replanning config. See the API for the options here
                                                                 );
+
+    public static final HolonomicPathFollowerConfig nearHolConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                                                                  new PIDConstants(2.7,0.1,0.08), // Translation PID constant
+                                                                  new PIDConstants(3,0.2,0.06), // Rotation PID constants
+                                                                   DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
+                                                                  DriveConstants.kTrackRadius, // Drive base radius in meters. Distance from robot center to furthest module.
+                                                                  new ReplanningConfig() // Default path replanning config. See the API for the options here
+                                                                );
+    
+   public static final HolonomicPathFollowerConfig holConfig = farHolConfig;
   }
 
   public static final class OIConstants {

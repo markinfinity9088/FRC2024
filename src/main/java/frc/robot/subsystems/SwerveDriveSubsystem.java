@@ -5,6 +5,7 @@ import java.util.function.DoubleSupplier;
 import org.opencv.core.Mat;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -76,25 +77,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   private SwerveDriveSubsystem(){
     System.out.println("Swerve Drive Subsystem Created");
     
-    AutoBuilder.configureHolonomic(
-      this::getPose,
-      this::resetOdometry,
-      this::getRobotRelativeSpeeds,
-      this::driveRobotRelative,
-      AutoConstants.holConfig,
-      () -> {
-        // Boolean supplier that controls when the path will be mirrored for the red alliance
-        // This will flip the path being followed to the red side of the field.
-        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-          return alliance.get() == DriverStation.Alliance.Red;
-        }
-        return false;
-      },
-      this
-    );
+    setHolonomicConfiguration(AutoConstants.holConfig);
   }
 
   // Odometry class for tracking robot pose
@@ -124,6 +107,29 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     maximum_rotation_speed = angularspeed;
 
     SmartDashboard.putString("Swerve MaxSpeeds ", ""+drivespeed+" "+angularspeed);
+  }
+
+  //set holonomic drive configuration for auto builder //pathplanner
+  public void setHolonomicConfiguration(HolonomicPathFollowerConfig holoConfig) {
+     AutoBuilder.configureHolonomic(
+      this::getPose,
+      this::resetOdometry,
+      this::getRobotRelativeSpeeds,
+      this::driveRobotRelative,
+      holoConfig,
+      () -> {
+        // Boolean supplier that controls when the path will be mirrored for the red alliance
+        // This will flip the path being followed to the red side of the field.
+        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+          return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+      },
+      this
+    );
   }
 
   @Override
