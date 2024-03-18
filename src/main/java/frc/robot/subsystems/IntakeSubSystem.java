@@ -92,17 +92,17 @@ public class IntakeSubSystem extends SubsystemBase {
   }
 
   public void releaseToAMP() {
-    System.out.println("Releasing to AMP..");
+    // System.out.println("Releasing to AMP..");
     intake.set(releaseToAMPSpeed);
   }
 
   public void releaseToShooter() {
-    System.out.println("Releasing to Shooter..");
+    // System.out.println("Releasing to Shooter..");
     intake.set(releaseToShooterSpeed);
   }
 
   public void stop() {
-    System.out.println("Stopping...");
+    // System.out.println("Stopping...");
     intake.set(0);
   }
 
@@ -137,18 +137,18 @@ public class IntakeSubSystem extends SubsystemBase {
   public void periodic() {
 
     if (intakeColorSensor == null) {
-      SmartDashboard.putString("ColorSensor", "Not found");
+      // SmartDashboard.putString("ColorSensor", "Not found");
       return;
     }
 
-    Color color = intakeColorSensor.getColor();
+    //Color color = intakeColorSensor.getColor();
   
     SmartDashboard.putNumber("Ring Proximity", intakeColorSensor.getProximity());
-    String colorstr = ""+color.red+":"+color.green+":"+color.blue;
-    SmartDashboard.putString("IntakeColors", colorstr);
+   // String colorstr = ""+color.red+":"+color.green+":"+color.blue;
+    // SmartDashboard.putString("IntakeColors", colorstr);
 
-    SmartDashboard.putBoolean("RingColorMatched", isMatchingColor());
-    SmartDashboard.putBoolean("RingDistanceMatched", isMatchingDistance());
+    // SmartDashboard.putBoolean("RingColorMatched", isMatchingColor());
+    // SmartDashboard.putBoolean("RingDistanceMatched", isMatchingDistance());
   }
 
 public boolean isRingDetected() {

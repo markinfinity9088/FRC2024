@@ -205,6 +205,7 @@ public final class Constants {
     public static final int leftClimbCanId = 10;
     public static final int rightClimbCanId = 9;
     public static final double MAX_SPEED = 0.7;
+    public static final int climbCurrentLimit = 40;
   }
 
   public static final class AutoConstants {

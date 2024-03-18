@@ -11,7 +11,7 @@ import frc.robot.commands.testingcommand.PathTestAuto;
 
 public class DriveCommands {
     public static Command getSimpleSwerveCommand() {
-        System.out.println("getSwerveAutonomousCommand called");
+        // System.out.println("getSwerveAutonomousCommand called");
         //return null;
         
        SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();

@@ -111,7 +111,7 @@ public class CommandBot {
     //used to override and cancel active commands manually
     teleOpController.cancelAllCommandsTrigger().whileTrue(Commands.run(()->{CommandScheduler.getInstance().cancelAll();}));
 
-    System.out.println("Configring Bindings with driveType:" + DriveConstants.driveType);
+    // System.out.println("Configring Bindings with driveType:" + DriveConstants.driveType);
     if (DriveConstants.driveType.startsWith("DIFF")) {
       DifferentialDriveSubsystem d_drive = DifferentialDriveSubsystem.getInstance();
       drive = d_drive;
@@ -137,7 +137,7 @@ public class CommandBot {
 
         teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
           s_drive.zeroGyro();
-          System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
+          // System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
           SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
         }));
         
@@ -270,7 +270,7 @@ public class CommandBot {
         // return IntakeCommands.rightAutonOneRingRed();
 
     return new PathPlannerAuto("midBlue4Ring");
-    // return new PathPlannerAuto("rightBlue2FarRing");
+    // return new PathPlannerAuto("testAuto");
     // return new PathPlannerAuto("leftBlue3Ring");
     // return new PathPlannerAuto("midBlue2Ring");
     // return new PathPlannerAuto("leftBlue2Ring");

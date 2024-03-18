@@ -39,7 +39,7 @@ public class ElbowSubsystem extends PositionableSubsystem {
   public void move(double speed) {
     // setCurrentSpeed(speed);
     //System.out.println("Elbow speed = "+getCurrentSpeed()+" original speed = "+speed);
-    SmartDashboard.putNumber("ElbowSpeed", speed);
+    // SmartDashboard.putNumber("ElbowSpeed", speed);
     // elbowf.set(getCurrentSpeed());
     elbowf.set(restrictSpeedForMinMax(speed));
   }

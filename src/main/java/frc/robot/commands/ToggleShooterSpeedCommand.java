@@ -25,12 +25,12 @@ public class ToggleShooterSpeedCommand extends InstantCommand {
   public void initialize() {
     if(shooter.getShooterVelocity() < -0.1){
       shooter.stopShooterWheels();
-      SmartDashboard.putNumber("GoalVelo", shooter.getShooterVelocity());
-      SmartDashboard.putString("herro","shabangalang");
+      // SmartDashboard.putNumber("GoalVelo", shooter.getShooterVelocity());
+      // SmartDashboard.putString("herro","shabangalang");
     } else {
       shooter.startShooterWheels(velocity);
-      SmartDashboard.putNumber("GoalVelo", shooter.getShooterVelocity());
-      SmartDashboard.putString("herro","bigabagabom");
+      // SmartDashboard.putNumber("GoalVelo", shooter.getShooterVelocity());
+      // SmartDashboard.putString("herro","bigabagabom");
     }
     
   }

@@ -74,7 +74,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   private Rotation2d m_lastRecordGyroBeforeRotation;
 
   private SwerveDriveSubsystem(){
-    System.out.println("Swerve Drive Subsystem Created");
+    // System.out.println("Swerve Drive Subsystem Created");
     
     AutoBuilder.configureHolonomic(
       this::getPose,
@@ -298,9 +298,9 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed);
     
-    if (diagnosticsTab == null) {
-      diagnosticsTab =  Shuffleboard.getTab("Diagnostics");
-    }
+    // if (diagnosticsTab == null) {
+    //   diagnosticsTab =  Shuffleboard.getTab("Diagnostics");
+    // }
     
     
     /* 

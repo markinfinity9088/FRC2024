@@ -37,7 +37,7 @@ public class HoldSubsystemInPositionCommand extends Command {
           position = ((PositionableSubsystem)subsystem).getPosition();
     }
     CommandInterruptor.getInstance().checkIsInterruptedAndReset(subsystem.getName());
-    System.out.println("Hold Position "+subsystem.getName()+" command initialized with pos:"+position);
+    // System.out.println("Hold Position "+subsystem.getName()+" command initialized with pos:"+position);
   }
 
   @Override
@@ -55,8 +55,8 @@ public class HoldSubsystemInPositionCommand extends Command {
   public boolean isFinished() {
     boolean finished = false;
     finished = CommandInterruptor.getInstance().checkIsInterruptedAndReset(subsystem.getName());
-    if (finished)
-      System.out.println("Finished "+getName());
+    // if (finished)
+    //   System.out.println("Finished "+getName());
     return finished; //subsystem.isAtPosition(position);
   }
 

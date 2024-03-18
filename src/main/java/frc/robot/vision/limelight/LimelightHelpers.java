@@ -440,7 +440,7 @@ public class LimelightHelpers {
             url = new URL(urlString);
             return url;
         } catch (MalformedURLException e) {
-            System.err.println("bad LL URL");
+            // System.err.println("bad LL URL");
         }
         return null;
     }
@@ -743,10 +743,10 @@ public class LimelightHelpers {
             if (responseCode == 200) {
                 return true;
             } else {
-                System.err.println("Bad LL Request");
+                // System.err.println("Bad LL Request");
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            // System.err.println(e.getMessage());
         }
         return false;
     }
@@ -765,14 +765,14 @@ public class LimelightHelpers {
         try {
             results = mapper.readValue(getJSONDump(limelightName), LimelightResults.class);
         } catch (JsonProcessingException e) {
-            System.err.println("lljson error: " + e.getMessage());
+            // System.err.println("lljson error: " + e.getMessage());
         }
 
         long end = System.nanoTime();
         double millis = (end - start) * .000001;
         results.targetingResults.latency_jsonParse = millis;
         if (profileJSON) {
-            System.out.printf("lljson: %.2f\r\n", millis);
+            // System.out.printf("lljson: %.2f\r\n", millis);
         }
 
         return results;

@@ -46,7 +46,7 @@ public class AutoAimPivot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("newPivotAngle", this.angle);
+    // SmartDashboard.putNumber("newPivotAngle", this.angle);
     pivot.moveToPosition((int) pivot.getEncoderWithAngle(angle));
   }
 

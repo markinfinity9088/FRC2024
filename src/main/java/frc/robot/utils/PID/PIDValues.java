@@ -14,7 +14,7 @@ public class PIDValues {
 
 
     public static PIDValue getPID(String name) {
-        System.out.println("PIDValue for name "+name);
+        // System.out.println("PIDValue for name "+name);
         if (name.contains("Wrist")) {
             return WristPID;
         }

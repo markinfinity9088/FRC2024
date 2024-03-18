@@ -26,9 +26,9 @@ public class PositionController {
         return self==null? self=new PositionController():self;
     }
 
-    public void refresh() {
-        wristAmpPosition = (long)SmartDashboard.getNumber(WRIST_AMP_KEY, wristAmpPosition);
-        elbowAmpPosition = (long)SmartDashboard.getNumber(ELBOW_AMP_KEY, elbowAmpPosition);
-        elevAmpPosition = (long)SmartDashboard.getNumber(ELEV_AMP_KEY, elevAmpPosition);
-    }
+    // public void refresh() {
+    //     wristAmpPosition = (long)SmartDashboard.getNumber(WRIST_AMP_KEY, wristAmpPosition);
+    //     elbowAmpPosition = (long)SmartDashboard.getNumber(ELBOW_AMP_KEY, elbowAmpPosition);
+    //     elevAmpPosition = (long)SmartDashboard.getNumber(ELEV_AMP_KEY, elevAmpPosition);
+    // }
 }

@@ -149,8 +149,8 @@ private boolean finished;
     double currentPoseY = swerveSubsystem.getPose().getY();
     double currentPoseX = swerveSubsystem.getPose().getX();
 
-    SmartDashboard.putNumber("YDIFF",Math.abs(currentPoseY-ySetpoint));
-    SmartDashboard.putNumber("XDIFF",Math.abs(currentPoseX-xSetpoint));
+    // SmartDashboard.putNumber("YDIFF",Math.abs(currentPoseY-ySetpoint));
+    // SmartDashboard.putNumber("XDIFF",Math.abs(currentPoseX-xSetpoint));
 
     if (Math.abs(currentPoseY-ySetpoint) <= tolerance && 
         Math.abs(currentPoseX - xSetpoint) <= tolerance
@@ -175,8 +175,8 @@ private boolean finished;
       return true;
     }
     double deltaAngle = getAngleDifference();
-    SmartDashboard.putNumber("TSetpoint", Units.radiansToDegrees(tSetpoint));
-    SmartDashboard.putNumber("AngleDiff", deltaAngle);
+    // SmartDashboard.putNumber("TSetpoint", Units.radiansToDegrees(tSetpoint));
+    // SmartDashboard.putNumber("AngleDiff", deltaAngle);
 
     if (Math.abs(deltaAngle) <= m_degreeTolerance) {
       return true;
@@ -213,11 +213,11 @@ private boolean finished;
 
       turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
 
-      SmartDashboard.putNumber("ROT CACL", turningSpeed);
-      SmartDashboard.putNumber("ODO Y", swerveSubsystem.getPose().getY());
-      SmartDashboard.putNumber("ODO X", swerveSubsystem.getPose().getX());
-      SmartDashboard.putNumber("ROBO DEG", swerveSubsystem.getHeading());
-      SmartDashboard.putBoolean("ISFinished", finished);
+      // SmartDashboard.putNumber("ROT CACL", turningSpeed);
+      // SmartDashboard.putNumber("ODO Y", swerveSubsystem.getPose().getY());
+      // SmartDashboard.putNumber("ODO X", swerveSubsystem.getPose().getX());
+      // SmartDashboard.putNumber("ROBO DEG", swerveSubsystem.getHeading());
+      // SmartDashboard.putBoolean("ISFinished", finished);
 
   
 
@@ -239,9 +239,9 @@ private boolean finished;
       vY = MathUtil.clamp(vY, -maxdrivespeed, maxdrivespeed);
       turningSpeed = MathUtil.clamp(turningSpeed, -maxturnspeed, maxturnspeed);
 
-      SmartDashboard.putNumber("vX", vX);
-      SmartDashboard.putNumber("vY", vY);
-      SmartDashboard.putNumber("vTurn", turningSpeed);
+      // SmartDashboard.putNumber("vX", vX);
+      // SmartDashboard.putNumber("vY", vY);
+      // SmartDashboard.putNumber("vTurn", turningSpeed);
 
       // Create chassis speeds  
       /* 
@@ -264,7 +264,7 @@ private boolean finished;
   // Stop all module motor movement when command ends
   @Override
   public void end(boolean interrupted){
-    System.out.println("End SwerveSampleMoveCommand called");
+    // System.out.println("End SwerveSampleMoveCommand called");
     swerveSubsystem.stopModules();
   }
 

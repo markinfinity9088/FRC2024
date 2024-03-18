@@ -55,7 +55,7 @@ public class AmpAlignAndShootCommand extends Command {
         // double newHeading = currPose.getRotation().getDegrees();
 
         //loginfo(relativePoseToTarget.getX(), relativePoseToTarget.getY());
-        loginfo(newXPosition, newYPosition, newHeading);
+        // loginfo(newXPosition, newYPosition, newHeading);
         
         //create command compositions
         SwerveSampleMoveCommand moveToAmpBaseCmd1 = new SwerveSampleMoveCommand(drive, Units.degreesToRadians(newHeading), false, null, 5);
@@ -70,12 +70,12 @@ public class AmpAlignAndShootCommand extends Command {
         CommandScheduler.getInstance().schedule(mainCommandGroup);
     }
 
-    void loginfo(double deltaX, double deltaY, double heading) {
-        SmartDashboard.putNumber("DeltaXToAmp", deltaX);
-        SmartDashboard.putNumber("DeltaYToAmo", deltaY);
-        SmartDashboard.putNumber("DeltaRotation", heading);
+    // void loginfo(double deltaX, double deltaY, double heading) {
+    //     SmartDashboard.putNumber("DeltaXToAmp", deltaX);
+    //     SmartDashboard.putNumber("DeltaYToAmo", deltaY);
+    //     SmartDashboard.putNumber("DeltaRotation", heading);
 
-    }
+    // }
 
 
     @Override

@@ -65,8 +65,8 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
   }
 
   public void drive(double speed, double rotation) {
-    if (speed!=0 || rotation!=0) 
-        System.out.println("arcadeDrive:"+speed+" with rot:"+rotation); 
+    // if (speed!=0 || rotation!=0) 
+    //     System.out.println("arcadeDrive:"+speed+" with rot:"+rotation); 
     // A split-stick arcade command
     m_drive.arcadeDrive(speed, rotation);
   }

@@ -17,7 +17,7 @@ public class MovePivotToPosition extends Command {
   public MovePivotToPosition(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.angle = MathUtil.clamp(angle,pivot.getMinAngle(),pivot.getMaxAngle());
-    System.out.println("passed angle = "+angle+" clamped angle = "+this.angle);
+    // System.out.println("passed angle = "+angle+" clamped angle = "+this.angle);
   }
 
   // Called when the command is initially scheduled.

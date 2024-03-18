@@ -170,7 +170,7 @@ public class PivotSubsystem extends PositionableSubsystem {
  
   public void periodic(){
     //SmartDashboard.putNumber("PivotEncoder", pivotEncoder.getPosition());
-    restrictSpeed(pivot.get());
+    //restrictSpeed(pivot.get());
     super.periodic();
   }
 }
