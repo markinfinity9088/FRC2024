@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6825775190011933,
-      "y": 6.630585568863446
+      "x": 0.0,
+      "y": 3.0
     },
-    "rotation": 64.10422245727361
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LEFT BLUE move1"
+            "pathName": "Turntest"
           }
         }
       ]

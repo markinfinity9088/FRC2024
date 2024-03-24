@@ -225,8 +225,8 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
     public static final HolonomicPathFollowerConfig holConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                                                  new PIDConstants(3.8,0.01,0.00), // Translation PID constant 4,.1,0
-                                                                  new PIDConstants(2.35,0.01,0.0), // Rotation PID constants 2.35,.01,0
+                                                                  new PIDConstants(4.0,0.0,0.03), // Translation PID constant 4,.1,0 | 3.8,.01,0
+                                                                  new PIDConstants(2.5,0.0,0.09), // Rotation PID constants 2.35,.01,0 | 2.35,.01,0
                                                                   // new PIDConstants(2.7,0.1,0.08), // Translation PID constant
                                                                   // new PIDConstants(3,0.2,0.06), // Rotation PID constants
                                                                    DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s

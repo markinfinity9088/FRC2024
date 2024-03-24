@@ -56,7 +56,7 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
 
   // The gyro sensor
   private final GyroSubsystem m_gyro = GyroSubsystem.getInstance();
-  ShuffleboardTab diagnosticsTab ;
+  ShuffleboardTab diagnosticsTab;
 
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
@@ -313,14 +313,11 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
    
     //System.out.println("Swerve speeds = fr="+ m_frontLeft.getState().speedMetersPerSecond+" fl="+m_frontRight.getState().speedMetersPerSecond);
 
-    /*
-     * diagnosticsTab.addDouble("frontLeft", () -> m_frontLeft.getState().speedMetersPerSecond);
-     * diagnosticsTab.addDouble("frontRight", () -> m_frontRight.getState().speedMetersPerSecond);
-     *     diagnosticsTab.addDouble("rearLeft", () -> m_rearLeft.getState().speedMetersPerSecond);
-     *     diagnosticsTab.addDouble("rearRight", () -> m_rearRight.getState().speedMetersPerSecond);
+    // diagnosticsTab.addNumber("frontLeft", () -> m_frontLeft.getState().speedMetersPerSecond);
+    // diagnosticsTab.addNumber("frontRight", () -> m_frontRight.getState().speedMetersPerSecond);
+    // diagnosticsTab.addNumber("rearLeft", () -> m_rearLeft.getState().speedMetersPerSecond);
+    // diagnosticsTab.addNumber("rearRight", () -> m_rearRight.getState().speedMetersPerSecond);
 
-
-     */
 
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);

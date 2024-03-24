@@ -269,8 +269,8 @@ public class CommandBot {
     // return AutonController.getAutonCommand();
         // return IntakeCommands.rightAutonOneRingRed();
 
-    return new PathPlannerAuto("midBlue4Ring");
-    // return new PathPlannerAuto("testAuto");
+    // return new PathPlannerAuto("midBlue4Ring");
+    return new PathPlannerAuto("testAuto");
     // return new PathPlannerAuto("leftBlue3Ring");
     // return new PathPlannerAuto("midBlue2Ring");
     // return new PathPlannerAuto("leftBlue2Ring");
