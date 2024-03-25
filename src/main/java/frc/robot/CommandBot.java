@@ -133,7 +133,7 @@ public class CommandBot {
           () -> -teleOpController.getRotation(), true, true));
         */
 
-        teleOpController.getTestTrigger().whileTrue(Commands.run(() -> {s_drive.drive(4, 0, 0, false, false);}));
+        teleOpController.getTestTrigger().whileTrue(Commands.run(() -> {s_drive.drive(4, 0, 0, true, false);}));
 
         teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
           s_drive.zeroGyro();

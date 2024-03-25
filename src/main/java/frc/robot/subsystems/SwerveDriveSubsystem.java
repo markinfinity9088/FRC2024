@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -72,6 +73,19 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
 
   //KP hacky way to correct swerve drift with field relative + swerve hardware issue
   private Rotation2d m_lastRecordGyroBeforeRotation;
+
+  private ShuffleboardTab diagShuffleboardTab = Shuffleboard.getTab("Diagnostics");
+
+  private GenericEntry frontLeftSpeed = diagShuffleboardTab.add("frontLeft", 0).getEntry();
+  private GenericEntry frontRightSpeed = diagShuffleboardTab.add("frontRight", 0).getEntry();
+  private GenericEntry backLeftSpeed = diagShuffleboardTab.add("backLeft", 0).getEntry();
+  private GenericEntry backRightSpeed = diagShuffleboardTab.add("backRight", 0).getEntry();
+
+  private GenericEntry frontLeftAngle = diagShuffleboardTab.add("frontLeftAngle", 0).getEntry();
+  private GenericEntry frontRightAngle = diagShuffleboardTab.add("frontRightAngle", 0).getEntry();
+  private GenericEntry backLeftAngle = diagShuffleboardTab.add("backLeftAngle", 0).getEntry();
+  private GenericEntry backRightAngle = diagShuffleboardTab.add("backRightAngle", 0).getEntry();
+  
 
   private SwerveDriveSubsystem(){
     // System.out.println("Swerve Drive Subsystem Created");
@@ -139,6 +153,8 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
             m_rearRight.getPosition()
         });
     m_field.setRobotPose(m_odometry.getPoseMeters());
+    
+
   }
 
   public Field2d getField() {
@@ -298,10 +314,6 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond * maximum_drive_speed);
     
-    // if (diagnosticsTab == null) {
-    //   diagnosticsTab =  Shuffleboard.getTab("Diagnostics");
-    // }
-    
     
     /* 
      *  SmartDashboard.putNumber("frontLeft", m_frontLeft.getState().speedMetersPerSecond);
@@ -313,17 +325,20 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
    
     //System.out.println("Swerve speeds = fr="+ m_frontLeft.getState().speedMetersPerSecond+" fl="+m_frontRight.getState().speedMetersPerSecond);
 
-    // diagnosticsTab.addNumber("frontLeft", () -> m_frontLeft.getState().speedMetersPerSecond);
-    // diagnosticsTab.addNumber("frontRight", () -> m_frontRight.getState().speedMetersPerSecond);
-    // diagnosticsTab.addNumber("rearLeft", () -> m_rearLeft.getState().speedMetersPerSecond);
-    // diagnosticsTab.addNumber("rearRight", () -> m_rearRight.getState().speedMetersPerSecond);
-
-
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]);
-    
+
+    frontLeftSpeed.setDouble(m_frontLeft.getState().speedMetersPerSecond);
+    frontRightSpeed.setDouble(m_frontRight.getState().speedMetersPerSecond);
+    backLeftSpeed.setDouble(m_rearLeft.getState().speedMetersPerSecond);
+    backRightSpeed.setDouble(m_rearRight.getState().speedMetersPerSecond);
+
+    frontLeftAngle.setDouble(m_frontLeft.getState().angle.getDegrees());
+    frontRightAngle.setDouble(m_frontRight.getState().angle.getDegrees());
+    backLeftAngle.setDouble(m_rearLeft.getState().angle.getDegrees());
+    backRightAngle.setDouble(m_rearRight.getState().angle.getDegrees());
 
   }
 

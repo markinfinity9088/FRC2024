@@ -2,12 +2,12 @@ package frc.robot.commands.autonCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AlignToTarget;
 import frc.robot.commands.SwerveSampleMoveCommand;
 import frc.robot.commands.intake_commands.IntakeRingCommand;
 import frc.robot.commands.intake_commands.ReleaseRingCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.utils.AllianceSideEnum;
-import frc.robot.vision.limelight.AlignToTarget;
 import frc.robot.vision.limelight.LimelightsContainer;
 
 public class AutonCommandFactory {

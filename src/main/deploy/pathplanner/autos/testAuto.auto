@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.0,
-      "y": 3.0
+      "x": 1.9932481519741916,
+      "y": 0.9602885967540827
     },
     "rotation": 0.0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Turntest"
+            "pathName": "straight test"
           }
         }
       ]
