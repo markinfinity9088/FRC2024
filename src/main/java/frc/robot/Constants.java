@@ -172,6 +172,7 @@ public final class Constants {
     public static final double wristP = 0.1;
     public static final double wristI = 0;
     public static final double wristD = 0;
+    public static final int beamBreakDIO = 0;
   }
 
   public static final class ShooterConstants {

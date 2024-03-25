@@ -95,10 +95,7 @@ public class IntakeSubSystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    if (intakeColorSensor == null) {
-      // SmartDashboard.putString("ColorSensor", "Not found");
-      return;
-    }
+
     boolean ringDetected = !beamBreak.get();
     SmartDashboard.putBoolean("ringDetected", ringDetected);
 
