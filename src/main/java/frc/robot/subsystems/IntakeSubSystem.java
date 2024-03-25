@@ -12,24 +12,16 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class IntakeSubSystem extends SubsystemBase {
 
-  //Change port based on where it is connected to
-  static final I2C.Port ColorSensorPort = I2C.Port.kOnboard;
-  private ColorSensorV3 intakeColorSensor ;
-  
-  private ColorMatch m_ColorMatch;
-
-  //tweak this later
-  static final Color kRingTarget = new Color(0.143, 0.427, 0.429);
-  
 
   //If this flag is false then we use color to detect ring otherwise proximity
-  boolean useDistanceForIntakeDetection = true;
+  boolean useSensorForDetection = true;
 
   //Fine tune this
   static final double kProximityForRingDetection = 175;
@@ -40,20 +32,15 @@ public class IntakeSubSystem extends SubsystemBase {
   static IntakeSubSystem self;
   static final int INTAKE_CURRENT_LIMIT_A = 30; // How many amps the intake can use while picking up
   private CANSparkMax intake = null;
-
+  DigitalInput beamBreak;
   //tweak the colors later
 
 
 
   private IntakeSubSystem() {
-    try {
-      intakeColorSensor = new ColorSensorV3(ColorSensorPort);
-    } catch(Exception e) {
+ 
 
-    }
-
-    m_ColorMatch = new ColorMatch();
-    addColorMatchValues();
+    beamBreak = new DigitalInput(Constants.IntakeConstants.beamBreakDIO);
     intake = new CANSparkMax(Constants.IntakeConstants.intakeCanId, MotorType.kBrushless);
     intake.setIdleMode(IdleMode.kBrake);
     intake.setSmartCurrentLimit(INTAKE_CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
@@ -66,13 +53,10 @@ public class IntakeSubSystem extends SubsystemBase {
     return self;
   }
 
-  private void addColorMatchValues() {
-    m_ColorMatch.addColorMatch(kRingTarget);
-    
-  }
 
-  public void setUseDistanceForIntakeDetection(boolean flag) {
-    useDistanceForIntakeDetection = flag;
+
+  public void setUseSensorForDetection(boolean flag) {
+    useSensorForDetection = flag;
   }
 
   public void doIntake() {
@@ -106,32 +90,7 @@ public class IntakeSubSystem extends SubsystemBase {
     intake.set(0);
   }
 
-  //tweak this later
-  public boolean isMatchingColor() {
-    if (intakeColorSensor == null) {
-      return false;
-    }
 
-    Color detectedColor = intakeColorSensor.getColor();
-    ColorMatchResult match = m_ColorMatch.matchClosestColor(detectedColor);
-
-    if (match.color == kRingTarget) {
-      return true;
-    }
-
-    return false;
-  }
-
-  public boolean isMatchingDistance() {
-    if (intakeColorSensor == null) {
-      return false;
-    }
-    /* Get the raw proximity value from the sensor ADC (11 bit). This value is largest when an object
-    * is close to the sensor and smallest when far away. */
- 
-    double proximity = intakeColorSensor.getProximity();
-    return (proximity >= kProximityForRingDetection);
-  }
 
   @Override
   public void periodic() {
@@ -140,10 +99,11 @@ public class IntakeSubSystem extends SubsystemBase {
       // SmartDashboard.putString("ColorSensor", "Not found");
       return;
     }
+    boolean ringDetected = !beamBreak.get();
+    SmartDashboard.putBoolean("ringDetected", ringDetected);
 
     //Color color = intakeColorSensor.getColor();
-  
-    SmartDashboard.putNumber("Ring Proximity", intakeColorSensor.getProximity());
+
    // String colorstr = ""+color.red+":"+color.green+":"+color.blue;
     // SmartDashboard.putString("IntakeColors", colorstr);
 
@@ -152,9 +112,10 @@ public class IntakeSubSystem extends SubsystemBase {
   }
 
 public boolean isRingDetected() {
-    if (useDistanceForIntakeDetection) {
-      return isMatchingDistance();
-    }
-    return isMatchingColor();
+  boolean ringDetected = !beamBreak.get();
+  SmartDashboard.putBoolean("ringDetected", ringDetected);
+  
+  return ringDetected;
+
 }
 }
