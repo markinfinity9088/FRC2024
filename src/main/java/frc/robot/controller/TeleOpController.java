@@ -12,9 +12,13 @@ public interface TeleOpController {
     Trigger swerveTrigger();
 
 
-    Trigger getHookUpTrigger();
-    Trigger getHookDownTrigger();
-    Trigger getHookTrigger();
+
+    Trigger getClimberToggle();
+    Trigger getLeftHookDown();
+    Trigger getRightHookDown();
+    double getLeftHookSpeed();
+    double getRightHookSpeed();
+
     Trigger getElbowTrigger();
     Trigger getWristTrigger();
     Trigger getElevatorTrigger();

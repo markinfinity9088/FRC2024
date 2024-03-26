@@ -25,6 +25,7 @@ import frc.robot.controller.PS4Controller;
 import frc.robot.controller.PS4ControllerSingle;
 import frc.robot.controller.TeleOpController;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ClimbSubsystemTwo;
 import frc.robot.subsystems.DifferentialDriveSubsystem;
 import frc.robot.subsystems.ElbowSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -138,14 +139,11 @@ public class CommandBot {
         teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
           s_drive.zeroGyro();
           // System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
-          SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
+          //SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
         }));
         
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
-    ShooterSubsystem shooter = ShooterSubsystem.getInstance();
-    PivotSubsystem pivot = PivotSubsystem.getInstance();
-
     if (intake != null) {
       // Deploy the intake with the triangle button for the cone
       teleOpController.intakeTrigger().onTrue(new IntakeRingCommand(true));
@@ -157,13 +155,17 @@ public class CommandBot {
       teleOpController.releaseToAMPTrigger().whileTrue(Commands.run(() -> {intake.releaseToAMP();}));
       teleOpController.releaseToAMPTrigger().onFalse(Commands.runOnce(() -> {intake.stop();}));
       
-      if (shooter!=null) {
+      
+    }
+
+    ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+    if (shooter!=null) {
         // teleOpController.getShootTrigger().onTrue(new ToggleShooterSpeedCommand());
         teleOpController.getShootTrigger().whileTrue(Commands.runOnce(() ->{ shooter.startShooterWheels(1);}));
         teleOpController.getShootTrigger().onFalse(Commands.runOnce(() -> {shooter.stopShooterWheels();}));
-      }
     }
 
+    PivotSubsystem pivot = PivotSubsystem.getInstance();
     if (pivot!=null) {
       teleOpController.getPivotTriggerDown().whileTrue(Commands.run(() -> {pivot.move(.6);}));
       teleOpController.getPivotTriggerUp().whileTrue(Commands.run(() -> {pivot.move(-.6);}));
@@ -225,13 +227,14 @@ public class CommandBot {
 
     }
 
-    ClimbSubsystem hook = ClimbSubsystem.getInstance();
+    ClimbSubsystemTwo hook = ClimbSubsystemTwo.getInstance();
     if (hook!=null) {
-      if (dualController) {
-      teleOpController.getHookUpTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookUpSpeed()));
-      teleOpController.getHookDownTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookDownSpeed()));
-      teleOpController.getHookUpTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
-      teleOpController.getHookDownTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
+      if (dualController && teleOpController.getClimberToggle().getAsBoolean()) {
+        hook.setDefaultCommand(hook.moveCommand(() -> teleOpController.getLeftHookSpeed(), () -> teleOpController.getRightHookSpeed()));
+        teleOpController.getLeftHookDown().onFalse(Commands.runOnce(() -> {hook.stop();}));
+        teleOpController.getRightHookDown().onFalse(Commands.runOnce(() -> {hook.stop();}));
+        teleOpController.getLeftHookDown().whileTrue(Commands.run(() -> {hook.moveLeft(Constants.climberDownSpeed);}));
+        teleOpController.getRightHookDown().whileTrue(Commands.runOnce(() -> {hook.moveRight(Constants.climberDownSpeed);}));
       }
     }
 

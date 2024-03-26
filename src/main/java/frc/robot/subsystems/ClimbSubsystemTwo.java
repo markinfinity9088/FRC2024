@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -103,5 +106,15 @@ public class ClimbSubsystemTwo extends PositionableSubsystem {
         moveLeft(speed);
         moveRight(speed);
     
+    }
+    public void move(double speedL, double speedR){
+        moveLeft(speedL);
+        moveRight(speedR);
+    }
+    public Command moveCommand(DoubleSupplier speedSupplierLeft, DoubleSupplier speedSupplierRight) {
+        return run(() -> {
+            move(speedSupplierLeft.getAsDouble(), speedSupplierRight.getAsDouble() );
+            showPositionOnDashboard();
+        });
     }
 }

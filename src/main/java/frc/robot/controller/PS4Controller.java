@@ -26,8 +26,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger releaseToAMPTrigger() {
-        //activate this only when preset trigger is not pressed and R1 is pressed
-        return presetPrimaryTrigger().negate().and(ps4Controller2.R1()) ;
+        return ps4Controller2.R1();
     }
     
     @Override
@@ -37,8 +36,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger intakeTrigger() {
-        //L1 is pressed and the preset trigger is not pressed
-        return presetPrimaryTrigger().negate().and( ps4Controller2.L1());
+        return  ps4Controller2.L1();
     }
 
     @Override
@@ -81,27 +79,31 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller1.circle();
     }
 
-    @Override
-    public Trigger getHookUpTrigger() {
-        return ps4Controller1.L2();
-    }
+
 
     @Override
-    public double getHookUpSpeed() {
+    public double getLeftHookSpeed() {
         return (ps4Controller1.getL2Axis() + 1) / 2;
     }
 
     @Override
-    public double getHookDownSpeed() {
-        return -(ps4Controller1.getR2Axis() + 1) / 2;
+    public double getRightHookSpeed() {
+        return (ps4Controller1.getR2Axis() + 1) / 2;
     }
     
-
     @Override
-    public Trigger getHookDownTrigger() {
-        return ps4Controller1.R2();
+    public Trigger getClimberToggle(){
+        return ps4Controller1.povUp();
     }
-
+    @Override
+    public Trigger getLeftHookDown(){
+        return ps4Controller1.L1();
+    }
+    @Override
+    public Trigger getRightHookDown(){
+        return ps4Controller1.R1();
+    }
+  
     @Override
     public double getIntakeSpeed() {
         // int intakeSpeed = 1;
