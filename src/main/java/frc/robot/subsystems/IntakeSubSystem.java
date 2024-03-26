@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.vision.limelight.LimeLightFacade;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +34,7 @@ public class IntakeSubSystem extends SubsystemBase {
   static final int INTAKE_CURRENT_LIMIT_A = 30; // How many amps the intake can use while picking up
   private CANSparkMax intake = null;
   DigitalInput beamBreak;
+  LimeLightFacade limelight;
   //tweak the colors later
 
 
@@ -41,6 +43,7 @@ public class IntakeSubSystem extends SubsystemBase {
  
 
     beamBreak = new DigitalInput(Constants.IntakeConstants.beamBreakDIO);
+    limelight = new LimeLightFacade();
     intake = new CANSparkMax(Constants.IntakeConstants.intakeCanId, MotorType.kBrushless);
     intake.setIdleMode(IdleMode.kBrake);
     intake.setSmartCurrentLimit(INTAKE_CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
@@ -96,8 +99,10 @@ public class IntakeSubSystem extends SubsystemBase {
   public void periodic() {
 
 
+
     boolean ringDetected = !beamBreak.get();
     SmartDashboard.putBoolean("ringDetected", ringDetected);
+    limelight.setLED(ringDetected);
 
     //Color color = intakeColorSensor.getColor();
 
@@ -111,7 +116,7 @@ public class IntakeSubSystem extends SubsystemBase {
 public boolean isRingDetected() {
   boolean ringDetected = !beamBreak.get();
   SmartDashboard.putBoolean("ringDetected", ringDetected);
-  
+  limelight.setLED(ringDetected);
   return ringDetected;
 
 }
