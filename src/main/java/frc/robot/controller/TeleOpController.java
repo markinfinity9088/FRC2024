@@ -32,8 +32,6 @@ public interface TeleOpController {
     double getElbowSpeed();
     double getPivotSpeed();
     double getElevatorSpeed();
-    double getHookSpeed();
-    double getHookUpSpeed();
     double getHookDownSpeed();
 
     Trigger holdElbowInPositionTrigger();
