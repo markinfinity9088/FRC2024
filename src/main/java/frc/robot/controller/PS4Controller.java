@@ -83,19 +83,26 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getLeftHookSpeed() {
+        //gives no speed to the climbers if the climber toggle isnt pressed
         if (getClimberToggle().getAsBoolean()){
             return (ps4Controller1.getL2Axis() + 1) / 2;
+        } else {
+            return ((ps4Controller1.getL2Axis() + 1) / 2) - ((ps4Controller1.getR2Axis() + 1) / 2);
         }
-        return 0.0;
+        
         
     }
 
     @Override
     public double getRightHookSpeed() {
+        //gives no speed to the climbers if the climber toggle isnt pressed
+  
         if (getClimberToggle().getAsBoolean()){
             return (ps4Controller1.getR2Axis() + 1) / 2;
+        } else {
+            return ((ps4Controller1.getL2Axis() + 1) / 2) - ((ps4Controller1.getR2Axis() + 1) / 2);
         }
-        return 0.0;
+
         
     }
     
