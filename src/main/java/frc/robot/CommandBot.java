@@ -229,7 +229,7 @@ public class CommandBot {
 
     ClimbSubsystemTwo hook = ClimbSubsystemTwo.getInstance();
     if (hook!=null) {
-      if (dualController && teleOpController.getClimberToggle().getAsBoolean()) {
+      if (dualController) {
         hook.setDefaultCommand(hook.moveCommand(() -> teleOpController.getLeftHookSpeed(), () -> teleOpController.getRightHookSpeed()));
         teleOpController.getLeftHookDown().onFalse(Commands.runOnce(() -> {hook.stop();}));
         teleOpController.getRightHookDown().onFalse(Commands.runOnce(() -> {hook.stop();}));

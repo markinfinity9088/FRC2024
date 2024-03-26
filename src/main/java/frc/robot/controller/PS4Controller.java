@@ -83,12 +83,20 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public double getLeftHookSpeed() {
-        return (ps4Controller1.getL2Axis() + 1) / 2;
+        if (getClimberToggle().getAsBoolean()){
+            return (ps4Controller1.getL2Axis() + 1) / 2;
+        }
+        return 0.0;
+        
     }
 
     @Override
     public double getRightHookSpeed() {
-        return (ps4Controller1.getR2Axis() + 1) / 2;
+        if (getClimberToggle().getAsBoolean()){
+            return (ps4Controller1.getR2Axis() + 1) / 2;
+        }
+        return 0.0;
+        
     }
     
     @Override
@@ -97,11 +105,11 @@ public class PS4Controller implements TeleOpController {
     }
     @Override
     public Trigger getLeftHookDown(){
-        return ps4Controller1.L1();
+        return ps4Controller1.L1().and(getClimberToggle());
     }
     @Override
     public Trigger getRightHookDown(){
-        return ps4Controller1.R1();
+        return ps4Controller1.R1().and(getClimberToggle());
     }
   
     @Override
