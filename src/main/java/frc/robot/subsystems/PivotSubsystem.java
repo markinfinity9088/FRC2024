@@ -27,10 +27,12 @@ public class PivotSubsystem extends PositionableSubsystem {
   //speed control for delta of move positions (absolute encoders)
   private final double maxspeeddelta = 80;
   private final double lowestspeeddelta = 30;
+  private final double holdspeeddelta = 4; //around 1 degree
 
   //speeds
   private final double slowestspeed = 0.1;
   private final double mediumspeed = 0.2;
+  private final double holdspeed = 0.05;
 
   enum PivotDirection {
     UP,
@@ -153,9 +155,15 @@ public class PivotSubsystem extends PositionableSubsystem {
       return speed;
     } 
 
+    if (delta <= holdspeeddelta) {
+      return signum * holdspeed;
+    }
+
     if (delta <= lowestspeeddelta) {
       return signum * slowestspeed;
     }
+
+
 
     return signum * mediumspeed;
   }
