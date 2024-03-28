@@ -19,7 +19,7 @@ public class ClimbSubsystem extends PositionableSubsystem {
     private static final int followDeviceID = Constants.ClimbConstants.leftClimbCanId;
     static private ClimbSubsystem self;
     // private double extenisonLimit = 2; //2 feet
-    private DifferentialDrive m_drive;
+
     private CANSparkMax m_leadMotor;
     private CANSparkMax m_followMotor;
 
@@ -51,7 +51,6 @@ public class ClimbSubsystem extends PositionableSubsystem {
          * by calling the follow() method on the SPARK MAX you want to configure as a follower, and
          * by passing as a parameter the SPARK MAX you want to configure as a leader.
          */
-        m_followMotor.follow(m_leadMotor);
         m_followMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);
         m_followMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 1000);
         m_followMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 1000);
@@ -76,7 +75,7 @@ public class ClimbSubsystem extends PositionableSubsystem {
         return self;
       }
 
-    public void move(double speed) {
+    public void moveRight(double speed) {
         // System.out.println("Climb speed:"+speed);
         m_leadMotor.set(speed);
 
@@ -84,8 +83,25 @@ public class ClimbSubsystem extends PositionableSubsystem {
         // m_drive.arcadeDrive(getCurrentSpeed(), 0);
     }
 
+    public void moveLeft(double speed) {
+        // System.out.println("Climb speed:"+speed);
+        m_followMotor.set(speed);
+
+        // setCurrentSpeed(speed);
+        // m_drive.arcadeDrive(getCurrentSpeed(), 0);
+    }
+
+
+
     public void stop() {
         move(0);
         // System.out.println("Hook stopped");
+    }
+
+    @Override
+    public void move(double speed) {
+        moveLeft(speed);
+        moveRight(speed);
+    
     }
 }

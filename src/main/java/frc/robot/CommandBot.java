@@ -225,15 +225,7 @@ public class CommandBot {
 
     }
 
-    ClimbSubsystem hook = ClimbSubsystem.getInstance();
-    if (hook!=null) {
-      if (dualController) {
-      teleOpController.getHookUpTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookUpSpeed()));
-      teleOpController.getHookDownTrigger().whileTrue(hook.moveCommand(() -> teleOpController.getHookDownSpeed()));
-      teleOpController.getHookUpTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
-      teleOpController.getHookDownTrigger().onFalse(Commands.runOnce(() -> {hook.stop();}));
-      }
-    }
+    setHookBindings(dualController, teleOpController);
 
     //preset triggers
     // teleOpController.resetLastKnownPresetNameTrigger().onTrue(Commands.runOnce(()->{GlobalState.getInstance().setPreviousPresetRun("");}));
@@ -256,6 +248,40 @@ public class CommandBot {
       }));
     */
     
+  }
+
+  private void setHookBindings(boolean dualController, TeleOpController teleOpController) {
+    ClimbSubsystem hook = ClimbSubsystem.getInstance();
+    if (hook!=null) {
+      if (dualController) {
+        //for moving both hooks together, do not press left or right indepdendent hook triggers
+        Trigger combinedHookUpTrigger = teleOpController.getHookUpTrigger().and(teleOpController.getLeftHookTrigger().negate()).and(teleOpController.getRightHookTrigger().negate());
+        Trigger combinedHookDownTrigger = teleOpController.getHookDownTrigger().and(teleOpController.getLeftHookTrigger().negate()).and(teleOpController.getRightHookTrigger().negate());
+        combinedHookUpTrigger.whileTrue(hook.moveCommand(() -> teleOpController.getHookUpSpeed()));
+        combinedHookDownTrigger.whileTrue(hook.moveCommand(() -> teleOpController.getHookDownSpeed()));
+        combinedHookUpTrigger.onFalse(Commands.runOnce(() -> {hook.stop();}));
+        combinedHookDownTrigger.onFalse(Commands.runOnce(() -> {hook.stop();}));
+
+        //for left hook trigger
+        Trigger leftHookCommandUpTrigger = teleOpController.getLeftHookTrigger().and(teleOpController.getHookUpTrigger());
+        leftHookCommandUpTrigger.whileTrue(Commands.run(() -> hook.moveLeft(teleOpController.getHookUpSpeed())));
+        leftHookCommandUpTrigger.onFalse(Commands.runOnce(() -> {hook.stop();}));
+
+        Trigger leftHookCommandDownTrigger = teleOpController.getLeftHookTrigger().and(teleOpController.getHookDownTrigger());
+        leftHookCommandDownTrigger.whileTrue(Commands.run(() -> hook.moveLeft(teleOpController.getHookDownSpeed())));
+        leftHookCommandDownTrigger.onFalse(Commands.runOnce(() -> {hook.stop();}));
+
+        //for right hook trigger
+        Trigger rightHookCommandUpTrigger = teleOpController.getRightHookTrigger().and(teleOpController.getHookUpTrigger());
+        rightHookCommandUpTrigger.whileTrue(Commands.run(() -> hook.moveRight(teleOpController.getHookUpSpeed())));
+        rightHookCommandUpTrigger.onFalse(Commands.runOnce(() -> {hook.stop();}));
+
+        Trigger rightHookCommandDownTrigger = teleOpController.getRightHookTrigger().and(teleOpController.getHookDownTrigger());
+        rightHookCommandDownTrigger.whileTrue(Commands.run(() -> hook.moveRight(teleOpController.getHookDownSpeed())));
+        rightHookCommandDownTrigger.onFalse(Commands.runOnce(() -> {hook.stop();}));
+
+      }
+    }
   }
 
   /**
