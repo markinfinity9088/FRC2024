@@ -44,11 +44,6 @@ public class MyXboxController implements TeleOpController{
         return xboxController1.getLeftY();
     }
 
-    @Override
-    public Trigger getHookTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'raiseHookTrigger'");
-    }
 
     @Override
     public double getIntakeSpeed() {
@@ -247,6 +242,18 @@ public class MyXboxController implements TeleOpController{
     public Trigger getTestTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTestTrigger'");
+    }
+
+    @Override
+    public Trigger getLeftHookTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getLeftHookTrigger'");
+    }
+
+    @Override
+    public Trigger getRightHookTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRightHookTrigger'");
     } 
 }
 

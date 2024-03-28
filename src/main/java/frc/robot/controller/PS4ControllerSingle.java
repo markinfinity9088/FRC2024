@@ -71,10 +71,6 @@ public class PS4ControllerSingle implements TeleOpController {
         return -MathUtil.applyDeadband(ps4Controller1.getRightX(), OIConstants.kDriveDeadband);
     }
 
-    @Override
-    public Trigger getHookTrigger() {
-        return ps4Controller1.R1();
-    }
 
     @Override
     public double getIntakeSpeed() {
@@ -245,5 +241,17 @@ public class PS4ControllerSingle implements TeleOpController {
     public Trigger getTestTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTestTrigger'");
+    }
+
+    @Override
+    public Trigger getLeftHookTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getLeftHookTrigger'");
+    }
+
+    @Override
+    public Trigger getRightHookTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRightHookTrigger'");
     }
 }
