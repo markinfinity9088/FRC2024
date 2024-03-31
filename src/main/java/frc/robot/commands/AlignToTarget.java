@@ -52,7 +52,7 @@ public class AlignToTarget extends Command {
   @Override
   public void initialize() {
     m_limelight.setAprilTagPipeline();
-    m_limelight.setLED(true);
+    // m_limelight.setLED(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -71,7 +71,7 @@ public class AlignToTarget extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_limelight.setLED(false);
+    // m_limelight.setLED(false);
     m_drivetrain.drive(0, 0, 0, true, false);
   }
 

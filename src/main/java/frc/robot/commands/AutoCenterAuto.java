@@ -11,15 +11,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.utils.GlobalState;
 import frc.robot.vision.limelight.LimeLightFacade;
 
-public class AutoCenter extends Command {
+public class AutoCenterAuto extends Command {
   LimeLightFacade ll = LimeLightFacade.getInstance();
   private SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
   double angle = 0; 
   TurnDegreesCommand turnCommand;
   /** Creates a new AutoCenter. */
-  public AutoCenter() {
+  public AutoCenterAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,11 +29,12 @@ public class AutoCenter extends Command {
   public void initialize() {
     
     angle = Math.atan(ll.getTX() / ll.getDistanceToGoalMeters());
-    turnCommand = new TurnDegreesCommand(Units.radiansToDegrees(-angle));
     SmartDashboard.putNumber("angle", Units.radiansToDegrees(angle));
+    GlobalState.getInstance().setTurn(0);
     if (ll.isTargetVisible()){
-      SequentialCommandGroup setup = new SequentialCommandGroup(turnCommand, new AutoAimPivot());
-      CommandScheduler.getInstance().schedule(setup);
+      GlobalState.getInstance().setTurn(angle);
+      //SequentialCommandGroup setup = new SequentialCommandGroup(turnCommand, new AutoAimPivot());
+      //CommandScheduler.getInstance().schedule(setup);
     }
   }
   // Called every time the scheduler runs while the command is scheduled.

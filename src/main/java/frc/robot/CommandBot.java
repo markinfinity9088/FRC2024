@@ -6,19 +6,27 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AlignToTarget;
 import frc.robot.commands.AutoAimPivot;
+import frc.robot.commands.AutoCenter;
+import frc.robot.commands.AutoCenterAuto;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.IntakeCommands;
 import frc.robot.commands.MovePivotToPosition;
 import frc.robot.commands.PositionSubsystemCommand;
+import frc.robot.commands.SwerveSampleMoveCommand;
 import frc.robot.commands.ToggleShooterSpeedCommand;
+import frc.robot.commands.TurnDegreesCommand;
+import frc.robot.commands.TurnDegreesCommandAuto;
 import frc.robot.commands.arm_routines.ArmPresets;
 import frc.robot.commands.arm_routines.logic.ArmRoutine;
 import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
 import frc.robot.commands.autonCommands.AutonCommandFactory;
 import frc.robot.commands.autonCommands.HandoffAndShootCommand;
+import frc.robot.commands.autonCommands.SpeakerAlignAndShoot;
 import frc.robot.commands.intake_commands.DetectRing;
 import frc.robot.commands.intake_commands.IntakeRingCommand;
+import frc.robot.commands.intake_commands.SpitOutRingSensor;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -48,7 +56,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**s
@@ -66,7 +78,7 @@ public class CommandBot {
 
   public void init() {
     SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
-    m_limelight = new LimeLightFacade();
+    m_limelight = LimeLightFacade.getInstance();
     LimelightsContainer.getInstance().addLimeLight("limelight", m_limelight);
 
     NamedCommands.registerCommand("pickupWithSensor", new IntakeRingCommand(true));
@@ -74,12 +86,11 @@ public class CommandBot {
     NamedCommands.registerCommand("moveToPickup", IntakeCommands.moveToIntakePos());
     NamedCommands.registerCommand("detectRing", new DetectRing());
     NamedCommands.registerCommand("intake", Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}));
-    NamedCommands.registerCommand("autoAim", new AutoAimPivot());
     NamedCommands.registerCommand("stow", IntakeCommands.moveToStowPos());
     NamedCommands.registerCommand("pickupSequence", IntakeCommands.pickupSequence());
     NamedCommands.registerCommand("handoff", IntakeCommands.moveToHandoffPos());
     NamedCommands.registerCommand("shoot", IntakeCommands.shootRing());
-
+    NamedCommands.registerCommand("autoAim", new SpeakerAlignAndShoot());
   }
 
   /**
@@ -133,8 +144,11 @@ public class CommandBot {
           () -> -teleOpController.getRotation(), true, true));
         */
 
-        teleOpController.getTestTrigger().whileTrue(Commands.run(() -> {s_drive.drive(4, 0, 0, true, false);}));
-
+        // teleOpController.getTestTrigger().whileTrue(Commands.run(() -> {s_drive.drive(4, 0, 0, true, false);}));
+        //teleOpController.getTestTrigger().onTrue(new SwerveSampleMoveCommand(s_drive, Math.PI, true, new Pose2d(), 1));
+        // teleOpController.getTestTrigger().onTrue(new AutoCenter());
+        teleOpController.getTestTrigger().onTrue(new SpeakerAlignAndShoot());
+        
         teleOpController.getResetTrigger().whileTrue(Commands.run(() -> {
           s_drive.zeroGyro();
           // System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
@@ -204,7 +218,7 @@ public class CommandBot {
       }
     }
 
-    //teleOpController.executeAmpDriveAndPositionPreset().onTrue(AutonCommandFactory.getAmpAlignAndSetArmCommand());
+    teleOpController.executeAmpDriveAndPositionPreset().onTrue(AutonCommandFactory.getAmpAlignAndSetArmCommand());
 
     /*if (dualController) {
       teleOpController.holdElbowInPositionTrigger().whileTrue(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
@@ -231,8 +245,29 @@ public class CommandBot {
     // teleOpController.resetLastKnownPresetNameTrigger().onTrue(Commands.runOnce(()->{GlobalState.getInstance().setPreviousPresetRun("");}));
     teleOpController.pickupPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PickupRing)); //cross
     teleOpController.stowPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Stow)); //square
-    teleOpController.ampPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff)); //triangle
     teleOpController.handoffPresetTrigger().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff)); //circle
+
+    ParallelDeadlineGroup intakeTimeout = new ParallelDeadlineGroup(new WaitCommand(1), Commands.runOnce(() -> {intake.doIntake();}));
+    // ParallelDeadlineGroup intakeReverseTimeout = new ParallelDeadlineGroup(new WaitCommand(.17), Commands.runOnce(() -> {intake.releaseToAMP();}));
+
+    SequentialCommandGroup intakeWaitCommandGroup = new SequentialCommandGroup(
+      new WaitCommand(0.05), intakeTimeout, Commands.runOnce(() -> {intake.stop();})
+    );
+
+    SequentialCommandGroup intakeReverseWaitCommandGroup = new SequentialCommandGroup(
+      new WaitCommand(1), new SpitOutRingSensor()
+    );
+
+    ParallelCommandGroup amp1CommandGroup = new ParallelCommandGroup();
+    amp1CommandGroup.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpDropOff));
+    amp1CommandGroup.addCommands(intakeReverseWaitCommandGroup);
+
+    ParallelCommandGroup amp2CommandGroup = new ParallelCommandGroup();
+    amp2CommandGroup.addCommands(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.AmpScore));
+    amp2CommandGroup.addCommands(intakeWaitCommandGroup);
+
+    teleOpController.ampPresetTrigger().onTrue(amp1CommandGroup); //dpad left
+    teleOpController.ampScorePresetTrigger().onTrue(amp2CommandGroup); //dpad right
 
     // teleOpController.getPivotTriggerDown().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotDropTilt));
     // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotShootTilt));
@@ -295,14 +330,14 @@ public class CommandBot {
     // return AutonController.getAutonCommand();
         // return IntakeCommands.rightAutonOneRingRed();
 
-    // return new PathPlannerAuto("midBlue4Ring");
-    return new PathPlannerAuto("testAuto");
+    return new PathPlannerAuto("midBlue4RingLimelight");
+    // return new PathPlannerAuto("testAuto");
     // return new PathPlannerAuto("leftBlue3Ring");
     // return new PathPlannerAuto("midBlue2Ring");
     // return new PathPlannerAuto("leftBlue2Ring");
 
-    // return new PathPlannerAuto("rightBlue2Ring");
-
+    // return new PathPlannerAuto("rightBlue2FarRing");
+    // return new SequentialCommandGroup();
     }
 
   void periodic() {

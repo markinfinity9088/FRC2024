@@ -232,7 +232,13 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger ampPresetTrigger() {
         // return presetPrimaryTrigger().and(ps4Controller2.R2());
-        return ps4Controller2.triangle();
+        return ps4Controller2.povLeft();
+    }
+
+    @Override
+    public Trigger ampScorePresetTrigger() {
+        // return presetPrimaryTrigger().and(ps4Controller2.R2());
+        return ps4Controller2.povRight();
     }
 
     @Override

@@ -13,7 +13,7 @@ import frc.robot.vision.limelight.LimeLightFacade;
 
 public class AutoAimPivot extends Command {
 
-  LimeLightFacade limelight = new LimeLightFacade();
+  LimeLightFacade limelight = LimeLightFacade.getInstance();
   PivotSubsystem pivot = PivotSubsystem.getInstance();
   SwerveDriveSubsystem swerve = SwerveDriveSubsystem.getInstance();
   private int angle = 0;
@@ -59,6 +59,6 @@ public class AutoAimPivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(pivot.getPositionDegrees()-angle) <= 2);
+    return ((Math.abs(pivot.getPositionDegrees()-angle) <= 2) || (!limelight.isTargetVisible()));
   }
 }

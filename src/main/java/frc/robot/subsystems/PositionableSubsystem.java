@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.utils.RuntimeConfig;
 import frc.robot.utils.PID.AsymmetricProfiledPIDController;
 import frc.robot.utils.PID.PIDValues;
@@ -116,6 +117,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public void showPositionOnDashboard() {
         // if (dcount++%16==0)
+        if (GeneralConstants.kInVerboseMode)
         {
             // System.out.println(ABS_KEY+":"+aEncoder.getPosition() * encoderFactor);
             if (hasAbsEncoder)
@@ -139,6 +141,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         encoderReversed = -1;
     }
 
+    
     protected void init(CANSparkMax motorController) {
         ShuffleboardTab pidTab = Shuffleboard.getTab("PID");
         pidTab.add(PIDKP_KEY, currentKP);

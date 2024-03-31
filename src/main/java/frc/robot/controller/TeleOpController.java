@@ -53,6 +53,7 @@ public interface TeleOpController {
     Trigger stowPresetTrigger();
     Trigger handoffPresetTrigger();
     Trigger ampPresetTrigger();
+    Trigger ampScorePresetTrigger();
     Trigger getTestTrigger();
 
    Trigger getResetTrigger();

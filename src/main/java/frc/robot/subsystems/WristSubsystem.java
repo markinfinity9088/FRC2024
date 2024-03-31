@@ -11,10 +11,10 @@ public class WristSubsystem extends PositionableSubsystem {
   private final CANSparkMax wrist;
   private static WristSubsystem self;
 
-  private static final boolean APPLY_SAFETY = false;
+  private static final boolean APPLY_SAFETY = true;
   private static final int MotorDirectionForUP = 1;
-  private static final double Max_Wrist_Position = 2500;
-  private static final double Min_Wrist_Position = 495;
+  public static final double Max_Wrist_Position = 4000;
+  public static final double Min_Wrist_Position = 2366;
 
 
   private WristSubsystem() {

@@ -254,6 +254,12 @@ public class MyXboxController implements TeleOpController{
     public Trigger getRightHookTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getRightHookTrigger'");
+    }
+
+    @Override
+    public Trigger ampScorePresetTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ampScorePresetTrigger'");
     } 
 }
 

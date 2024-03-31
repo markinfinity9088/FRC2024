@@ -27,7 +27,7 @@ public class IntakeSubSystem extends SubsystemBase {
   //Fine tune this
   static final double kProximityForRingDetection = 175;
 
-  static final double intakeSpeed = 0.75;
+  static final double intakeSpeed = 1;
   static final double releaseToAMPSpeed = -0.8;
   static final double releaseToShooterSpeed = 1.0;
   static IntakeSubSystem self;
@@ -43,7 +43,7 @@ public class IntakeSubSystem extends SubsystemBase {
  
 
     beamBreak = new DigitalInput(Constants.IntakeConstants.beamBreakDIO);
-    limelight = new LimeLightFacade();
+    limelight = LimeLightFacade.getInstance();
     intake = new CANSparkMax(Constants.IntakeConstants.intakeCanId, MotorType.kBrushless);
     intake.setIdleMode(IdleMode.kBrake);
     intake.setSmartCurrentLimit(INTAKE_CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
@@ -67,7 +67,7 @@ public class IntakeSubSystem extends SubsystemBase {
   }
 
   public void doIntake(double intakeSpeed) {
-    if (intakeSpeed!=0) System.out.println("Intake in progress");
+    // if (intakeSpeed!=0) System.out.println("Intake in progress");
     intake.set(intakeSpeed); // makes the intake motor rotate at given speed
   }
 
@@ -102,7 +102,7 @@ public class IntakeSubSystem extends SubsystemBase {
 
     boolean ringDetected = !beamBreak.get();
     SmartDashboard.putBoolean("ringDetected", ringDetected);
-    limelight.setLED(ringDetected);
+    // limelight.setLED(ringDetected);
 
     //Color color = intakeColorSensor.getColor();
 
@@ -116,7 +116,7 @@ public class IntakeSubSystem extends SubsystemBase {
 public boolean isRingDetected() {
   boolean ringDetected = !beamBreak.get();
   SmartDashboard.putBoolean("ringDetected", ringDetected);
-  limelight.setLED(ringDetected);
+  // limelight.setLED(ringDetected);
   return ringDetected;
 
 }

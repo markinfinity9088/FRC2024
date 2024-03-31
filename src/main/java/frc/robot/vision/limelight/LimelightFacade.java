@@ -14,8 +14,16 @@ public class LimeLightFacade {
 	private double kCameraHeight = 9.14;
 	private double kMountingAngle = 35.0;
 	private double GoalHeight = 24.5; // inches, deg
+	private static LimeLightFacade self;
 
 	public LimeLightFacade() {
+	}
+
+	public static LimeLightFacade getInstance(){
+		if (self == null){
+			self = new LimeLightFacade();
+		}
+		return self;
 	}
 
 	public LimeLightFacade(String name) {

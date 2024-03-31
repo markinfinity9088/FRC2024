@@ -10,9 +10,11 @@ import org.opencv.core.Mat;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +30,7 @@ private boolean finished;
   Supplier<Double> headingFunction, setpointFunction;
 
   private PIDController vXController, vYController;
-  private PIDController thetaController;
+  private ProfiledPIDController thetaController;
 
   private double vX;
   private double vY;
@@ -50,6 +52,8 @@ private boolean finished;
   private double m_degreeTolerance=3;
 
   private boolean m_driveOnly = false;
+
+  private boolean m_debug = true;
 
     // tSetpoint is in radians and posive for counter clockwise
     //call this constructor for rotate only
@@ -139,9 +143,13 @@ private boolean finished;
 
     //thetaController = new PIDController(0.1, 0.004, 0.02);
     //thetaController = new PIDController(0.6, 0.004, 0.001);
-    thetaController = new PIDController(1, 0.004, 0.008);
+    //thetaController = new PIDController(2.5, 0.004, 0.008);
+    thetaController = new ProfiledPIDController(2.2,0,0,new Constraints(5,10));
 
-    thetaController.enableContinuousInput(0, 360);
+
+    //thetaController.enableContinuousInput(0, 360);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    //thetaController.disableContinuousInput();
 
   }
 
@@ -149,9 +157,12 @@ private boolean finished;
     double currentPoseY = swerveSubsystem.getPose().getY();
     double currentPoseX = swerveSubsystem.getPose().getX();
 
-    // SmartDashboard.putNumber("YDIFF",Math.abs(currentPoseY-ySetpoint));
-    // SmartDashboard.putNumber("XDIFF",Math.abs(currentPoseX-xSetpoint));
+    if (m_debug) {
+      SmartDashboard.putNumber("YDIFF",Math.abs(currentPoseY-ySetpoint));
+      SmartDashboard.putNumber("XDIFF",Math.abs(currentPoseX-xSetpoint));
 
+    }
+    
     if (Math.abs(currentPoseY-ySetpoint) <= tolerance && 
         Math.abs(currentPoseX - xSetpoint) <= tolerance
       ) {
@@ -175,8 +186,12 @@ private boolean finished;
       return true;
     }
     double deltaAngle = getAngleDifference();
-    // SmartDashboard.putNumber("TSetpoint", Units.radiansToDegrees(tSetpoint));
-    // SmartDashboard.putNumber("AngleDiff", deltaAngle);
+
+    if (m_debug) {
+      SmartDashboard.putNumber("TSetpoint", Units.radiansToDegrees(tSetpoint));
+      SmartDashboard.putNumber("AngleDiff", deltaAngle);
+    }
+    
 
     if (Math.abs(deltaAngle) <= m_degreeTolerance) {
       return true;
@@ -187,39 +202,26 @@ private boolean finished;
 
   @Override
   public void execute(){
-      /*if(swerveSubsystem.getPose().getY()  > (ySetpoint) - tolerance){
-        if(swerveSubsystem.getPose().getY()  < (ySetpoint) + tolerance){
-            yflag = true;
-          }
-      }
-
-      if(swerveSubsystem.getPose().getX()  > (xSetpoint) - tolerance){
-        if(swerveSubsystem.getPose().getX()  < (xSetpoint) + tolerance){
-            xflag = true;
-          }
-      }
-
-      if(yflag && xflag){ finished = true;}*/
-
-      /*if (didReachXYSetPoint() && didReachThetaSetpoint()) {
-        finished = true;
-      }*/
+      
 
       double turningSpeed;
 
-      turningSpeed = -thetaController.calculate(Units.degreesToRadians(swerveSubsystem.getHeading()), tSetpoint);
+      turningSpeed = thetaController.calculate(Units.degreesToRadians(swerveSubsystem.getHeading()), tSetpoint);
+
+      System.out.println("Swervemove heading="+Units.degreesToRadians(swerveSubsystem.getHeading())+" tsetpoint="+tSetpoint+" turningspeed="+turningSpeed);
 
       turningSpeed = (turningSpeed > maxturnspeed)?maxturnspeed:turningSpeed;
 
       turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
 
-      // SmartDashboard.putNumber("ROT CACL", turningSpeed);
-      // SmartDashboard.putNumber("ODO Y", swerveSubsystem.getPose().getY());
-      // SmartDashboard.putNumber("ODO X", swerveSubsystem.getPose().getX());
-      // SmartDashboard.putNumber("ROBO DEG", swerveSubsystem.getHeading());
-      // SmartDashboard.putBoolean("ISFinished", finished);
-
-  
+      if (m_debug) {
+        SmartDashboard.putNumber("ROT CACL", turningSpeed);
+        SmartDashboard.putNumber("ODO Y", swerveSubsystem.getPose().getY());
+        SmartDashboard.putNumber("ODO X", swerveSubsystem.getPose().getX());
+        SmartDashboard.putNumber("ROBO DEG", swerveSubsystem.getHeading());
+        SmartDashboard.putBoolean("ISFinished", finished);
+      }
+      
 
       vX = vXController.calculate(swerveSubsystem.getPose().getX(), xSetpoint); // X-Axis PID
       vY = vYController.calculate(swerveSubsystem.getPose().getY(), ySetpoint); // Y-Axis PID
@@ -239,23 +241,13 @@ private boolean finished;
       vY = MathUtil.clamp(vY, -maxdrivespeed, maxdrivespeed);
       turningSpeed = MathUtil.clamp(turningSpeed, -maxturnspeed, maxturnspeed);
 
-      // SmartDashboard.putNumber("vX", vX);
-      // SmartDashboard.putNumber("vY", vY);
-      // SmartDashboard.putNumber("vTurn", turningSpeed);
+      if (m_debug) {
+        SmartDashboard.putNumber("vX", vX);
+        SmartDashboard.putNumber("vY", vY);
+        SmartDashboard.putNumber("vTurn", turningSpeed);
 
-      // Create chassis speeds  
-      /* 
-     ChassisSpeeds chassisSpeeds;
-  
-      // Apply chassis speeds with desired velocities
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(vX, vY, turningSpeed, swerveSubsystem.getRotation2d());
-
-      // Create states array
-      SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-    
-      // Move swerve modules
-      swerveSubsystem.setModuleStates(moduleStates);
-      */
+      }
+      
       
       swerveSubsystem.drive(vX, vY, turningSpeed, true, true);
 
@@ -264,13 +256,15 @@ private boolean finished;
   // Stop all module motor movement when command ends
   @Override
   public void end(boolean interrupted){
-    // System.out.println("End SwerveSampleMoveCommand called");
+    if (m_debug) {
+      System.out.println("End SwerveSampleMoveCommand called");
+    }
     swerveSubsystem.stopModules();
   }
 
   @Override
   public boolean isFinished(){
-    if (didReachXYSetPoint() && didReachThetaSetpoint()) {
+    if (didReachXYSetPoint() &&didReachThetaSetpoint()) {
         finished = true;
       }
     return finished;
