@@ -31,7 +31,7 @@ public class AutoCenter extends Command {
     turnCommand = new TurnDegreesCommand(Units.radiansToDegrees(-angle));
     SmartDashboard.putNumber("angle", Units.radiansToDegrees(angle));
     if (ll.isTargetVisible()){
-      SequentialCommandGroup setup = new SequentialCommandGroup(turnCommand, new AutoAimPivot());
+      SequentialCommandGroup setup = new SequentialCommandGroup(turnCommand, new AutoAimPivot(false));
       CommandScheduler.getInstance().schedule(setup);
     }
   }

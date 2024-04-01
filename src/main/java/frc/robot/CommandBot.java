@@ -87,11 +87,8 @@ public class CommandBot {
     NamedCommands.registerCommand("moveToPickup", IntakeCommands.moveToIntakePos());
     NamedCommands.registerCommand("detectRing", new DetectRing());
     NamedCommands.registerCommand("intake", Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}));
-<<<<<<< HEAD
-=======
     NamedCommands.registerCommand("autoAim", new AutoAimPivot(false));
     NamedCommands.registerCommand("autoAimWithHold", new AutoAimPivot(true));
->>>>>>> 99c5128700eb3e29e54b2d60dfb4b9a2ca578b1d
     NamedCommands.registerCommand("stow", IntakeCommands.moveToStowPos());
     NamedCommands.registerCommand("pickupSequence", IntakeCommands.pickupSequence());
     NamedCommands.registerCommand("handoff", IntakeCommands.moveToHandoffPos());
@@ -190,11 +187,7 @@ public class CommandBot {
       teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();}));
       teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();}));
       //teleOpController.getPivotPresetTrigger().onTrue(new MovePivotToPosition(30));
-<<<<<<< HEAD
-      teleOpController.getPivotPresetTrigger().onTrue(new AutoAimPivotPID());
-=======
       teleOpController.getPivotPresetTrigger().onTrue(new AutoAimPivot(true));
->>>>>>> 99c5128700eb3e29e54b2d60dfb4b9a2ca578b1d
       // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.createPivotPreset(100)));
 
     }
