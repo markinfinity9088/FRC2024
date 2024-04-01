@@ -28,13 +28,14 @@ public class AutoAimPivot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double dist = Math.sqrt(Math.pow(limelight.getTX(), 2) + Math.pow(limelight.getDistanceToGoalMeters(), 2));
+    // double dist = Math.sqrt(Math.pow(limelight.getTX(), 2) + Math.pow(limelight.getDistanceToGoalMeters(), 2));
+    double dist = limelight.getDistanceToGoalMeters();
     angle = (int) new PivotComputation().getPivotAngle(dist);
-    if (dist > 5){
-      angle += 5;
-    } else if (dist > 3){
-      angle += 3;
-    }
+    // if (dist > 5){
+    //   angle += 5;
+    // } else if (dist > 3){
+    //   angle += 3;
+    // }
     if (angle > maxAngle){
       angle = maxAngle;
     } else if (angle < minAngle) {
@@ -59,6 +60,6 @@ public class AutoAimPivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((Math.abs(pivot.getPositionDegrees()-angle) <= 2) || (!limelight.isTargetVisible()));
+    return ((Math.abs(pivot.getPositionDegrees()-angle) <= 1) || (!limelight.isTargetVisible()));
   }
 }

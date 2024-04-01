@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 2.5670791427174855,
-        "y": 5.539225686154654
+        "y": 5.703092944647428
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.543657469625922,
-        "y": 4.918551349228233
+        "y": 5.0824186077210065
       },
       "isLocked": false,
       "linkedName": "MID BLUE sideRing1"
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -35.110000000000014,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "midblue",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -35.110000000000014,
     "velocity": 0
   },
   "useDefaultConstraints": true

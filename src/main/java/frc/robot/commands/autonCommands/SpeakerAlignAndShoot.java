@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoAimPivot;
+import frc.robot.commands.AutoAimPivotPID;
 import frc.robot.commands.AutoCenter;
 import frc.robot.commands.AutoCenterAuto;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
@@ -34,8 +35,8 @@ public class SpeakerAlignAndShoot extends SequentialCommandGroup {
 
     //align, pivot, spin wheels, and go to handoff
     SequentialCommandGroup align = new SequentialCommandGroup(new AutoCenterAuto(), new TurnDegreesCommandAuto());
-    ParallelCommandGroup setupForShot = new ParallelCommandGroup(align, ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotShootTilt), new AutoAimPivot(), Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels((1.0));}));
-    addCommands(setupForShot);
+    ParallelCommandGroup setupForShot = new ParallelCommandGroup(align, new AutoAimPivotPID(), Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels((1.0));}), ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    addCommands(setupForShot.withTimeout(1));
 
     //shoot
     ParallelCommandGroup shooting = new ParallelCommandGroup();

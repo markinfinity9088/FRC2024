@@ -46,7 +46,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void startShooterWheels(double targetVelocity) {
         // System.out.println("Shooter in progress");
         leftShooter.set(-targetVelocity); // makes the shooter1 motor rotate at given speed
-        rightShooter.set(targetVelocity); // makes the shooter1 motor rotate at given speed
+        rightShooter.set(targetVelocity*.99); // makes the shooter1 motor rotate at given speed
     }
 
     public void stopShooterWheels() {

@@ -13,6 +13,7 @@ import frc.robot.commands.AutoCenterAuto;
 import frc.robot.commands.HoldSubsystemInPositionCommand;
 import frc.robot.commands.IntakeCommands;
 import frc.robot.commands.MovePivotToPosition;
+import frc.robot.commands.AutoAimPivotPID;
 import frc.robot.commands.PositionSubsystemCommand;
 import frc.robot.commands.SwerveSampleMoveCommand;
 import frc.robot.commands.ToggleShooterSpeedCommand;
@@ -90,7 +91,7 @@ public class CommandBot {
     NamedCommands.registerCommand("pickupSequence", IntakeCommands.pickupSequence());
     NamedCommands.registerCommand("handoff", IntakeCommands.moveToHandoffPos());
     NamedCommands.registerCommand("shoot", IntakeCommands.shootRing());
-    NamedCommands.registerCommand("autoAim", new SpeakerAlignAndShoot());
+    NamedCommands.registerCommand("autoAimAndShoot", new SpeakerAlignAndShoot());
   }
 
   /**
@@ -184,7 +185,7 @@ public class CommandBot {
       teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();}));
       teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();}));
       //teleOpController.getPivotPresetTrigger().onTrue(new MovePivotToPosition(30));
-      teleOpController.getPivotPresetTrigger().onTrue(new AutoAimPivot());
+      teleOpController.getPivotPresetTrigger().onTrue(new AutoAimPivotPID());
       // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.createPivotPreset(100)));
 
     }

@@ -3,10 +3,11 @@
   "robotLength": 0.762,
   "holonomicMode": true,
   "pathFolders": [
-    "tests",
+    "rightblue far",
     "leftblue",
     "midblue",
-    "rightblue"
+    "rightblue",
+    "tests"
   ],
   "autoFolders": [
     "2 Ring!!",

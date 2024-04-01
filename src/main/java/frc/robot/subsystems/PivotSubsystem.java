@@ -64,6 +64,10 @@ public class PivotSubsystem extends PositionableSubsystem {
     restrictSpeed(speed);
   }
 
+  public void moveNoRestrictions(double speed){
+    pivot.set(speed);
+  }
+
   @Override
   public void moveToPosition(long requiredPosition) {
     PivotDirection directionNeeded = pivotEncoder.getPosition() > requiredPosition ? PivotDirection.DOWN : PivotDirection.UP;
@@ -98,7 +102,11 @@ public class PivotSubsystem extends PositionableSubsystem {
 
   //gives degrees of current pivot absolute encoder position
   public double getPositionDegrees(){
-    return getAngleForGivenPosition(pivotEncoder.getPosition());
+    double angle = getAngleForGivenPosition(pivotEncoder.getPosition());
+    if (angle > 300){
+      return 0;
+    }
+    return angle;
   }
 
   //given an angle, gives the absolute encoder value 
