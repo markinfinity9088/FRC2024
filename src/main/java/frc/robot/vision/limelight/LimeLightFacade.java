@@ -14,8 +14,16 @@ public class LimeLightFacade {
 	private double kCameraHeight = 9.14;
 	private double kMountingAngle = 35.0;
 	private double GoalHeight = 24.5; // inches, deg
+	private static LimeLightFacade self;
 
 	public LimeLightFacade() {
+	}
+
+	public static LimeLightFacade getInstance(){
+		if (self == null){
+			self = new LimeLightFacade();
+		}
+		return self;
 	}
 
 	public LimeLightFacade(String name) {
@@ -36,7 +44,7 @@ public class LimeLightFacade {
 	}
 
 	public double getDistanceToGoalMeters() {
-		return Units.inchesToMeters(getDistanceToGoalInches());
+		return getRSpace3d().getZ();
 	}
 
 	public double getYAngleOffsetDegrees() {
@@ -86,6 +94,10 @@ public class LimeLightFacade {
 
 	public Pose3d getRSpace3d() {
 		return LimelightHelpers.getTargetPose3d_RobotSpace(limelightName);
+	}
+
+	public double getTX(){
+		return getRSpace3d().getX();
 	}
 
 	public void updateDashboard() {

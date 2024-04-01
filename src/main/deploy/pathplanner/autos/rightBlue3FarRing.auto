@@ -1,0 +1,125 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7516461186768542,
+      "y": 4.489458978917958
+    },
+    "rotation": -59.481769321124766
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "handoffAndShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RIGHT BLUE far move1"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT BLUE far pu1"
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "detectRing"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "moveToPickup"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "pickupWithSensor"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT BLUE far shoot1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "handoff"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT BLUE far pu2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "pickupSequence"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RIGHT BLUE far shoot2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "handoffAndShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "3 Ring!!!",
+  "choreoAuto": false
+}

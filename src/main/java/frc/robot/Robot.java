@@ -57,8 +57,8 @@ public class Robot extends LoggedRobot {
     // Starts recording to data log
     DataLogManager.start();
     m_robot.init();
-    PositionController.getInstance().refresh();
-    SmartDashboard.putBoolean("Reset", false);
+    // PositionController.getInstance().refresh();
+    // SmartDashboard.putBoolean("Reset", false);
     m_robot.configureBindings();
   }
 
@@ -76,16 +76,16 @@ public class Robot extends LoggedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    boolean refresh = SmartDashboard.getBoolean("Reset", false);
-    if (refresh) {
-      System.out.println("Resetting subsystems..");
-      WristSubsystem.getInstance().reset();
-      ElbowSubsystem.getInstance().reset();
-      ElevatorSubsystem.getInstance().reset();
-      PivotSubsystem.getInstance().reset();
-      ClimbSubsystem.getInstance().reset();
-      SmartDashboard.putBoolean("Reset", false); 
-    }
+    // boolean refresh = SmartDashboard.getBoolean("Reset", false);
+    // if (refresh) {
+    //   System.out.println("Resetting subsystems..");
+    //   WristSubsystem.getInstance().reset();
+    //   ElbowSubsystem.getInstance().reset();
+    //   ElevatorSubsystem.getInstance().reset();
+    //   PivotSubsystem.getInstance().reset();
+    //   ClimbSubsystem.getInstance().reset();
+    //   SmartDashboard.putBoolean("Reset", false); 
+    // }
 
     if (GeneralConstants.kInVerboseMode) {
       SwerveDriveSubsystem.getInstance().displayPosition();
@@ -148,20 +148,21 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
     m_robot.periodic();
-    PositionController.getInstance().refresh();
+    // PositionController.getInstance().refresh();
     WristSubsystem.getInstance().periodic();
     ElbowSubsystem.getInstance().periodic();
     ElevatorSubsystem.getInstance().periodic();
     PivotSubsystem.getInstance().periodic();
     ClimbSubsystem.getInstance().periodic();
     ShooterSubsystem.getInstance().periodic();
+    IntakeSubSystem.getInstance().periodic();
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    System.out.println("Test Init");
+    // System.out.println("Test Init");
   }
 
   /** This function is called periodically during test mode. */
@@ -171,7 +172,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void simulationInit() {
-    System.out.println("Simulation Mode Init");
+    // System.out.println("Simulation Mode Init");
     RuntimeConfig.is_simulator_mode = true;
     SwerveDriveSubsystem.getInstance().simulationInit();
   }

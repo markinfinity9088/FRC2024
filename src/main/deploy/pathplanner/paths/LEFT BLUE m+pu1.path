@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.1922197690549243,
-        "y": 7.025263281295794
+        "x": 0.6825775190011933,
+        "y": 6.630585568863446
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.917423284940237,
-        "y": 7.025263281295794
+        "x": 1.3633965729469937,
+        "y": 7.084464938160646
       },
       "isLocked": false,
-      "linkedName": "ringposleftblue"
+      "linkedName": "LEFT BLUE start"
     },
     {
       "anchor": {
-        "x": 3.2,
-        "y": 7.03
+        "x": 2.705300795216977,
+        "y": 6.9956624528633675
       },
       "prevControl": {
-        "x": 2.2797786338953383,
-        "y": 7.03
+        "x": 2.705300795216977,
+        "y": 6.9956624528633675
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LEFT BLUE pickup1 END"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 4.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
@@ -45,8 +45,8 @@
   "reversed": false,
   "folder": "leftblue",
   "previewStartingState": {
-    "rotation": 0.8002280281152969,
+    "rotation": 59.45,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

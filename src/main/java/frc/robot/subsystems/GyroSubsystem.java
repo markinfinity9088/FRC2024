@@ -76,11 +76,11 @@ public class GyroSubsystem {
 
     public void periodic() {
         //System.out.println("gyroP:"+gyro.getPitch()+", gyroR:"+gyro.getDegrees());
-        //if ((tickCount & 0x1111) == 0x1111) 
-        {
-            SmartDashboard.putNumber(GYRO_PITCH, getPitch());
-            SmartDashboard.putNumber(GYRO_YAW, getYaw());
-        }
+        // //if ((tickCount & 0x1111) == 0x1111) 
+        // {
+        //     SmartDashboard.putNumber(GYRO_PITCH, getPitch());
+        //     SmartDashboard.putNumber(GYRO_YAW, getYaw());
+        // }
         //SmartDashboard.putNumber(DriveController.GYRO_ANGLE, gyro.getAngle());
         //SmartDashboard.putNumber(DriveController.GYRO_ROLL, gyro.getRoll());
     }

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.utils.RuntimeConfig;
 import frc.robot.utils.PID.AsymmetricProfiledPIDController;
 import frc.robot.utils.PID.PIDValues;
@@ -66,9 +67,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     public abstract void stop();
 
     public void periodic() {
-        //if (currentSpeed!=0)
-            logInfo();
-        //updatePIDValues();
+       showPositionOnDashboard();
     }
 
     private void updateRange() {
@@ -84,7 +83,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     protected void setPIDValues(double kP, double kI, double kD) {
-        System.out.print("Updating PID controller");
+        // System.out.print("Updating PID controller");
         currentKP = kP;
         currentKI = kI;
         currentKD = kD;
@@ -97,7 +96,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
             pid.setPID(kP, kI, kD);
             asmpid.setPID(kP, kI, kD);
         }
-        System.out.println("PID values set to:"+pid.getP() + "  " + pid.getI() + "  " + pid.getD());
+        // System.out.println("PID values set to:"+pid.getP() + "  " + pid.getI() + "  " + pid.getD());
     }
 
     public void updatePIDValues() {
@@ -118,6 +117,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public void showPositionOnDashboard() {
         // if (dcount++%16==0)
+        if (GeneralConstants.kInVerboseMode)
         {
             // System.out.println(ABS_KEY+":"+aEncoder.getPosition() * encoderFactor);
             if (hasAbsEncoder)
@@ -141,6 +141,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         encoderReversed = -1;
     }
 
+    
     protected void init(CANSparkMax motorController) {
         ShuffleboardTab pidTab = Shuffleboard.getTab("PID");
         pidTab.add(PIDKP_KEY, currentKP);
@@ -157,7 +158,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         plogger = new DoubleLogEntry(log, name+"Pos");
         slogger = new DoubleLogEntry(log, name+"Spd");
 
-        System.out.println("Initialized " + name + " with arDiff:" + arEncoderDifference);
+        // System.out.println("Initialized " + name + " with arDiff:" + arEncoderDifference);
 
         showPositionOnDashboard();
         if (RuntimeConfig.is_simulator_mode)
@@ -189,7 +190,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         }*/
 
         // if (pos!=currentPos) //(speed!=0)
-        System.out.println("Moving " + name +  " from:" + currentPos +" to:" + pos + ". Calculated PID speed:" + speed+"..asym:"+asymSpeed);
+        // System.out.println("Moving " + name +  " from:" + currentPos +" to:" + pos + ". Calculated PID speed:" + speed+"..asym:"+asymSpeed);
         if (maxSpeed != 0)
             speed = MathUtil.clamp(speed, -maxspeed, maxSpeed);
 
@@ -220,10 +221,10 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         long delta;
         if (range > 0) {
             if ((delta = (currentPosition - maxEncoder)) >= -10 && (speed * encoderReversed > 0)) {
-                System.out.println("Limiting + speed with delta:" + delta);
+                // System.out.println("Limiting + speed with delta:" + delta);
                 speed = delta >= 0 ? 0 : speed * (-delta / 10.0);
             } else if ((delta = (currentPosition - minEncoder)) <= 10 && (speed * encoderReversed < 0)) {
-                System.out.println("Limiting - speed with delta:" + delta);
+                // System.out.println("Limiting - speed with delta:" + delta);
                 speed = currentPosition - minEncoder <= 0 ? 0 : speed * (delta / 10.0);
             }
         }
@@ -238,7 +239,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
                 speedChange = (speedChange>0?0.02:-0.02)+speedChange / periodsToPIDspeed;
             speed = currentSpeed + speedChange;
             
-            System.out.println("Limiting max speed change for " + name + ". Acc:"+accelerating+", change:"+speedChange+"..New speed:" + speed);
+            // System.out.println("Limiting max speed change for " + name + ". Acc:"+accelerating+", change:"+speedChange+"..New speed:" + speed);
             
             if (maxSpeed != 0)
                 speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
@@ -248,7 +249,7 @@ public abstract class PositionableSubsystem extends SubsystemBase {
 
     public boolean isAtPosition(long pos, Long tolerance) {
         long delta = getPosition() - relativeToAbsolutePostition(pos);
-        System.out.println("isAtPosition delta: " + delta);
+        // System.out.println("isAtPosition delta: " + delta);
         return Math.abs(delta) <= tolerance;
     }
 

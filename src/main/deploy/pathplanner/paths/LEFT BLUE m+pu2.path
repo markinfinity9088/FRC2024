@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6825775190011933,
-        "y": 6.630585568863446
+        "x": 2.5670791427174855,
+        "y": 6.183321696172636
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.284461030460524,
-        "y": 7.035130224106603
+        "x": 3.66239424786542,
+        "y": 6.6503194544850635
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LEFT BLUE shoot1 END"
     },
     {
       "anchor": {
-        "x": 2.1922197690549243,
-        "y": 7.025263281295794
+        "x": 8.003849084621248,
+        "y": 5.762294601512281
       },
       "prevControl": {
-        "x": 1.2745940876497153,
-        "y": 6.956194681620133
+        "x": 7.137247180233416,
+        "y": 6.734294034812145
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ringposleftblue"
+      "linkedName": "LEFT BLUE m+pu2 END"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "leftblue",
   "previewStartingState": {
-    "rotation": 59.452428251092975,
+    "rotation": 19.13,
     "velocity": 0
   },
   "useDefaultConstraints": true

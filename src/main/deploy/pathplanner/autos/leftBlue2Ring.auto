@@ -5,13 +5,107 @@
       "x": 0.6825775190011933,
       "y": 6.630585568863446
     },
-    "rotation": 60.255118703057825
+    "rotation": 60.55457127007439
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LEFT BLUE move1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoAim"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "detectRing"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "moveToPickup"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LEFT BLUE pickup1"
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "detectRing"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "pickupWithSensor"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LEFT BLUE shoot1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoAim"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "handoffAndShoot"
@@ -20,30 +114,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "moveToRingLeftBlue"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "pickupWithSensor"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "pickupRingLeftBlue"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "handoffAndShoot"
+            "pathName": "LEFT BLUE m+pu2"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "2 Ring!!",
   "choreoAuto": false
 }

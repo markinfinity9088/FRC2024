@@ -48,7 +48,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger swerveTrigger() {
-        return ps4Controller1.L1();
+        return new Trigger(() -> (false)); //not used
     }
 
     @Override
@@ -194,14 +194,8 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public Trigger getHookTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
-    }
-
-    @Override
     public Trigger moveWristTrigger() {
-        return ps4Controller1.circle();
+        return new Trigger(()->(false)); //not used
     }
 
     @Override
@@ -238,7 +232,13 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger ampPresetTrigger() {
         // return presetPrimaryTrigger().and(ps4Controller2.R2());
-        return ps4Controller2.triangle();
+        return ps4Controller2.povLeft();
+    }
+
+    @Override
+    public Trigger ampScorePresetTrigger() {
+        // return presetPrimaryTrigger().and(ps4Controller2.R2());
+        return ps4Controller2.povRight();
     }
 
     @Override
@@ -248,7 +248,28 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger slowMaxSpeedTrigger() {
-        return ps4Controller1.circle();
+        //return ps4Controller1.circle();
+        return new Trigger(() -> (false)); //disabled for now
+    }
+
+    @Override
+    public Trigger executeAmpDriveAndPositionPreset() {
+        return ps4Controller1.touchpad();
+    }
+
+    @Override
+    public Trigger getTestTrigger(){
+        return ps4Controller1.povUp();
+    }
+
+    @Override
+    public Trigger getLeftHookTrigger() {
+        return ps4Controller1.povLeft();
+    }
+
+    @Override
+    public Trigger getRightHookTrigger() {
+        return ps4Controller1.povRight();
     }
 
     // @Override

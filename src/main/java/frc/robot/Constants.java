@@ -128,12 +128,24 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.04;
-    public static final double kDrivingI = 0;
-    public static final double kDrivingD = 0;
+    public static final double kDrivingPFr = 0.04;
+    public static final double kDrivingIFr = 0;
+    public static final double kDrivingDFr = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
+
+    public static final double kDrivingPFl = 0.04;
+    public static final double kDrivingIFl = 0;
+    public static final double kDrivingDFl = 0;
+
+    public static final double kDrivingPBl = 0.04;
+    public static final double kDrivingIBl = 0;
+    public static final double kDrivingDBl = 0;
+
+    public static final double kDrivingPBr = 0.04;
+    public static final double kDrivingIBr = 0;
+    public static final double kDrivingDBr = 0;
 
     public static final double kTurningP = 1; //1
     public static final double kTurningI = 0;
@@ -151,7 +163,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int elbowCanId = 13;
-    public static final int CURRENT_LIMIT_A = 30;
+    public static final int CURRENT_LIMIT_A = 42220;
     public static final double MAX_SPEED = 1.0;
     public static final double ELBOW_MAX_SPEED = 0.5;
     public static final int intakeCanId = 17;
@@ -160,6 +172,7 @@ public final class Constants {
     public static final double wristP = 0.1;
     public static final double wristI = 0;
     public static final double wristD = 0;
+    public static final int beamBreakDIO = 0;
   }
 
   public static final class ShooterConstants {
@@ -193,6 +206,7 @@ public final class Constants {
     public static final int leftClimbCanId = 10;
     public static final int rightClimbCanId = 9;
     public static final double MAX_SPEED = 0.7;
+    public static final int climbCurrentLimit = 40;
   }
 
   public static final class AutoConstants {
@@ -212,9 +226,13 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
     public static final HolonomicPathFollowerConfig holConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                                                  new PIDConstants(2.5,0.1,.08), // Translation PID constants
-                                                                  new PIDConstants(3,0.25,0.06), // Rotation PID constants
-                                                                  DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
+                                                                  // new PIDConstants(3.425,0.03,0.13), // Translation PID constant 4,.1,0 | 3.8,.01,0
+                                                                  // new PIDConstants(1,0.0,0.0), // Rotation PID constants 2.35,.01,0 | 2.35,.01,0
+                                                                  new PIDConstants(3,0.0,0.03), // Translation PID constant 4,.1,0 | 3.8,.01,0
+                                                                  new PIDConstants(3.6,0.8,0.27),// Rotation PID constants 2.35,.01,0 | 2.35,.01,0
+                                                                  // new PIDConstants(2.7,0.1,0.08), // Translation PID constant
+                                                                  // new PIDConstants(3,0.2,0.06), // Rotation PID constants
+                                                                   DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
                                                                   DriveConstants.kTrackRadius, // Drive base radius in meters. Distance from robot center to furthest module.
                                                                   new ReplanningConfig() // Default path replanning config. See the API for the options here
                                                                 );
@@ -244,6 +262,6 @@ public final class Constants {
 
   public static final class GeneralConstants {
     public static final boolean   kInVerboseMode = true; //set to false during competition
-    public static final boolean kCorrectSwerveDrift=true; //kp we will use drift correction logic if this flag is on
+    public static final boolean kCorrectSwerveDrift=false; //kp we will use drift correction logic if this flag is on
   }
 }

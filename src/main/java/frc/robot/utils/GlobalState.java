@@ -15,8 +15,18 @@ public class GlobalState {
 
     private Double maxSwerveSpeed = 1.0;
 
+    private double turn = 0;
+
     private GlobalState() {
 
+    }
+
+    public double getTurn(){
+        return turn;
+    }
+
+    public void setTurn(double turn){
+        this.turn = turn;
     }
 
     public static GlobalState getInstance() {

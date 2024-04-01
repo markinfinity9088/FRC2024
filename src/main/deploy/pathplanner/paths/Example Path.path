@@ -3,25 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 15.858878622179498,
+        "y": 6.628333484912334
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0,
-        "y": 0.0
+        "x": 15.039120063974792,
+        "y": 7.3426945142050055
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5474297102440375,
-        "y": 0.0
+        "x": 9.441340195091232,
+        "y": 7.4598028796628215
       },
       "prevControl": {
-        "x": 1.5474297102440375,
-        "y": 0.0
+        "x": 11.467314917511432,
+        "y": 7.951658014585645
+      },
+      "nextControl": {
+        "x": 7.4153654726710325,
+        "y": 6.967947744739998
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.4591285644768136,
+        "y": 5.550936522700434
+      },
+      "prevControl": {
+        "x": 3.9021145089365787,
+        "y": 6.189177114445527
+      },
+      "nextControl": {
+        "x": -2.9838573799829518,
+        "y": 4.9126959309553415
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.844614736305079,
+        "y": 1.9322880300539491
+      },
+      "prevControl": {
+        "x": 4.610620119956343,
+        "y": 2.321673345201188
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,59 +62,22 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "deadline",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "detectRing"
-              }
-            },
-            {
-              "type": "sequential",
-              "data": {
-                "commands": [
-                  {
-                    "type": "wait",
-                    "data": {
-                      "waitTime": 0.8
-                    }
-                  },
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "pickupWithSensor"
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 4.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 90.0,
     "maxAngularAcceleration": 180.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 90.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "tests",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -61.92751306414722,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -13,6 +13,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
+import frc.robot.vision.limelight.LimeLightFacade;
 
 /*
  * Purpose of this class is to create commands that complete a defined Arm routine
@@ -27,6 +28,7 @@ public class ArmRoutineCommandFactory {
     };
 
     private static ArmRoutineCommandFactory instance=null;
+    private static LimeLightFacade ll = LimeLightFacade.getInstance();
 
     private ArmRoutineCommandFactory() {}
 
@@ -40,6 +42,7 @@ public class ArmRoutineCommandFactory {
     public Command executeArmRoutine(ArmRoutine routine) {
 
         SequentialCommandGroup commandSequence = new SequentialCommandGroup();
+        ll.setLED(false);
 
         
         //Iterate over initial sequence of positions and add to sequential group of move commands

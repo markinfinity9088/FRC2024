@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2745940876497153,
-        "y": 5.545221859674489
+        "x": 0.761513061487663,
+        "y": 4.519059807350385
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2745940876497155,
-        "y": 5.545221859674489
+        "x": 1.1265899454875852,
+        "y": 2.0621910474590193
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RIGHT BLUE shoot1 END"
     },
     {
       "anchor": {
-        "x": 2.1922197690549243,
-        "y": 5.545221859674489
+        "x": 7.46116723002677,
+        "y": 2.4470018170805568
       },
       "prevControl": {
-        "x": 1.1922197690549243,
-        "y": 5.545221859674489
+        "x": 6.375803520837812,
+        "y": 0.7992223676755058
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ringposmidblue"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "midblue",
+  "folder": "rightblue",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

@@ -27,10 +27,12 @@ public class PivotSubsystem extends PositionableSubsystem {
   //speed control for delta of move positions (absolute encoders)
   private final double maxspeeddelta = 80;
   private final double lowestspeeddelta = 30;
+  private final double holdspeeddelta = 4; //around 1 degree
 
   //speeds
   private final double slowestspeed = 0.1;
   private final double mediumspeed = 0.2;
+  private final double holdspeed = 0.05;
 
   enum PivotDirection {
     UP,
@@ -39,7 +41,7 @@ public class PivotSubsystem extends PositionableSubsystem {
   };
   private static final int MotorDirectionForUP = -1;
 
-  private PivotSubsystem() {
+  public PivotSubsystem() {
     pivot = new CANSparkMax(Constants.ShooterConstants.shooterPivotCanId, MotorType.kBrushless);
     pivotEncoder = pivot.getAbsoluteEncoder();
     pivotEncoder.setPositionConversionFactor(1000);
@@ -62,6 +64,10 @@ public class PivotSubsystem extends PositionableSubsystem {
     //System.out.println("Move called with speed "+speed);
 
     restrictSpeed(speed);
+  }
+
+  public void moveNoRestrictions(double speed){
+    pivot.set(speed);
   }
 
   @Override
@@ -98,7 +104,11 @@ public class PivotSubsystem extends PositionableSubsystem {
 
   //gives degrees of current pivot absolute encoder position
   public double getPositionDegrees(){
-    return getAngleForGivenPosition(pivotEncoder.getPosition());
+    double angle = getAngleForGivenPosition(pivotEncoder.getPosition());
+    if (angle > 300){
+      return 0;
+    }
+    return angle;
   }
 
   //given an angle, gives the absolute encoder value 
@@ -153,9 +163,15 @@ public class PivotSubsystem extends PositionableSubsystem {
       return speed;
     } 
 
+    if (delta <= holdspeeddelta) {
+      return signum * holdspeed;
+    }
+
     if (delta <= lowestspeeddelta) {
       return signum * slowestspeed;
     }
+
+
 
     return signum * mediumspeed;
   }
@@ -169,7 +185,9 @@ public class PivotSubsystem extends PositionableSubsystem {
   }
  
   public void periodic(){
-    SmartDashboard.putNumber("PivotEncoder", pivotEncoder.getPosition());
-    restrictSpeed(pivot.get());
+    //SmartDashboard.putNumber("PivotEncoder", pivotEncoder.getPosition());
+    //restrictSpeed(pivot.get());
+    SmartDashboard.putNumber("Pivot angle", getPositionDegrees());
+    super.periodic();
   }
 }

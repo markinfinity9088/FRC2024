@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.9850139700279412,
+        "y": 4.09478126648561
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2384064203791745,
+        "y": 4.096948897288554
+      },
+      "isLocked": false,
+      "linkedName": "RIGHT BLUE move1 END"
+    },
+    {
+      "anchor": {
+        "x": 2.649054998537956,
+        "y": 4.087081954477746
+      },
+      "prevControl": {
+        "x": 2.6293211129163385,
+        "y": 4.0772150116669374
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RIGHT BLUE pickup1 END"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "rightblue",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

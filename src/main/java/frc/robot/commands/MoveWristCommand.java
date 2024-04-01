@@ -15,7 +15,7 @@ public class MoveWristCommand extends Command{
     
   @Override
   public void initialize() {
-    System.out.println("Position "+wrist.getName()+" command initialized");
+    // System.out.println("Position "+wrist.getName()+" command initialized");
   }
 
   @Override
@@ -36,12 +36,12 @@ public class MoveWristCommand extends Command{
     
     if (up){
         if (wrist.getPosition() >= position){
-            System.out.println("Wrist command up finished "+wrist.getPosition()+" for given position"+position);
+            // System.out.println("Wrist command up finished "+wrist.getPosition()+" for given position"+position);
             return true;
         }
     } else {
         if (wrist.getPosition() <= position){
-                      System.out.println("Wrist command down finished "+wrist.getPosition()+" for given position"+position);
+                      // System.out.println("Wrist command down finished "+wrist.getPosition()+" for given position"+position);
 
             return true;
         }

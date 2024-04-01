@@ -17,7 +17,7 @@ public class MovePivotToPosition extends Command {
   public MovePivotToPosition(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.angle = MathUtil.clamp(angle,pivot.getMinAngle(),pivot.getMaxAngle());
-    System.out.println("passed angle = "+angle+" clamped angle = "+this.angle);
+    // System.out.println("passed angle = "+angle+" clamped angle = "+this.angle);
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +28,7 @@ public class MovePivotToPosition extends Command {
   @Override
   public void execute() {
     double encoderpos = pivot.getEncoderWithAngle(angle);
-    System.out.println("Move to postion called "+this.angle);
+    // System.out.println("Move to postion called "+this.angle);
     pivot.moveToPosition((long)encoderpos);
   }
 
@@ -41,6 +41,6 @@ public class MovePivotToPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(pivot.getPositionDegrees()-angle) <= 2);
+    return (Math.abs(pivot.getPositionDegrees()-angle) <= 1);
   }
 }

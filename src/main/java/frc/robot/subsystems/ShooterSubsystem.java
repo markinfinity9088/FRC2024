@@ -44,19 +44,20 @@ public class ShooterSubsystem extends SubsystemBase {
     } 
     
     public void startShooterWheels(double targetVelocity) {
-        System.out.println("Shooter in progress");
+        // System.out.println("Shooter in progress");
         leftShooter.set(-targetVelocity); // makes the shooter1 motor rotate at given speed
-        rightShooter.set(targetVelocity); // makes the shooter1 motor rotate at given speed
+        rightShooter.set(targetVelocity*.99); // makes the shooter1 motor rotate at given speed
     }
 
     public void stopShooterWheels() {
-        System.out.println("Stopping...");
+        // System.out.println("Stopping...");
         leftShooter.set(0); 
         rightShooter.set(0); 
     }
 
     public void periodic(){
         SmartDashboard.putNumber("shooter velo", getShooterVelocity());
+        super.periodic();
     }
 
     public double getShooterVelocity() {

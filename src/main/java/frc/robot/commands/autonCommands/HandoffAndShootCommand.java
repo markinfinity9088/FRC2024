@@ -111,7 +111,7 @@ public class HandoffAndShootCommand extends Command {
     private void switchState(HandoffAndShootState newState) {
         currentState = newState;
         startTimeOfCurrentState = System.currentTimeMillis();
-        System.out.println("Current shoot state = "+ currentState);
+        // System.out.println("Current shoot state = "+ currentState);
     }
 
     private void startShootingAction() {

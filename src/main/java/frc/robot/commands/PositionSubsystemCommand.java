@@ -34,7 +34,7 @@ public class PositionSubsystemCommand extends Command {
 
   @Override
   public void initialize() {
-    System.out.println("Position "+subsystem.getName()+" command initialized");
+    // System.out.println("Position "+subsystem.getName()+" command initialized");
   }
 
   @Override

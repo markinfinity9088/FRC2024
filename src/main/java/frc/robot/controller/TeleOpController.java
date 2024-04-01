@@ -14,7 +14,6 @@ public interface TeleOpController {
 
     Trigger getHookUpTrigger();
     Trigger getHookDownTrigger();
-    Trigger getHookTrigger();
     Trigger getElbowTrigger();
     Trigger getWristTrigger();
     Trigger getElevatorTrigger();
@@ -54,10 +53,18 @@ public interface TeleOpController {
     Trigger stowPresetTrigger();
     Trigger handoffPresetTrigger();
     Trigger ampPresetTrigger();
+    Trigger ampScorePresetTrigger();
+    Trigger getTestTrigger();
 
    Trigger getResetTrigger();
 
 
     //speed toggle
     Trigger slowMaxSpeedTrigger();
+
+    //Independent Hook triggers
+    Trigger getLeftHookTrigger();
+    Trigger getRightHookTrigger();
+
+    public Trigger executeAmpDriveAndPositionPreset() ; //drive to amp and position arm
 }

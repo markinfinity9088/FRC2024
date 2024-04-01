@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6529766905687672,
-      "y": 4.4499912076747234
+      "x": 0.761513061487663,
+      "y": 4.519059807350385
     },
-    "rotation": -55.09750438407526
+    "rotation": -59.481769321124766
   },
   "command": {
     "type": "sequential",
@@ -18,21 +18,72 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "moveToRingRightBlue"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT BLUE move1"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "pickupWithSensor"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT BLUE pickup1"
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "pickupWithSensor"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "detectRing"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "moveToPickup"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "pickupRingRightBlue"
+            "pathName": "RIGHT BLUE shoot1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
@@ -40,10 +91,22 @@
           "data": {
             "name": "handoffAndShoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RIGHT BLUE m+pu4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pickupWithSensor"
+          }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "2 Ring!!",
   "choreoAuto": false
 }
