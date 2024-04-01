@@ -5,21 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class TurnDegreesCommand extends Command {
+public class MoveCommand extends Command {
   private ProfiledPIDController thetaController;
+  private ProfiledPIDController xController;
+  private ProfiledPIDController yController;
+
+  private double kPXControllerCone = 1.1;
+  private double kPYControllerCone = 1.1;
+
+  private double kPThetaController = 2.2;
+
+  private double xControllerGoalCone = 0.42;
+
   private SwerveDriveSubsystem s_drive = SwerveDriveSubsystem.getInstance();
   private double startHeading;
-  /** Creates a new turnDegrees. */
-  public TurnDegreesCommand(double degrees) {
+
+  /** Creates a new MoveCommand. */
+  public MoveCommand(double degrees, Pose2d pose) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_drive);
-    thetaController = new ProfiledPIDController(2.2,0,0,new Constraints(5,10));
+
+    xController = new ProfiledPIDController(kPXControllerCone, 0, 0, new Constraints(3, 3));
+    yController = new ProfiledPIDController(kPYControllerCone, 0, 0, new Constraints(3, 3));
+    thetaController = new ProfiledPIDController(kPThetaController, 0, 0, new Constraints(5, 10));
+    
     thetaController.setGoal(Units.degreesToRadians(degrees));
     thetaController.setTolerance(Units.degreesToRadians(1),0.01);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
@@ -29,7 +44,6 @@ public class TurnDegreesCommand extends Command {
   @Override
   public void initialize() {
     this.startHeading = s_drive.getHeadingRadians();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.

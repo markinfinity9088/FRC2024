@@ -45,7 +45,7 @@ public class SpeakerAlignAndShoot extends SequentialCommandGroup {
     shooting.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}).withTimeout(1));
     shooting.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().releaseToShooter();}).withTimeout(0.5));
     addCommands(shooting.withTimeout(1));
-    addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
+    addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}));
     addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));
   }
 

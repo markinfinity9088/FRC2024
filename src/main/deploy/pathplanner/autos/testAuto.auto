@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.5645260933888472,
-      "y": 3.9582627524741496
+      "x": 1.9112722961537205,
+      "y": 6.991369417831561
     },
     "rotation": 0.0
   },
@@ -14,19 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "testForward"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "New Path"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Copy of testForward"
+            "pathName": "straightLineTest"
           }
         }
       ]

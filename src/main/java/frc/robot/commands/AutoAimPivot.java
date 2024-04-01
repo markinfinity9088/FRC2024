@@ -64,14 +64,6 @@ public class AutoAimPivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-<<<<<<< HEAD
     return ((Math.abs(pivot.getPositionDegrees()-angle) <= 1) || (!limelight.isTargetVisible()));
-=======
-    if (m_holdAtEnd) {
-      return false;
-    }
-    
-    return (Math.abs(pivot.getPositionDegrees()-angle) <= 2);
->>>>>>> 99c5128700eb3e29e54b2d60dfb4b9a2ca578b1d
   }
 }

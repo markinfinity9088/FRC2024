@@ -229,7 +229,7 @@ public final class Constants {
                                                                   // new PIDConstants(3.425,0.03,0.13), // Translation PID constant 4,.1,0 | 3.8,.01,0
                                                                   // new PIDConstants(1,0.0,0.0), // Rotation PID constants 2.35,.01,0 | 2.35,.01,0
                                                                   new PIDConstants(3,0.0,0.03), // Translation PID constant 4,.1,0 | 3.8,.01,0
-                                                                  new PIDConstants(3.6,0.8,0.27),// Rotation PID constants 2.35,.01,0 | 2.35,.01,0
+                                                                  new PIDConstants(3.6,0,0.27),// Rotation PID constants 2.35,.01,0 | 2.35,.01,0
                                                                   // new PIDConstants(2.7,0.1,0.08), // Translation PID constant
                                                                   // new PIDConstants(3,0.2,0.06), // Rotation PID constants
                                                                    DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
