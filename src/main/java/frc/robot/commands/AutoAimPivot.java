@@ -20,9 +20,13 @@ public class AutoAimPivot extends Command {
   private int maxAngle = (int) pivot.getMaxAngle();
   private int minAngle = (int) pivot.getMinAngle();
 
+  private boolean m_holdAtEnd;
+
   /** Creates a new AutoAimPivot. */
-  public AutoAimPivot() {
+  public AutoAimPivot(boolean holdAtEnd) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(pivot);
+    m_holdAtEnd = holdAtEnd;
   }
 
   // Called when the command is initially scheduled.
@@ -60,6 +64,14 @@ public class AutoAimPivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+<<<<<<< HEAD
     return ((Math.abs(pivot.getPositionDegrees()-angle) <= 1) || (!limelight.isTargetVisible()));
+=======
+    if (m_holdAtEnd) {
+      return false;
+    }
+    
+    return (Math.abs(pivot.getPositionDegrees()-angle) <= 2);
+>>>>>>> 99c5128700eb3e29e54b2d60dfb4b9a2ca578b1d
   }
 }
