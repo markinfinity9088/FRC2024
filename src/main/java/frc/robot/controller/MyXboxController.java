@@ -46,12 +46,6 @@ public class MyXboxController implements TeleOpController{
 
 
     @Override
-    public double getIntakeSpeed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIntakeSpeed'");
-    }
-
-    @Override
     public double getElbowSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getElbowSpeed'");
@@ -59,14 +53,9 @@ public class MyXboxController implements TeleOpController{
 
     @Override
     public Trigger getResetTrigger() {
-        throw new UnsupportedOperationException("Unimplemented method 'getIntakeSpeed'");
+        throw new UnsupportedOperationException("Unimplemented method 'getResetTrigger'");
     }
 
-    @Override
-    public double getPivotSpeed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPivotspeed'");
-    }
 
     @Override
     public double getElevatorSpeed() {
@@ -74,11 +63,6 @@ public class MyXboxController implements TeleOpController{
         throw new UnsupportedOperationException("Unimplemented method 'getElevatorSpeed'");
     }
 
-    @Override
-    public double getHookSpeed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHookRaiseSpeed'");
-    }
 
     @Override
     public double getRotation() {
@@ -127,10 +111,6 @@ public class MyXboxController implements TeleOpController{
         throw new UnsupportedOperationException("Unimplemented method 'getWristSpeed'");
     } 
 
-    @Override
-    public Trigger swerveTrigger() {
-           throw new UnsupportedOperationException("Unimplemented method 'getWristSpeed'");
-    }
 
     @Override
     public Trigger moveTrigger() {
@@ -172,16 +152,11 @@ public class MyXboxController implements TeleOpController{
         throw new UnsupportedOperationException("Unimplemented method 'getHookDownSpeed'");
     }
 
-    @Override
-    public Trigger moveWristTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveWristTrigger'");
-    }
 
     @Override
     public Trigger cancelAllCommandsTrigger() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveWristTrigger'");
+        throw new UnsupportedOperationException("Unimplemented method 'cancelAllCommandsTrigger'");
     }
 
     @Override
@@ -208,11 +183,6 @@ public class MyXboxController implements TeleOpController{
         throw new UnsupportedOperationException("Unimplemented method 'ampPresetTrigger'");
     }
 
-    @Override
-    public Trigger presetPrimaryTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'presetPrimaryTrigger'");
-    }
 
     @Override
     public Trigger resetLastKnownPresetNameTrigger() {

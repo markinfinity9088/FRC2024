@@ -213,7 +213,6 @@ public class CommandBot {
         // teleOpController.getWristTrigger().whileFalse(new HoldSubsystemInPositionCommand(wrist));
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));
         teleOpController.getWristTrigger().onFalse(Commands.runOnce(() -> {wrist.stop();}));
-        // teleOpController.moveWristTrigger().whileTrue(new PositionSubsystemCommand(80, wrist));
       }
       else {
         teleOpController.getWristTrigger().whileTrue(wrist.moveCommand(() -> teleOpController.getWristSpeed()));

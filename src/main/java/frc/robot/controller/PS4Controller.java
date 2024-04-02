@@ -27,7 +27,7 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger releaseToAMPTrigger() {
         //activate this only when preset trigger is not pressed and R1 is pressed
-        return presetPrimaryTrigger().negate().and(ps4Controller2.R1()) ;
+        return ps4Controller2.R1() ;
     }
     
     @Override
@@ -38,7 +38,7 @@ public class PS4Controller implements TeleOpController {
     @Override
     public Trigger intakeTrigger() {
         //L1 is pressed and the preset trigger is not pressed
-        return presetPrimaryTrigger().negate().and( ps4Controller2.L1());
+        return  ps4Controller2.L1();
     }
 
     @Override
@@ -46,10 +46,6 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller1.L1();
     }
 
-    @Override
-    public Trigger swerveTrigger() {
-        return new Trigger(() -> (false)); //not used
-    }
 
     @Override
     public double getXSpeedSwerve() {
@@ -102,16 +98,6 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller1.R2();
     }
 
-    @Override
-    public double getIntakeSpeed() {
-        // int intakeSpeed = 1;
-        // if (ps4Controller2.L1().whil){
-        //     return intakeSpeed;
-        // } else if (ps4Controller2.R1()){
-        //     return -intakeSpeed;
-        // }
-        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
-    }
 
     @Override
     public double getWristSpeed() {
@@ -124,18 +110,8 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public double getPivotSpeed() {
-        return MathUtil.applyDeadband(-ps4Controller2.getLeftY(), OIConstants.kDriveDeadband);
-    }
-
-    @Override
     public double getElevatorSpeed() {
         return MathUtil.applyDeadband(ps4Controller2.getR2Axis() - ps4Controller2.getL2Axis(), OIConstants.kDriveDeadband);
-    }
-
-    @Override
-    public double getHookSpeed() {
-        return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
     private double getLeftY(CommandPS4Controller controller) {
@@ -193,11 +169,7 @@ public class PS4Controller implements TeleOpController {
         throw new UnsupportedOperationException("Unimplemented method 'getHookTrigger'");
     }
 
-    @Override
-    public Trigger moveWristTrigger() {
-        return new Trigger(()->(false)); //not used
-    }
-
+   
     @Override
     public Trigger cancelAllCommandsTrigger() {
         return ps4Controller2.touchpad();
@@ -206,10 +178,11 @@ public class PS4Controller implements TeleOpController {
 
 
     ///Presets
-     @Override
+   /*  @Override
     public Trigger presetPrimaryTrigger() {
          return ps4Controller2.cross();
     }
+    */
 
     @Override
     public Trigger pickupPresetTrigger() {

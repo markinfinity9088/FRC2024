@@ -9,8 +9,6 @@ public interface TeleOpController {
     Trigger releaseToAMPTrigger(); // Release ring to AMP
     Trigger getShootTrigger(); // Shoot the ring out
 
-    Trigger swerveTrigger();
-
 
     Trigger getHookUpTrigger();
     Trigger getHookDownTrigger();
@@ -22,12 +20,9 @@ public interface TeleOpController {
     Trigger getPivotPresetTrigger();
 
     // Bindings for Axis value
-    double getIntakeSpeed();
     double getWristSpeed();
     double getElbowSpeed();
-    double getPivotSpeed();
     double getElevatorSpeed();
-    double getHookSpeed();
     double getHookUpSpeed();
     double getHookDownSpeed();
 
@@ -40,15 +35,14 @@ public interface TeleOpController {
     double getYSpeedSwerve();
     double getRotation();
 
-    //Preset Bindings
-    Trigger moveWristTrigger();
+    
 
     //Cancel all commands trigger
     Trigger cancelAllCommandsTrigger();
 
     //Preset Triggers
     Trigger resetLastKnownPresetNameTrigger();
-    Trigger presetPrimaryTrigger(); // This button can be used as master trigger for preset while other buttons are to choose trigger
+    //Trigger presetPrimaryTrigger(); // This button can be used as master trigger for preset while other buttons are to choose trigger
     Trigger pickupPresetTrigger();
     Trigger stowPresetTrigger();
     Trigger handoffPresetTrigger();

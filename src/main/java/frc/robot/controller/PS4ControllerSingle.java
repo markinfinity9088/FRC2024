@@ -46,10 +46,6 @@ public class PS4ControllerSingle implements TeleOpController {
         return ps4Controller1.L1();
     }    
 
-    @Override
-    public Trigger swerveTrigger() {
-        return ps4Controller1.L1();
-    }
 
     @Override
     public double getXSpeedSwerve() {
@@ -72,16 +68,6 @@ public class PS4ControllerSingle implements TeleOpController {
     }
 
 
-    @Override
-    public double getIntakeSpeed() {
-        // int intakeSpeed = 1;
-        // if (ps4Controller1.L1().whil){
-        //     return intakeSpeed;
-        // } else if (ps4Controller1.R1()){
-        //     return -intakeSpeed;
-        // }
-        return MathUtil.applyDeadband(ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
-    }
 
     @Override
     public double getWristSpeed() {
@@ -93,20 +79,12 @@ public class PS4ControllerSingle implements TeleOpController {
         return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
-    @Override
-    public double getPivotSpeed() {
-        return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
-    }
 
     @Override
     public double getElevatorSpeed() {
         return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
     }
 
-    @Override
-    public double getHookSpeed() {
-        return MathUtil.applyDeadband(-ps4Controller1.getLeftY(), OIConstants.kDriveDeadband);
-    }
 
     @Override
     public Trigger getElbowTrigger() {
@@ -172,10 +150,6 @@ public class PS4ControllerSingle implements TeleOpController {
         throw new UnsupportedOperationException("Unimplemented method 'getHookDownSpeed'");
     }
 
-    @Override
-    public Trigger moveWristTrigger() {
-        return ps4Controller1.circle();
-    }
 
     @Override
     public Trigger cancelAllCommandsTrigger() {
@@ -207,11 +181,6 @@ public class PS4ControllerSingle implements TeleOpController {
         throw new UnsupportedOperationException("Unimplemented method 'ampPresetTrigger'");
     }
 
-    @Override
-    public Trigger presetPrimaryTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'presetPrimaryTrigger'");
-    }
 
     @Override
     public Trigger resetLastKnownPresetNameTrigger() {
