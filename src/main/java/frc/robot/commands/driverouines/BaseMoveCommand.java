@@ -71,7 +71,7 @@ public class BaseMoveCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        sdrive.drive(0, 0, 0, false, false);
+        sdrive.drive(0, 0, 0, true, false);
     }
 
     // Returns true when the command should end.

@@ -189,12 +189,6 @@ public class PS4ControllerSingle implements TeleOpController {
     }
 
     @Override
-    public Trigger slowMaxSpeedTrigger() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'slowMaxSpeedTrigger'");
-    }
-
-    @Override
     public Trigger getPivotPresetTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPivotPresetTrigger'");
@@ -228,5 +222,59 @@ public class PS4ControllerSingle implements TeleOpController {
     public Trigger ampScorePresetTrigger() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'ampScorePresetTrigger'");
+    }
+
+    @Override
+    public Trigger additionalDrive1Trigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'additionalDrive1Trigger'");
+    }
+
+    @Override
+    public Trigger additionalDrive2Trigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'additionalDrive2Trigger'");
+    }
+
+    @Override
+    public Trigger slowDownSwerveTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'slowDownSwerveTrigger'");
+    }
+
+    @Override
+    public Trigger speedUpSwerveTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'speedUpSwerveTrigger'");
+    }
+
+    @Override
+    public Trigger driveFrontSomeDistanceTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'driveFrontSomeDistanceTrigger'");
+    }
+
+    @Override
+    public Trigger driveBackSomeDistanceTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'driveBackSomeDistanceTrigger'");
+    }
+
+    @Override
+    public Trigger driveLeftSomeDistanceTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'driveLeftSomeDistanceTrigger'");
+    }
+
+    @Override
+    public Trigger driveRightSomeDistancTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'driveRightSomeDistancTrigger'");
+    }
+
+    @Override
+    public Trigger rotate360DriveForwardTrigger() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'rotate360Trigger'");
     }
 }

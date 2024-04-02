@@ -53,12 +53,24 @@ public interface TeleOpController {
    Trigger getResetTrigger();
 
 
-    //speed toggle
-    Trigger slowMaxSpeedTrigger();
-
     //Independent Hook triggers
     Trigger getLeftHookTrigger();
     Trigger getRightHookTrigger();
 
     public Trigger executeAmpDriveAndPositionPreset() ; //drive to amp and position arm
+
+
+    //Extra drive routine features helpful in case of radio lags to do some delta controls instead of joystic based swerve
+    Trigger additionalDrive1Trigger();
+    Trigger additionalDrive2Trigger();
+
+    Trigger slowDownSwerveTrigger();
+    Trigger speedUpSwerveTrigger();
+
+    Trigger driveFrontSomeDistanceTrigger();
+    Trigger driveBackSomeDistanceTrigger();
+    Trigger driveLeftSomeDistanceTrigger();
+    Trigger driveRightSomeDistancTrigger();
+    Trigger rotate360DriveForwardTrigger();
+
 }

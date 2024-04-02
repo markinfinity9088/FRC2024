@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AlignToTarget;
 import frc.robot.commands.AutoAimPivot;
@@ -25,6 +26,7 @@ import frc.robot.commands.arm_routines.logic.ArmRoutineCommandFactory;
 import frc.robot.commands.autonCommands.AutonCommandFactory;
 import frc.robot.commands.autonCommands.HandoffAndShootCommand;
 import frc.robot.commands.autonCommands.SpeakerAlignAndShoot;
+import frc.robot.commands.driverouines.BaseMoveCommand;
 import frc.robot.commands.intake_commands.DetectRing;
 import frc.robot.commands.intake_commands.IntakeRingCommand;
 import frc.robot.commands.intake_commands.SpitOutRingShootSensor;
@@ -157,7 +159,8 @@ public class CommandBot {
           // System.out.println("Gyro reset button pressed value = "+GyroSubsystem.getInstance().getYaw());
           SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
         }));
-        
+
+        setAdditionalDriveBindings(dualController, teleOpController);   
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
@@ -271,19 +274,6 @@ public class CommandBot {
     teleOpController.ampPresetTrigger().onTrue(amp1CommandGroup); //dpad left
     teleOpController.ampScorePresetTrigger().onTrue(amp2CommandGroup); //dpad right
 
-    // teleOpController.getPivotTriggerDown().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotDropTilt));
-    // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.PivotShootTilt));
-    
-
-    //speed control toggle between 1.0 or 0.4, see GlobalState for speedsb
-    /* 
-    teleOpController.slowMaxSpeedTrigger().onTrue(Commands.runOnce(() -> {
-          GlobalState.getInstance().toggleMaxSpeed();
-          Double maxspeed = GlobalState.getInstance().getMaxSpeed();
-          System.out.println("Max speed set to "+maxspeed);
-          SwerveDriveSubsystem.getInstance().setMaxSpeeds(maxspeed, maxspeed);
-      }));
-    */
     
   }
 
@@ -320,6 +310,25 @@ public class CommandBot {
       }
     }
   }
+
+  //Additional drive routines in driver control, helpful for extreme cases like radio lag .
+   private void setAdditionalDriveBindings(boolean dualController, TeleOpController teleOpController) {
+      SwerveDriveSubsystem sdrive = SwerveDriveSubsystem.getInstance();
+      if (dualController) {
+        double maxTranslationSpeed = 3.0; //meters/sec
+        double maxRotationalSpeed = 2.0;
+        double translationTolerance = 0.4;
+        double rotationToleranceDegrees = 1.0;
+
+        teleOpController.slowDownSwerveTrigger().onTrue(Commands.runOnce(()-> {sdrive.setMaxSpeeds(GeneralConstants.kSlowSwerveSpeed, GeneralConstants.kSlowSwerveSpeed);}));
+        teleOpController.speedUpSwerveTrigger().onTrue(Commands.runOnce(()-> {sdrive.setMaxSpeeds(GeneralConstants.kFullSwerveSpeed, GeneralConstants.kFullSwerveSpeed);}));
+        teleOpController.rotate360DriveForwardTrigger().onTrue(new BaseMoveCommand(0.3, 0, 360, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
+        teleOpController.driveFrontSomeDistanceTrigger().onTrue(new BaseMoveCommand(1, 0, 0, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
+        teleOpController.driveBackSomeDistanceTrigger().onTrue(new BaseMoveCommand(-1, 0, 0, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
+        teleOpController.driveLeftSomeDistanceTrigger().onTrue(new BaseMoveCommand(0, 1, 0, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
+        teleOpController.driveRightSomeDistancTrigger().onTrue(new BaseMoveCommand(0, -1, 0, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
+      }
+   }
 
   /**
    * Use this to define the command that runs during autonomous.A

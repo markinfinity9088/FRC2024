@@ -69,12 +69,12 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getResetTrigger() {
-        return ps4Controller1.square();
+        return additionalDriveTriggerPressedTrigger().negate().and( ps4Controller1.square() );
     }
 
     @Override
     public Trigger getPivotPresetTrigger() {
-        return ps4Controller1.circle();
+        return  additionalDriveTriggerPressedTrigger().negate().and(ps4Controller1.circle());
     }
 
     @Override
@@ -144,12 +144,14 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getPivotTriggerUp() {
-        return ps4Controller1.triangle().or(ps4Controller2.povUp());
+        Trigger ps1trigger = additionalDriveTriggerPressedTrigger().negate().and(ps4Controller1.triangle());
+        return ps1trigger.or(ps4Controller2.povUp());
     }
 
     @Override
     public Trigger getPivotTriggerDown() {
-        return ps4Controller1.cross().or(ps4Controller2.povDown());
+        Trigger ps1Trigger = additionalDriveTriggerPressedTrigger().negate().and(ps4Controller1.cross());
+        return ps1Trigger.or(ps4Controller2.povDown());
     }
 
     @Override
@@ -172,7 +174,8 @@ public class PS4Controller implements TeleOpController {
    
     @Override
     public Trigger cancelAllCommandsTrigger() {
-        return ps4Controller2.touchpad();
+        Trigger ps1Trigger = additionalDriveTriggerPressedTrigger().negate().and(ps4Controller1.touchpad());
+        return ps1Trigger.or(ps4Controller2.touchpad());
         
     }
 
@@ -220,19 +223,13 @@ public class PS4Controller implements TeleOpController {
     }
 
     @Override
-    public Trigger slowMaxSpeedTrigger() {
-        //return ps4Controller1.circle();
-        return new Trigger(() -> (false)); //disabled for now
-    }
-
-    @Override
     public Trigger executeAmpDriveAndPositionPreset() {
-        return ps4Controller1.touchpad();
+        return additionalDriveTriggerPressedTrigger().negate().and(ps4Controller1.touchpad());
     }
 
     @Override
     public Trigger getTestTrigger(){
-        return ps4Controller1.povUp();
+        return new Trigger(() -> (false)); //disabled for now
     }
 
     @Override
@@ -245,17 +242,58 @@ public class PS4Controller implements TeleOpController {
         return ps4Controller1.povRight();
     }
 
-    // @Override
-    // public Trigger pivotPresetUpTrigger(){
-    //     return ps4Controller1.povUp();
-    // }
+    //Additional drive commands helpful in extreme situations like radio lags
+    @Override
+    public Trigger additionalDrive1Trigger() {
+        return ps4Controller1.povUp();
+    }
 
-    // public Trigger pivotPresetDownTrigger(){
-    //     return ps4Controller1.povUp();
-    // }
+    @Override
+    public Trigger additionalDrive2Trigger() {
+        return ps4Controller1.povDown();
+    }
 
+    @Override
+    public Trigger slowDownSwerveTrigger() {
+        return additionalDrive2Trigger().and(ps4Controller1.circle());
+    }
 
-    //
+    @Override
+    public Trigger speedUpSwerveTrigger() {
+        return additionalDrive2Trigger().and(ps4Controller1.square());
+    }
+
+    @Override
+    public Trigger rotate360DriveForwardTrigger() {
+        return additionalDrive2Trigger().and(ps4Controller1.square());
+    }
+
+    @Override
+    public Trigger driveFrontSomeDistanceTrigger() {
+        return additionalDrive1Trigger().and(ps4Controller1.triangle());
+    }
+
+    @Override
+    public Trigger driveBackSomeDistanceTrigger() {
+        return additionalDrive1Trigger().and(ps4Controller1.cross());
+    }
+
+    @Override
+    public Trigger driveLeftSomeDistanceTrigger() {
+        return additionalDrive1Trigger().and(ps4Controller1.square());
+    }
+
+    @Override
+    public Trigger driveRightSomeDistancTrigger() {
+        return additionalDrive1Trigger().and(ps4Controller1.circle());
+    }
+
+    
+
+   private Trigger additionalDriveTriggerPressedTrigger() {
+        Trigger additionalDriveButtonTriggers = additionalDrive1Trigger().or(additionalDrive2Trigger());
+        return additionalDriveButtonTriggers;
+   }
     
    
 

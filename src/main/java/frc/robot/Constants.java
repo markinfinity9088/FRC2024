@@ -268,5 +268,9 @@ public final class Constants {
     public static boolean kUseDashboardValues = false;
     public static boolean kSwerveVerbose = false;
     public static boolean kVisionVerbose = false;
+
+    public static double kSlowSwerveSpeed = 0.3;
+    public static double kMediumSwerveSpeed = 0.5;
+    public static double kFullSwerveSpeed = 1.0;
   }
 }
