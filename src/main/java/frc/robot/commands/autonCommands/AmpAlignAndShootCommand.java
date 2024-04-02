@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.commands.SwerveSampleMoveCommand;
 import frc.robot.commands.TurnDegreesCommand;
 import frc.robot.commands.arm_routines.ArmPresets;
@@ -72,7 +73,7 @@ public class AmpAlignAndShootCommand extends Command {
     }
 
      void loginfo(double deltaX, double deltaY, double distance) {
-        if (m_debug) {
+        if (GeneralConstants.kInVerboseMode) {
             SmartDashboard.putNumber("DeltaXToAmp", deltaX);
             SmartDashboard.putNumber("DeltaYToAmo", deltaY);
             SmartDashboard.putNumber("DeltaDistance", distance);

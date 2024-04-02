@@ -46,7 +46,7 @@ public class ArmPresets {
     //// creations of routines 
 
     private static  ArmRoutine createHandoffPreset() {
-        System.out.println("Handoff preset created "+WRIST_HANDOFF_POSITION);
+        //System.out.println("Handoff preset created "+WRIST_HANDOFF_POSITION);
         ArmPositioningInfo initialSequentialPositions[] = new ArmPositioningInfo[] {
            // new ArmPositioningInfo(null, null, null)
         };

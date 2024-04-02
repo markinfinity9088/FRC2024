@@ -71,10 +71,13 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     private void updateRange() {
-        long r = (long) SmartDashboard.getNumber(RANGE_KEY, range);
-        if (r!=range) range = r;
-        long m = (long) SmartDashboard.getNumber(MINEN_KEY, minEncoder);
-        if (m!=minEncoder) setMinPoint(m);
+        if (GeneralConstants.kUseDashboardValues) {
+            long r = (long) SmartDashboard.getNumber(RANGE_KEY, range);
+            if (r!=range) range = r;
+            long m = (long) SmartDashboard.getNumber(MINEN_KEY, minEncoder);
+            if (m!=minEncoder) setMinPoint(m);
+        }
+        
     }
 
     public void reset() {
@@ -100,11 +103,13 @@ public abstract class PositionableSubsystem extends SubsystemBase {
     }
 
     public void updatePIDValues() {
-        double kPVal = SmartDashboard.getNumber(PIDKP_KEY, 0);
-        double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
-        double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
-        if (kPVal != currentKP || kIVal != currentKI || kDVal != currentKD) {
-            setPIDValues(kPVal, kIVal, kDVal);
+        if (GeneralConstants.kUseDashboardValues) {
+            double kPVal = SmartDashboard.getNumber(PIDKP_KEY, 0);
+            double kIVal = SmartDashboard.getNumber(PIDKI_KEY, 0);
+            double kDVal = SmartDashboard.getNumber(PIDKD_KEY, 0);
+            if (kPVal != currentKP || kIVal != currentKI || kDVal != currentKD) {
+                setPIDValues(kPVal, kIVal, kDVal);
+            }
         }
     }
 
@@ -120,8 +125,9 @@ public abstract class PositionableSubsystem extends SubsystemBase {
         if (GeneralConstants.kInVerboseMode)
         {
             // System.out.println(ABS_KEY+":"+aEncoder.getPosition() * encoderFactor);
-            if (hasAbsEncoder)
+            if (hasAbsEncoder) {
                 SmartDashboard.putNumber(ABS_KEY, getAbsPostion());
+            }
             SmartDashboard.putNumber(REL_KEY, getRelPostion());
             SmartDashboard.putNumber(SPEED_KEY, currentSpeed);
             logInfo();

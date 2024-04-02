@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.vision.limelight.LimeLightFacade;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
@@ -101,22 +102,17 @@ public class IntakeSubSystem extends SubsystemBase {
 
 
     boolean ringDetected = !beamBreak.get();
-    SmartDashboard.putBoolean("ringDetected", ringDetected);
-    // limelight.setLED(ringDetected);
-
-    //Color color = intakeColorSensor.getColor();
-
-   // String colorstr = ""+color.red+":"+color.green+":"+color.blue;
-    // SmartDashboard.putString("IntakeColors", colorstr);
-
-    // SmartDashboard.putBoolean("RingColorMatched", isMatchingColor());
-    // SmartDashboard.putBoolean("RingDistanceMatched", isMatchingDistance());
+    if (GeneralConstants.kIntakeVerbose) {
+      SmartDashboard.putBoolean("ringDetected", ringDetected);
+    }
+    
   }
 
 public boolean isRingDetected() {
   boolean ringDetected = !beamBreak.get();
-  SmartDashboard.putBoolean("ringDetected", ringDetected);
-  // limelight.setLED(ringDetected);
+  if (GeneralConstants.kIntakeVerbose) {
+    SmartDashboard.putBoolean("ringDetected", ringDetected);
+  }
   return ringDetected;
 
 }

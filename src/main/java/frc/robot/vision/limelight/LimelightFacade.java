@@ -6,6 +6,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants.GeneralConstants;
 
 public class LimeLightFacade {
 
@@ -101,18 +102,20 @@ public class LimeLightFacade {
 	}
 
 	public void updateDashboard() {
-		double distance = -9999;
-		if (isTargetVisible()) {
-			distance = getDistanceToGoalMeters();
-		}
-		Pose3d r_Pose3d = getRSpace3d();
-		SmartDashboard.putNumber("ll distance to goal", distance);
-		SmartDashboard.putNumber("tz", r_Pose3d.getZ());
+		if (GeneralConstants.kVisionVerbose) {
+			double distance = -9999;
+			if (isTargetVisible()) {
+				distance = getDistanceToGoalMeters();
+			}
+			Pose3d r_Pose3d = getRSpace3d();
+			SmartDashboard.putNumber("ll distance to goal", distance);
+			SmartDashboard.putNumber("tz", r_Pose3d.getZ());
 
-		Pose2d botpose = getBotPose2d();
-		SmartDashboard.putBoolean("CameraTargetIsDetected", isTargetVisible());
-		SmartDashboard.putNumber("CameraBasedPoseX", botpose.getX());
-		SmartDashboard.putNumber("CameraBasedPoseY", botpose.getY());
-		SmartDashboard.putNumber("CameraBaseBotHeading", botpose.getRotation().getDegrees());
+			Pose2d botpose = getBotPose2d();
+			SmartDashboard.putBoolean("CameraTargetIsDetected", isTargetVisible());
+			SmartDashboard.putNumber("CameraBasedPoseX", botpose.getX());
+			SmartDashboard.putNumber("CameraBasedPoseY", botpose.getY());
+			SmartDashboard.putNumber("CameraBaseBotHeading", botpose.getRotation().getDegrees());
+		}
 	}
 }

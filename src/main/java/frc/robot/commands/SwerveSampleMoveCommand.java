@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.GeneralConstants;
+
 import java.util.function.Supplier;
 
 import javax.swing.text.Utilities;
@@ -53,7 +55,6 @@ private boolean finished;
 
   private boolean m_driveOnly = false;
 
-  private boolean m_debug = true;
 
     // tSetpoint is in radians and posive for counter clockwise
     //call this constructor for rotate only
@@ -157,7 +158,7 @@ private boolean finished;
     double currentPoseY = swerveSubsystem.getPose().getY();
     double currentPoseX = swerveSubsystem.getPose().getX();
 
-    if (m_debug) {
+    if (GeneralConstants.kInVerboseMode) {
       SmartDashboard.putNumber("YDIFF",Math.abs(currentPoseY-ySetpoint));
       SmartDashboard.putNumber("XDIFF",Math.abs(currentPoseX-xSetpoint));
 
@@ -187,7 +188,7 @@ private boolean finished;
     }
     double deltaAngle = getAngleDifference();
 
-    if (m_debug) {
+    if (GeneralConstants.kInVerboseMode) {
       SmartDashboard.putNumber("TSetpoint", Units.radiansToDegrees(tSetpoint));
       SmartDashboard.putNumber("AngleDiff", deltaAngle);
     }
@@ -208,13 +209,13 @@ private boolean finished;
 
       turningSpeed = thetaController.calculate(Units.degreesToRadians(swerveSubsystem.getHeading()), tSetpoint);
 
-      System.out.println("Swervemove heading="+Units.degreesToRadians(swerveSubsystem.getHeading())+" tsetpoint="+tSetpoint+" turningspeed="+turningSpeed);
+      //System.out.println("Swervemove heading="+Units.degreesToRadians(swerveSubsystem.getHeading())+" tsetpoint="+tSetpoint+" turningspeed="+turningSpeed);
 
       turningSpeed = (turningSpeed > maxturnspeed)?maxturnspeed:turningSpeed;
 
       turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
 
-      if (m_debug) {
+      if (GeneralConstants.kInVerboseMode) {
         SmartDashboard.putNumber("ROT CACL", turningSpeed);
         SmartDashboard.putNumber("ODO Y", swerveSubsystem.getPose().getY());
         SmartDashboard.putNumber("ODO X", swerveSubsystem.getPose().getX());
@@ -241,7 +242,7 @@ private boolean finished;
       vY = MathUtil.clamp(vY, -maxdrivespeed, maxdrivespeed);
       turningSpeed = MathUtil.clamp(turningSpeed, -maxturnspeed, maxturnspeed);
 
-      if (m_debug) {
+      if (GeneralConstants.kInVerboseMode) {
         SmartDashboard.putNumber("vX", vX);
         SmartDashboard.putNumber("vY", vY);
         SmartDashboard.putNumber("vTurn", turningSpeed);
@@ -256,8 +257,8 @@ private boolean finished;
   // Stop all module motor movement when command ends
   @Override
   public void end(boolean interrupted){
-    if (m_debug) {
-      System.out.println("End SwerveSampleMoveCommand called");
+    if (GeneralConstants.kInVerboseMode) {
+      //System.out.println("End SwerveSampleMoveCommand called");
     }
     swerveSubsystem.stopModules();
   }

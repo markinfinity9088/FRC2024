@@ -5,6 +5,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GeneralConstants;
 
 public class ProximitySensorSubsystem extends SubsystemBase {
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -14,7 +15,9 @@ public class ProximitySensorSubsystem extends SubsystemBase {
     public static final String PROXIMITY="Proximity";
 
     private ProximitySensorSubsystem() {
-        SmartDashboard.putNumber(PROXIMITY, m_colorSensor.getProximity());
+        if (GeneralConstants.kInVerboseMode) {
+            SmartDashboard.putNumber(PROXIMITY, m_colorSensor.getProximity());
+        }
     }
 
     public static ProximitySensorSubsystem getInstance() {
@@ -22,7 +25,9 @@ public class ProximitySensorSubsystem extends SubsystemBase {
     }
 
     public boolean isNear() {
-        SmartDashboard.putNumber(PROXIMITY, m_colorSensor.getProximity());
+        if (GeneralConstants.kInVerboseMode) {
+            SmartDashboard.putNumber(PROXIMITY, m_colorSensor.getProximity());
+        }
         return m_colorSensor.getProximity() > proximityLimit;
     }
 }

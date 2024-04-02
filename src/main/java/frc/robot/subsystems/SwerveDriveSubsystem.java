@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import org.opencv.core.Mat;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -438,11 +436,14 @@ public class SwerveDriveSubsystem extends SubsystemBase  {
   }
 
   public void displayPosition() {
-    Pose2d pose = getPose();
+    if (GeneralConstants.kSwerveVerbose) {
+      Pose2d pose = getPose();
 
-    SmartDashboard.putNumber("RobotPoseX",pose.getX());
-    SmartDashboard.putNumber("RobotPoseY",pose.getY());
-    SmartDashboard.putNumber("RobotPoseHeading",pose.getRotation().getDegrees());
+      SmartDashboard.putNumber("RobotPoseX",pose.getX());
+      SmartDashboard.putNumber("RobotPoseY",pose.getY());
+      SmartDashboard.putNumber("RobotPoseHeading",pose.getRotation().getDegrees());
+    }
+    
 
   }
   

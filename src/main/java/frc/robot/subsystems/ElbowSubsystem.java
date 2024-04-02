@@ -26,10 +26,6 @@ public class ElbowSubsystem extends PositionableSubsystem {
 
     super.init(elbowf);
     super.setMaxSpeed(Constants.IntakeConstants.ELBOW_MAX_SPEED);
-    // super.hasAbsEncoder(true);
-
-    //super.setMinPoint(100);
-    //super.setRange(140);
     elbowf.burnFlash();
     elbowb.burnFlash();
   }
@@ -39,10 +35,6 @@ public class ElbowSubsystem extends PositionableSubsystem {
   }
 
   public void move(double speed) {
-    // setCurrentSpeed(speed);
-    //System.out.println("Elbow speed = "+getCurrentSpeed()+" original speed = "+speed);
-    // SmartDashboard.putNumber("ElbowSpeed", speed);
-    // elbowf.set(getCurrentSpeed());
     elbowf.set(restrictSpeedForMinMax(speed));
   }
 

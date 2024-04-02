@@ -34,7 +34,7 @@ public class DiffDriveForDurationCommand extends Command {
 
   @Override
   public void execute() {
-    System.out.println("Executing "+getName());
+    //System.out.println("Executing "+getName());
     DifferentialDriveSubsystem.getInstance().drive(speed, rotation);
   }
 

@@ -40,7 +40,6 @@ public class AutoCenterAuto extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // SmartDashboard.putNumber("turn angle", Units.radiansToDegrees(angle));
   }
 
   // Called once the command ends or is interrupted.

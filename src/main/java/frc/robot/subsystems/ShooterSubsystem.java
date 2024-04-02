@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.GeneralConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
     // private final CANSparkMax leftShooter1;
@@ -56,7 +57,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void periodic(){
-        SmartDashboard.putNumber("shooter velo", getShooterVelocity());
+        if (GeneralConstants.kInVerboseMode) {
+            SmartDashboard.putNumber("shooter velo", getShooterVelocity());
+        }
         super.periodic();
     }
 

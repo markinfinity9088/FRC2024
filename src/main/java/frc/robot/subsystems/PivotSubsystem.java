@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Constants.GeneralConstants;
 
 public class PivotSubsystem extends PositionableSubsystem {
   private final CANSparkMax pivot;
@@ -185,9 +186,9 @@ public class PivotSubsystem extends PositionableSubsystem {
   }
  
   public void periodic(){
-    //SmartDashboard.putNumber("PivotEncoder", pivotEncoder.getPosition());
-    //restrictSpeed(pivot.get());
-    SmartDashboard.putNumber("Pivot angle", getPositionDegrees());
+    if (GeneralConstants.kInVerboseMode) {
+      SmartDashboard.putNumber("Pivot angle", getPositionDegrees());
+    }
     super.periodic();
   }
 }
