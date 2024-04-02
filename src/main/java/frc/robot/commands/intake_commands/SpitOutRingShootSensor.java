@@ -6,12 +6,13 @@ package frc.robot.commands.intake_commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubSystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class SpitOutRingSensor extends Command {
+public class SpitOutRingShootSensor extends Command {
   /** Creates a new SpitOutRingSensor. */
-  public SpitOutRingSensor() {
+  public SpitOutRingShootSensor() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(IntakeSubSystem.getInstance());
+    addRequirements(IntakeSubSystem.getInstance(), ShooterSubsystem.getInstance());
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +22,9 @@ public class SpitOutRingSensor extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    IntakeSubSystem.getInstance().releaseToAMP();
+    IntakeSubSystem.getInstance().releaseToShooter();
+    ShooterSubsystem.getInstance().startShooterWheels(1);
+
   }
 
   // Called once the command ends or is interrupted.

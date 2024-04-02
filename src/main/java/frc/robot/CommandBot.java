@@ -27,7 +27,7 @@ import frc.robot.commands.autonCommands.HandoffAndShootCommand;
 import frc.robot.commands.autonCommands.SpeakerAlignAndShoot;
 import frc.robot.commands.intake_commands.DetectRing;
 import frc.robot.commands.intake_commands.IntakeRingCommand;
-import frc.robot.commands.intake_commands.SpitOutRingSensor;
+import frc.robot.commands.intake_commands.SpitOutRingShootSensor;
 import frc.robot.controller.AutonController;
 import frc.robot.controller.MyXboxController;
 import frc.robot.controller.PS4Controller;
@@ -258,7 +258,7 @@ public class CommandBot {
     );
 
     SequentialCommandGroup intakeReverseWaitCommandGroup = new SequentialCommandGroup(
-      new WaitCommand(1), new SpitOutRingSensor()
+      new WaitCommand(1), new SpitOutRingShootSensor()
     );
 
     ParallelCommandGroup amp1CommandGroup = new ParallelCommandGroup();
@@ -333,6 +333,8 @@ public class CommandBot {
     // return AutonController.getAutonCommand();
         // return IntakeCommands.rightAutonOneRingRed();
 
+
+    // return IntakeCommands.pickupSequence();
     return new PathPlannerAuto("midBlue4RingLimelight");
     // return new PathPlannerAuto("testAuto");
     // return new PathPlannerAuto("leftBlue3Ring");

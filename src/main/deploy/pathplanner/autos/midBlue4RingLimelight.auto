@@ -34,28 +34,9 @@
                 }
               },
               {
-                "type": "deadline",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "detectRing"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "pickupWithSensor"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "moveToPickup"
-                      }
-                    }
-                  ]
+                  "name": "pickupSequence"
                 }
               }
             ]

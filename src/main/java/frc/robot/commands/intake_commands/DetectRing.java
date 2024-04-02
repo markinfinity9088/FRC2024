@@ -9,6 +9,8 @@ import frc.robot.subsystems.IntakeSubSystem;
 
 public class DetectRing extends Command {
   IntakeSubSystem intake = IntakeSubSystem.getInstance();
+  double inARow = 0;
+  boolean prev = false;
   /** Creates a new DetectRing. */
   public DetectRing() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,15 +22,26 @@ public class DetectRing extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (prev && intake.isRingDetected()){
+      inARow += 1;
+    } else {
+      inARow = 0;
+    }
+    prev = intake.isRingDetected();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    inARow = 0;
+    prev = false;
+    System.out.println("detected ring");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.isRingDetected();
+    return (inARow > 15);
   }
 }
