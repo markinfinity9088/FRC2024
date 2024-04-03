@@ -38,12 +38,21 @@ public class IntakeCommands {
   final static long pulleyAMPPosition = 10;
 
   public static Command pickupSequence(){
-    ParallelDeadlineGroup group1 = new ParallelDeadlineGroup(new DetectRing());
+    // SequentialCommandGroup intakeGroup = new SequentialCommandGroup(Commands.run(() -> {IntakeSubSystem.getInstance().doIntake();}).withTimeout(1), new IntakeRingCommand(true));
+    SequentialCommandGroup intakeGroup = new SequentialCommandGroup(new WaitCommand(1.2), new IntakeRingCommand(true));
+    ParallelDeadlineGroup group1 = new ParallelDeadlineGroup(intakeGroup);
     group1.addCommands(moveToIntakePos());
     // SequentialCommandGroup group2 = new SequentialCommandGroup();
     // group2.addCommands(new WaitCommand(1.5));
-    group1.addCommands(new IntakeRingCommand(true));
+    // group1.addCommands(new IntakeRingCommand(true));
     return group1;
+  }
+
+  public static Command holdPosition() {
+    ParallelCommandGroup pcommandGroup = new ParallelCommandGroup();
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
+    pcommandGroup.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
+    return pcommandGroup;
   }
 
   public static Command moveToHandoffPos(){
@@ -119,8 +128,8 @@ public class IntakeCommands {
 
 
     SequentialCommandGroup commandGroup = new SequentialCommandGroup();
-    commandGroup.addCommands(pcommandGroup1.withTimeout(1));
-    commandGroup.addCommands(pcommandGroup2.withTimeout(1));
+    commandGroup.addCommands(pcommandGroup1.withTimeout(.5));
+    commandGroup.addCommands(pcommandGroup2.withTimeout(.5));
     commandGroup.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
     commandGroup.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));
 

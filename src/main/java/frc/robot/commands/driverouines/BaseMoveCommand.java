@@ -19,7 +19,7 @@ public class BaseMoveCommand extends Command {
 
     double maxspeed = 2;
 
-    PIDValue rotationPID = new PIDValue(3.6, 0.8, 0.27);
+    PIDValue rotationPID = new PIDValue(2.6, 0.02, 0.1);
     PIDValue translationPID = new PIDValue(3, 0.0, 0.03);
 
     ProfiledPIDController thetaController ;

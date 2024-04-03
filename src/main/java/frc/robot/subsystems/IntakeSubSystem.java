@@ -99,10 +99,8 @@ public class IntakeSubSystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-
-
-    boolean ringDetected = !beamBreak.get();
     if (GeneralConstants.kIntakeVerbose) {
+      boolean ringDetected = !beamBreak.get();
       SmartDashboard.putBoolean("ringDetected", ringDetected);
     }
     

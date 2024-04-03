@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.Date;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +43,7 @@ public class Robot extends LoggedRobot {
 
   private final CommandBot m_robot = new CommandBot();
   private final SwerveDriveSubsystem swerve = SwerveDriveSubsystem.getInstance(); 
+  private final Field2d m_field = new Field2d();
 
   Robot() {
     super(0.02);
@@ -60,6 +62,10 @@ public class Robot extends LoggedRobot {
     // PositionController.getInstance().refresh();
     // SmartDashboard.putBoolean("Reset", false);
     m_robot.configureBindings();
+
+    if (GeneralConstants.kFieldPoseVerbose) {
+      SmartDashboard.putData("Field", m_field);
+    }
   }
 
   /**
@@ -89,6 +95,11 @@ public class Robot extends LoggedRobot {
 
     if (GeneralConstants.kInVerboseMode) {
       SwerveDriveSubsystem.getInstance().displayPosition();
+    }
+
+    if (GeneralConstants.kFieldPoseVerbose) {
+      Pose2d pose = SwerveDriveSubsystem.getInstance().getPose();
+      m_field.setRobotPose(pose);
     }
     
   }

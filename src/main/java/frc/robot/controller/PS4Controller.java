@@ -229,7 +229,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger getTestTrigger(){
-        return new Trigger(() -> (false)); //disabled for now
+        return ps4Controller1.povDown(); //disabled for now
     }
 
     @Override
@@ -265,7 +265,7 @@ public class PS4Controller implements TeleOpController {
 
     @Override
     public Trigger rotate360DriveForwardTrigger() {
-        return additionalDrive2Trigger().and(ps4Controller1.square());
+        return additionalDrive2Trigger().and(ps4Controller1.cross());
     }
 
     @Override

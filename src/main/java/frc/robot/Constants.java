@@ -109,7 +109,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = Units.inchesToMeters(3.0);;
+    public static final double kWheelDiameterMeters = Units.inchesToMeters(2.9);;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -261,13 +261,15 @@ public final class Constants {
 
 
   public static final class GeneralConstants {
-    public static final boolean   kInVerboseMode = true; //set to false during competition
+    public static final boolean   kInVerboseMode = false; //set to false during competition
     public static final boolean kCorrectSwerveDrift=false; //kp we will use drift correction logic if this flag is on
     public static boolean kGyroVerbose=false;
-    public static boolean kIntakeVerbose = true;
+    public static boolean kIntakeVerbose = false;
     public static boolean kUseDashboardValues = false;
     public static boolean kSwerveVerbose = false;
     public static boolean kVisionVerbose = false;
+    public static boolean kFieldPoseVerbose = false;
+
 
     public static double kSlowSwerveSpeed = 0.3;
     public static double kMediumSwerveSpeed = 0.5;

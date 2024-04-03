@@ -8,6 +8,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoAimPivot;
@@ -37,19 +38,20 @@ public class SpeakerAlignAndShoot extends SequentialCommandGroup {
 
     //align, pivot, spin wheels, and go to handoff
     SequentialCommandGroup align = new SequentialCommandGroup(new AutoCenterAuto(), new TurnDegreesCommandAuto());
-    ParallelCommandGroup setupForShot = new ParallelCommandGroup(align, new AutoAimPivotPID(), Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels((1.0));}), ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
-    addCommands(setupForShot.withTimeout(1));
-
+    ParallelCommandGroup setupForShot = new ParallelCommandGroup(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}), align, Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels((1.0));}), ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
+    ParallelCommandGroup aimAndSetup = new ParallelCommandGroup(setupForShot.withTimeout(1), new AutoAimPivotPID().withTimeout(1));
+    addCommands(aimAndSetup);
     //shoot
-    ParallelCommandGroup shooting = new ParallelCommandGroup();
+    SequentialCommandGroup spitOut = new SequentialCommandGroup(new SpitOutRingShootSensor(), new WaitCommand(.3));
+    ParallelDeadlineGroup shooting = new ParallelDeadlineGroup(spitOut);
     shooting.addCommands(new HoldSubsystemInPositionCommand(WristSubsystem.getInstance()));
     shooting.addCommands(new HoldSubsystemInPositionCommand(ElbowSubsystem.getInstance()));
-    shooting.addCommands(new SpitOutRingShootSensor());
-    shooting.addCommands(new WaitCommand(1));
-    shooting.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}));
+    // shooting.addCommands(new SpitOutRingShootSensor());
+    // shooting.addCommands(new WaitCommand(1));
+    shooting.addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels(1.0);}));
     // shooting.addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().releaseToShooter();}).withTimeout(0.5));
-    addCommands(shooting.withTimeout(1));
-    addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}));
+    addCommands(shooting.withTimeout(1.5));
+    addCommands(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}).withTimeout(.1));
     addCommands(Commands.run(() -> {ShooterSubsystem.getInstance().stopShooterWheels();}).withTimeout(.1));
   }
 

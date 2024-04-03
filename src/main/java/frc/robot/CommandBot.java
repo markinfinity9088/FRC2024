@@ -96,6 +96,9 @@ public class CommandBot {
     NamedCommands.registerCommand("handoff", IntakeCommands.moveToHandoffPos());
     NamedCommands.registerCommand("shoot", IntakeCommands.shootRing());
     NamedCommands.registerCommand("autoAimAndShoot", new SpeakerAlignAndShoot());
+    NamedCommands.registerCommand("turn35", new TurnDegreesCommand(-35));
+    NamedCommands.registerCommand("holdPosition", IntakeCommands.holdPosition());
+
   }
 
   /**
@@ -185,10 +188,10 @@ public class CommandBot {
     }
 
     if (pivot!=null) {
-      teleOpController.getPivotTriggerDown().whileTrue(Commands.run(() -> {pivot.move(.6);}));
-      teleOpController.getPivotTriggerUp().whileTrue(Commands.run(() -> {pivot.move(-.6);}));
-      teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();}));
-      teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();}));
+      teleOpController.getPivotTriggerDown().whileTrue(Commands.run(() -> {pivot.move(.6);},pivot));
+      teleOpController.getPivotTriggerUp().whileTrue(Commands.run(() -> {pivot.move(-.6);},pivot));
+      teleOpController.getPivotTriggerDown().onFalse(Commands.runOnce(() -> {pivot.stop();},pivot));
+      teleOpController.getPivotTriggerUp().onFalse(Commands.runOnce(() -> {pivot.stop();},pivot));
       //teleOpController.getPivotPresetTrigger().onTrue(new MovePivotToPosition(30));
       teleOpController.getPivotPresetTrigger().onTrue(new AutoAimPivotPID());
       // teleOpController.getPivotTriggerUp().onTrue(ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.createPivotPreset(100)));
@@ -322,6 +325,7 @@ public class CommandBot {
 
         teleOpController.slowDownSwerveTrigger().onTrue(Commands.runOnce(()-> {sdrive.setMaxSpeeds(GeneralConstants.kSlowSwerveSpeed, GeneralConstants.kSlowSwerveSpeed);}));
         teleOpController.speedUpSwerveTrigger().onTrue(Commands.runOnce(()-> {sdrive.setMaxSpeeds(GeneralConstants.kFullSwerveSpeed, GeneralConstants.kFullSwerveSpeed);}));
+        
         teleOpController.rotate360DriveForwardTrigger().onTrue(new BaseMoveCommand(0.3, 0, 360, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
         teleOpController.driveFrontSomeDistanceTrigger().onTrue(new BaseMoveCommand(1, 0, 0, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));
         teleOpController.driveBackSomeDistanceTrigger().onTrue(new BaseMoveCommand(-1, 0, 0, maxTranslationSpeed, maxRotationalSpeed, translationTolerance, rotationToleranceDegrees));

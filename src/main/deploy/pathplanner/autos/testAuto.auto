@@ -2,19 +2,32 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.9112722961537205,
-      "y": 6.991369417831561
+      "x": 1.2320437764983934,
+      "y": 5.515804013063089
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "straightLineTest"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MID BLUE m+pu2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "pickupSequence"
+                }
+              }
+            ]
           }
         }
       ]

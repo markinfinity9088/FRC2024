@@ -9,6 +9,7 @@ import frc.robot.subsystems.IntakeSubSystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class SpitOutRingShootSensor extends Command {
+  boolean startval;
   /** Creates a new SpitOutRingSensor. */
   public SpitOutRingShootSensor() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -17,14 +18,18 @@ public class SpitOutRingShootSensor extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    startval = IntakeSubSystem.getInstance().isRingDetected();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     IntakeSubSystem.getInstance().releaseToShooter();
     ShooterSubsystem.getInstance().startShooterWheels(1);
-
+    if (!startval && IntakeSubSystem.getInstance().isRingDetected()){
+      startval = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +41,6 @@ public class SpitOutRingShootSensor extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !IntakeSubSystem.getInstance().isRingDetected();
+    return startval && !IntakeSubSystem.getInstance().isRingDetected();
   }
 }

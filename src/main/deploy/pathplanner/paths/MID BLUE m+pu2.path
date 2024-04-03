@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7516136195445835,
-        "y": 6.0836388302865485
+        "x": 1.3842846515935527,
+        "y": 6.686887667641241
       },
       "isLocked": false,
       "linkedName": "MID BLUE start"
     },
     {
       "anchor": {
-        "x": 2.5670791427174855,
-        "y": 7.014791090923124
+        "x": 2.496814123442796,
+        "y": 6.956236908194216
       },
       "prevControl": {
-        "x": 2.1806215367066955,
-        "y": 6.651755158003897
+        "x": 1.876139786516376,
+        "y": 6.885971888919526
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 24.567171320601254,
     "rotateFast": false
   },
   "reversed": false,

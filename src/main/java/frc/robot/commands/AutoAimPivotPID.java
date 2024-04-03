@@ -24,7 +24,7 @@ public class AutoAimPivotPID extends Command {
   /** Creates a new MovePivotToPositionPID. */
   public AutoAimPivotPID() {
     addRequirements(pivot);
-    pivotController = new PIDController(2,3,0);
+    pivotController = new PIDController(.5,.2,0); //2 3 0
     pivotController.setTolerance(Units.degreesToRadians(0.2),0.01);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -32,7 +32,7 @@ public class AutoAimPivotPID extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double dist = Math.sqrt(Math.pow(ll.getTX(), 2) + Math.pow(ll.getDistanceToGoalMeters(), 2));
+    double dist = ll.getDistanceToGoalMeters();
     angle = new PivotComputation().getPivotAngle(dist);
     angle = MathUtil.clamp(angle, pivot.getMinAngle(), pivot.getMaxAngle());
     SmartDashboard.putNumber("calc angle", angle);
@@ -43,7 +43,8 @@ public class AutoAimPivotPID extends Command {
   @Override
   public void execute() {
     double velocity = -pivotController.calculate(Units.degreesToRadians(pivot.getPositionDegrees()));
-    pivot.moveNoRestrictions(velocity);
+    pivot.move(velocity);
+    //pivot.moveNoRestrictions(velocity);
   }
 
   // Called once the command ends or is interrupted.

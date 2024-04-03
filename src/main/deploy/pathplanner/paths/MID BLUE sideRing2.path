@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5670791427174855,
-        "y": 5.703092944647428
+        "x": 2.496814123442796,
+        "y": 5.550936522700434
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.543657469625922,
-        "y": 5.0824186077210065
+        "x": 1.3842846515935527,
+        "y": 5.433828157242619
       },
       "isLocked": false,
       "linkedName": "MID BLUE sideRing1"
     },
     {
       "anchor": {
-        "x": 2.5670791427174855,
-        "y": 4.087081954477746
+        "x": 1.8175856037874687,
+        "y": 4.262744502664469
       },
       "prevControl": {
-        "x": 2.5553683061717036,
-        "y": 4.461828723942753
+        "x": 1.021248718674326,
+        "y": 4.649202108675258
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
+    "maxVelocity": 1.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -35.110000000000014,
+    "velocity": 0.0,
+    "rotation": -18.434948822921882,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "midblue",
   "previewStartingState": {
-    "rotation": -35.110000000000014,
+    "rotation": 0.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
