@@ -261,7 +261,7 @@ public final class Constants {
 
 
   public static final class GeneralConstants {
-    public static final boolean   kInVerboseMode = false; //set to false during competition
+    public static final boolean   kInVerboseMode = true; //set to false during competition
     public static final boolean kCorrectSwerveDrift=false; //kp we will use drift correction logic if this flag is on
     public static boolean kGyroVerbose=false;
     public static boolean kIntakeVerbose = false;

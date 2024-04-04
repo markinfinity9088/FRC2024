@@ -23,7 +23,7 @@ public class PivotComputation {
     // }
 
 	public double getPivotAngle(double distance){
-		return 157.75 - (105*distance) + (34.7*Math.pow(distance, 2)) - (5.36*Math.pow(distance, 3)) + (0.315*Math.pow(distance, 4));
+		return 155 - (105*distance) + (34.7*Math.pow(distance, 2)) - (5.36*Math.pow(distance, 3)) + (0.315*Math.pow(distance, 4));
 		// return 127 - (64.9*distance) + (15*Math.pow(distance, 2)) - (1.2*Math.pow(distance, 3));
 		// return 59.8*Math.pow(distance, -.524);
 	}

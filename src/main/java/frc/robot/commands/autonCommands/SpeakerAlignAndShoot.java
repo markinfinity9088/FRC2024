@@ -39,7 +39,7 @@ public class SpeakerAlignAndShoot extends SequentialCommandGroup {
     //align, pivot, spin wheels, and go to handoff
     SequentialCommandGroup align = new SequentialCommandGroup(new AutoCenterAuto(), new TurnDegreesCommandAuto());
     ParallelCommandGroup setupForShot = new ParallelCommandGroup(Commands.run(() -> {IntakeSubSystem.getInstance().stop();}), align, Commands.run(() -> {ShooterSubsystem.getInstance().startShooterWheels((1.0));}), ArmRoutineCommandFactory.getInstance().executeArmRoutine(ArmPresets.Handoff));
-    ParallelCommandGroup aimAndSetup = new ParallelCommandGroup(setupForShot.withTimeout(1), new AutoAimPivotPID().withTimeout(1));
+    ParallelCommandGroup aimAndSetup = new ParallelCommandGroup(setupForShot.withTimeout(1), new AutoAimPivotPID().withTimeout(1.5));
     addCommands(aimAndSetup);
     //shoot
     SequentialCommandGroup spitOut = new SequentialCommandGroup(new SpitOutRingShootSensor(), new WaitCommand(.3));

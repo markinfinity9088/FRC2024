@@ -25,6 +25,7 @@ public class AutoAimPivotPID extends Command {
   public AutoAimPivotPID() {
     addRequirements(pivot);
     pivotController = new PIDController(.5,.2,0); //2 3 0
+    // pivotController = new PIDController(.9,.3,0.1);
     pivotController.setTolerance(Units.degreesToRadians(0.2),0.01);
     // Use addRequirements() here to declare subsystem dependencies.
   }

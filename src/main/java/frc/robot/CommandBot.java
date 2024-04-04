@@ -163,7 +163,7 @@ public class CommandBot {
           SwerveDriveSubsystem.getInstance().resetOdometry(new Pose2d()); //kp todo later to set initial pose
         }));
 
-        setAdditionalDriveBindings(dualController, teleOpController);   
+        //setAdditionalDriveBindings(dualController, teleOpController);   
     }   
     IntakeSubSystem intake = IntakeSubSystem.getInstance();
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
@@ -348,6 +348,7 @@ public class CommandBot {
 
     // return IntakeCommands.pickupSequence();
     return new PathPlannerAuto("midBlue4RingLimelight");
+    // return new PathPlannerAuto("rightBlue3FarRingLimelight2");
     // return new PathPlannerAuto("testAuto");
     // return new PathPlannerAuto("leftBlue3Ring");
     // return new PathPlannerAuto("midBlue2Ring");
