@@ -3,7 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.subsystems.PositionableSubsystem;
+import frc.robot.vision.limelight.LimeLightFacade;
 
 /**
  * A command that performs the intake
@@ -33,6 +35,12 @@ public class HoldSubsystemInPositionCommand extends Command {
 
   @Override
   public void initialize() {
+
+    //turn off ll led on other routines
+    if (GeneralConstants.kUseLimeLightToIndicateRing) {
+      LimeLightFacade.getInstance().setLED(false);
+    }
+
     if (holdAtCurrentPosition ) {
           position = ((PositionableSubsystem)subsystem).getPosition();
     }

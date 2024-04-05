@@ -42,7 +42,6 @@ public class ArmRoutineCommandFactory {
     public Command executeArmRoutine(ArmRoutine routine) {
 
         SequentialCommandGroup commandSequence = new SequentialCommandGroup();
-        ll.setLED(false);
 
         
         //Iterate over initial sequence of positions and add to sequential group of move commands
