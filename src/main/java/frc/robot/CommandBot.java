@@ -347,8 +347,8 @@ public class CommandBot {
 
 
     // return IntakeCommands.pickupSequence();
-    return new PathPlannerAuto("midBlue4RingLimelight");
-    // return new PathPlannerAuto("rightBlue3FarRingLimelight2");
+    // return new PathPlannerAuto("midBlue4RingLimelight");
+    return new PathPlannerAuto("rightBlue3FarRingLimelight3");
     // return new PathPlannerAuto("testAuto");
     // return new PathPlannerAuto("leftBlue3Ring");
     // return new PathPlannerAuto("midBlue2Ring");

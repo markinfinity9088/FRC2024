@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -23,6 +24,15 @@ public class ElbowSubsystem extends PositionableSubsystem {
     elbowf.setIdleMode(IdleMode.kBrake);
     elbowf.setSmartCurrentLimit(Constants.IntakeConstants.CURRENT_LIMIT_A); // gives a limit for how much power, the motor can receive
     elbowb.follow(elbowf);
+
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 1000);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 1000);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 1000);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 1000);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 1000);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 1000);
+    elbowb.setPeriodicFramePeriod(PeriodicFrame.kStatus7, 1000);
 
     super.init(elbowf);
     super.setMaxSpeed(Constants.IntakeConstants.ELBOW_MAX_SPEED);

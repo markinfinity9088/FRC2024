@@ -27,6 +27,7 @@ public class IntakeSubSystem extends SubsystemBase {
 
   //Fine tune this
   static final double kProximityForRingDetection = 175;
+  static boolean isDetected = false;
 
   static final double intakeSpeed = 1;
   static final double  releaseToAMPSpeed = -0.8;

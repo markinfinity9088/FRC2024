@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7516461186768542,
-        "y": 4.489458978917958
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 1.3337957445145676,
-        "y": 0.8189562532971217
-      },
-      "isLocked": false,
-      "linkedName": "RIGHT BLUE start"
-    },
-    {
-      "anchor": {
         "x": 6.853245318473517,
         "y": 2.4007214918852084
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.864956155019298,
+        "y": 2.3890106553394257
+      },
+      "isLocked": false,
+      "linkedName": "RIGHT BLUE move1 END3"
+    },
+    {
+      "anchor": {
+        "x": 8.375654069425114,
+        "y": 2.4007214918852084
+      },
       "prevControl": {
-        "x": 6.232570981547097,
-        "y": 0.7963368851131429
+        "x": 8.375654069425114,
+        "y": 2.4241431649767713
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RIGHT BLUE move1 END3"
+      "linkedName": "RIGHT BLUE pickup1 END3"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
+    "maxVelocity": 1.5,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "rightblue far",
   "previewStartingState": {
-    "rotation": -60.25999999999999,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

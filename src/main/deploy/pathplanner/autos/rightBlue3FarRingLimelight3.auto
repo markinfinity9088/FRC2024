@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RIGHT BLUE far move1 2"
+                  "pathName": "RIGHT BLUE far move1 3"
                 }
               },
               {
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RIGHT BLUE far pu1 2"
+                  "pathName": "RIGHT BLUE far pu1 3"
                 }
               },
               {
@@ -68,76 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RIGHT BLUE far shoot1 LL 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "handoff"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoAimAndShoot"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "RIGHT BLUE far move2 LL"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "handoff"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "RIGHT BLUE far pu2 LL"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "pickupSequence"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.5
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "RIGHT BLUE far shoot2 LL"
+                  "pathName": "RIGHT BLUE far shoot1 LL 3"
                 }
               },
               {
